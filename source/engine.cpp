@@ -1,4 +1,5 @@
 #include "engine.h"
+#include "engine_context.h"
 
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
@@ -14,6 +15,12 @@ namespace eng
 	}
 	bool Engine::Init(int width, int height)
 	{
+        if (!m_application)
+        {
+            std::cerr << "ENGINE::INIT: NO APPLICATION";
+            return false;
+        }
+
         if (!glfwInit())
         {
             std::cerr << "Failed to initialize GLFW\n";
@@ -21,8 +28,8 @@ namespace eng
         }
 
         GLFWwindow* window = glfwCreateWindow(
-            800,
-            600,
+            width,
+            height,
             "OpenGL",
             nullptr,
             nullptr
@@ -34,7 +41,7 @@ namespace eng
             glfwTerminate();
             return false;
         }
-
+        m_window = window;
         glfwMakeContextCurrent(window);
 
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
@@ -43,47 +50,29 @@ namespace eng
             glfwTerminate();
             return false;
         }
-
-        m_window = window;
-        std::cout << "OpenGL version: "
-            << glGetString(GL_VERSION)
-            << '\n';
+        //std::cout << "OpenGL version: "
+        //    << glGetString(GL_VERSION)
+        //    << '\n';
+        EngineContext ctx{ m_window };
+        return m_application->Init(ctx);
 	}
 	void Engine::Run()
-	{
-
-        IMGUI_CHECKVERSION();
-        ImGui::CreateContext();
-        ImGuiIO& io = ImGui::GetIO(); (void)io;
-        ImGui::StyleColorsDark();
-        ImGui_ImplGlfw_InitForOpenGL(m_window, true);
-        ImGui_ImplOpenGL3_Init("#version 460");
-
+	{        
         while (!glfwWindowShouldClose(m_window))
         {
             glClear(GL_COLOR_BUFFER_BIT);
 
-            ImGui_ImplOpenGL3_NewFrame();
-            ImGui_ImplGlfw_NewFrame();
-            ImGui::NewFrame();
-
-            ImGui::Begin("My name is window, ImGUI window");
-            ImGui::Text("Hello there");
-            ImGui::Text("this is text 2");
-            ImGui::End();
-
-            ImGui::Render();
-            ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
             glfwPollEvents();
+
+            m_application->Update(0);
+
             glfwSwapBuffers(m_window);
         }
 	}
 	void Engine::Destroy()
 	{
-        ImGui_ImplOpenGL3_Shutdown();
-        ImGui_ImplGlfw_Shutdown();
-        ImGui::DestroyContext();
+        m_application->Destroy();
+        SetApplication(nullptr);
 
         glfwDestroyWindow(m_window);
         glfwTerminate();

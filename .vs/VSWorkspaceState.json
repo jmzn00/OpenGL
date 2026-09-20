@@ -7,10 +7,13 @@
   },
   "ExpandedNodes": [
     "",
-    "\\dependencies",
     "\\source",
-    "\\source\\render"
+    "\\source\\editor",
+    "\\source\\editor\\tools",
+    "\\source\\editor\\tools\\console",
+    "\\source\\editor\\ui",
+    "\\source\\log"
   ],
-  "SelectedNode": "\\source\\render\\render_queue.cpp",
+  "SelectedNode": "\\source\\editor\\tools\\console\\console.h",
   "PreviewInSolutionExplorer": false
 }

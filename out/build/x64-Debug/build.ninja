@@ -85,6 +85,7 @@ build glad.lib: C_STATIC_LIBRARY_LINKER__glad_Debug CMakeFiles\glad.dir\dependen
 build cmake_object_order_depends_target_imgui: phony || cmake_object_order_depends_target_glfw
 
 build CMakeFiles\imgui.dir\dependencies\imgui\imgui.cpp.obj: CXX_COMPILER__imgui_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui\imgui.cpp || cmake_object_order_depends_target_imgui
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include
   OBJECT_DIR = CMakeFiles\imgui.dir
@@ -93,6 +94,7 @@ build CMakeFiles\imgui.dir\dependencies\imgui\imgui.cpp.obj: CXX_COMPILER__imgui
   TARGET_PDB = imgui.pdb
 
 build CMakeFiles\imgui.dir\dependencies\imgui\imgui_draw.cpp.obj: CXX_COMPILER__imgui_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui\imgui_draw.cpp || cmake_object_order_depends_target_imgui
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include
   OBJECT_DIR = CMakeFiles\imgui.dir
@@ -101,6 +103,7 @@ build CMakeFiles\imgui.dir\dependencies\imgui\imgui_draw.cpp.obj: CXX_COMPILER__
   TARGET_PDB = imgui.pdb
 
 build CMakeFiles\imgui.dir\dependencies\imgui\imgui_tables.cpp.obj: CXX_COMPILER__imgui_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui\imgui_tables.cpp || cmake_object_order_depends_target_imgui
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include
   OBJECT_DIR = CMakeFiles\imgui.dir
@@ -109,6 +112,7 @@ build CMakeFiles\imgui.dir\dependencies\imgui\imgui_tables.cpp.obj: CXX_COMPILER
   TARGET_PDB = imgui.pdb
 
 build CMakeFiles\imgui.dir\dependencies\imgui\imgui_widgets.cpp.obj: CXX_COMPILER__imgui_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui\imgui_widgets.cpp || cmake_object_order_depends_target_imgui
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include
   OBJECT_DIR = CMakeFiles\imgui.dir
@@ -117,6 +121,7 @@ build CMakeFiles\imgui.dir\dependencies\imgui\imgui_widgets.cpp.obj: CXX_COMPILE
   TARGET_PDB = imgui.pdb
 
 build CMakeFiles\imgui.dir\dependencies\imgui\imgui_impl_glfw.cpp.obj: CXX_COMPILER__imgui_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui\imgui_impl_glfw.cpp || cmake_object_order_depends_target_imgui
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include
   OBJECT_DIR = CMakeFiles\imgui.dir
@@ -125,6 +130,7 @@ build CMakeFiles\imgui.dir\dependencies\imgui\imgui_impl_glfw.cpp.obj: CXX_COMPI
   TARGET_PDB = imgui.pdb
 
 build CMakeFiles\imgui.dir\dependencies\imgui\imgui_impl_opengl3.cpp.obj: CXX_COMPILER__imgui_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui\imgui_impl_opengl3.cpp || cmake_object_order_depends_target_imgui
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include
   OBJECT_DIR = CMakeFiles\imgui.dir
@@ -160,6 +166,7 @@ build imgui.lib: CXX_STATIC_LIBRARY_LINKER__imgui_Debug CMakeFiles\imgui.dir\dep
 build cmake_object_order_depends_target_OpenGL: phony || cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_imgui
 
 build CMakeFiles\OpenGL.dir\main.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\main.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
@@ -168,6 +175,7 @@ build CMakeFiles\OpenGL.dir\main.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\source\engine.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\engine.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
@@ -175,19 +183,48 @@ build CMakeFiles\OpenGL.dir\source\engine.cpp.obj: CXX_COMPILER__OpenGL_unscanne
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
-build CMakeFiles\OpenGL.dir\source\application.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\application.cpp || cmake_object_order_depends_target_OpenGL
+build CMakeFiles\OpenGL.dir\source\application\application.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\application\application.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
-  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\source
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\source\application
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\source\render\render_queue.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\render\render_queue.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
   INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\source\render
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\source\editor\editor.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\editor\editor.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\source\editor
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\source\editor\ui\editor_ui.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\editor\ui\editor_ui.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\source\editor\ui
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\source\editor\tools\console\console.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\source\editor\tools\console\console.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\source -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\source\editor\tools\console
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
@@ -199,7 +236,7 @@ build CMakeFiles\OpenGL.dir\source\render\render_queue.cpp.obj: CXX_COMPILER__Op
 #############################################
 # Link the executable OpenGL.exe
 
-build OpenGL.exe: CXX_EXECUTABLE_LINKER__OpenGL_Debug CMakeFiles\OpenGL.dir\main.cpp.obj CMakeFiles\OpenGL.dir\source\engine.cpp.obj CMakeFiles\OpenGL.dir\source\application.cpp.obj CMakeFiles\OpenGL.dir\source\render\render_queue.cpp.obj | glad.lib dependencies\glfw-3.5.1\src\glfw3.lib imgui.lib dependencies\glfw-3.5.1\src\glfw3.lib || dependencies\glfw-3.5.1\src\glfw3.lib glad.lib imgui.lib
+build OpenGL.exe: CXX_EXECUTABLE_LINKER__OpenGL_Debug CMakeFiles\OpenGL.dir\main.cpp.obj CMakeFiles\OpenGL.dir\source\engine.cpp.obj CMakeFiles\OpenGL.dir\source\application\application.cpp.obj CMakeFiles\OpenGL.dir\source\render\render_queue.cpp.obj CMakeFiles\OpenGL.dir\source\editor\editor.cpp.obj CMakeFiles\OpenGL.dir\source\editor\ui\editor_ui.cpp.obj CMakeFiles\OpenGL.dir\source\editor\tools\console\console.cpp.obj | glad.lib dependencies\glfw-3.5.1\src\glfw3.lib imgui.lib dependencies\glfw-3.5.1\src\glfw3.lib || dependencies\glfw-3.5.1\src\glfw3.lib glad.lib imgui.lib
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = glad.lib  dependencies\glfw-3.5.1\src\glfw3.lib  opengl32.lib  imgui.lib  dependencies\glfw-3.5.1\src\glfw3.lib  opengl32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

@@ -17,7 +17,6 @@ target_include_directories(glad PUBLIC
     dependencies/glad/include
 )
 
-# ImGui
 add_library(imgui
     dependencies/imgui/imgui.cpp
     dependencies/imgui/imgui_draw.cpp
@@ -31,6 +30,10 @@ target_include_directories(imgui PUBLIC
     dependencies/imgui
 )
 
+target_compile_definitions(imgui PRIVATE
+    GLFW_INCLUDE_NONE
+)
+
 target_link_libraries(imgui PRIVATE
     glfw
     opengl32
@@ -40,10 +43,14 @@ target_link_libraries(imgui PRIVATE
 add_executable(OpenGL
     main.cpp
     source/engine.cpp
-    source/application.cpp
+    source/application/application.cpp
     source/render/render_queue.cpp
+    source/editor/editor.cpp
+    source/editor/ui/editor_ui.cpp
+    source/editor/tools/console/console.cpp
+    
 )
-
+target_compile_definitions(OpenGL PRIVATE GLFW_INCLUDE_NONE)
 target_include_directories(OpenGL PRIVATE
     source
 )

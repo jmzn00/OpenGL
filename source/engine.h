@@ -2,9 +2,8 @@
 #define ENGINE_H
 #include <memory>
 
-#include "application.h"
+#include <application/application.h>
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 namespace eng
 {
