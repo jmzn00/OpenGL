@@ -7,13 +7,17 @@
   },
   "ExpandedNodes": [
     "",
-    "\\source",
-    "\\source\\editor",
-    "\\source\\editor\\tools",
-    "\\source\\editor\\tools\\console",
-    "\\source\\editor\\ui",
-    "\\source\\log"
+    "\\engine",
+    "\\engine\\apps",
+    "\\engine\\apps\\editor",
+    "\\engine\\apps\\editor\\panels",
+    "\\engine\\apps\\editor\\panels\\console",
+    "\\engine\\apps\\editor\\src",
+    "\\engine\\include",
+    "\\engine\\include\\eng",
+    "\\engine\\include\\eng\\command",
+    "\\engine\\include\\eng\\command\\commands"
   ],
-  "SelectedNode": "\\source\\editor\\tools\\console\\console.h",
+  "SelectedNode": "\\engine\\apps\\editor\\src\\main.cpp",
   "PreviewInSolutionExplorer": false
 }

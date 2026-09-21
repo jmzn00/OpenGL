@@ -39,20 +39,24 @@ target_link_libraries(imgui PRIVATE
     opengl32
 )
 
-# Our program
 add_executable(OpenGL
-    main.cpp
-    source/engine.cpp
-    source/application/application.cpp
-    source/render/render_queue.cpp
-    source/editor/editor.cpp
-    source/editor/ui/editor_ui.cpp
-    source/editor/tools/console/console.cpp
-    
+    engine/apps/editor/src/main.cpp
+    engine/src/core/engine.cpp
+    engine/src/core/application.cpp
+    engine/src/render/render_queue.cpp
+    engine/apps/editor/src/editor.cpp
+    engine/apps/editor/ui/editor_ui.cpp
+    engine/apps/editor/panels/console/console.cpp
+    engine/src/core/logger.cpp    
+    engine/src/command/command_registry.cpp
+    engine/src/command/application_quit_command.cpp
 )
 target_compile_definitions(OpenGL PRIVATE GLFW_INCLUDE_NONE)
 target_include_directories(OpenGL PRIVATE
-    source
+    engine/include
+    engine/apps/editor/src
+    engine/apps/editor/ui
+    engine/apps/editor/panels
 )
 
 target_link_libraries(OpenGL PRIVATE
