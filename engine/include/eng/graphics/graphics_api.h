@@ -1,0 +1,32 @@
+#ifndef GRAPHICS_API_H
+#define GRAPHICS_API_H
+#include <memory>
+#include <string>
+#include <vector>
+#include <glad/glad.h>
+
+namespace eng
+{
+	class ShaderProgram;
+	class Material;
+	class Mesh;
+
+	class GraphicsAPI
+	{
+	public:
+		bool Init();
+		GLuint CreateVertexBuffer(const std::vector<float>& vertices);
+		GLuint CreateIndexBuffer(const std::vector<uint32_t>& indices);		
+
+		void SetClearColor(float r, float g, float b, float a);
+		void ClearBuffers();
+
+		void BindShaderProgram(ShaderProgram* shaderProgram);
+		void BindMaterial(Material* material);
+		void BindMesh(Mesh* mesh);
+		void DrawMesh(Mesh* mesh);
+
+		void ToggleWireframe(bool isWireframe);
+	};
+}
+#endif // !GRAPHICS_API_H

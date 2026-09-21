@@ -166,92 +166,128 @@ build imgui.lib: CXX_STATIC_LIBRARY_LINKER__imgui_Debug CMakeFiles\imgui.dir\dep
 build cmake_object_order_depends_target_OpenGL: phony || cmake_object_order_depends_target_glad cmake_object_order_depends_target_glfw cmake_object_order_depends_target_imgui
 
 build CMakeFiles\OpenGL.dir\engine\apps\editor\src\main.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src\main.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\apps\editor\src
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\engine\src\core\engine.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\core\engine.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\core
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\engine\src\core\application.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\core\application.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\core
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\engine\src\render\render_queue.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\render\render_queue.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\render
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\engine\apps\editor\src\editor.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src\editor.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\apps\editor\src
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\engine\apps\editor\ui\editor_ui.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui\editor_ui.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\apps\editor\ui
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
-build CMakeFiles\OpenGL.dir\engine\apps\editor\panels\console\console.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels\console\console.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+build CMakeFiles\OpenGL.dir\engine\apps\editor\ui\panels\console\console.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui\panels\console\console.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
-  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\apps\editor\panels\console
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\apps\editor\ui\panels\console
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
 build CMakeFiles\OpenGL.dir\engine\src\core\logger.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\core\logger.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
   OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\core
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
-build CMakeFiles\OpenGL.dir\engine\src\command\command_registry.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\command\command_registry.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+build CMakeFiles\OpenGL.dir\engine\src\core\command_registry.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\core\command_registry.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
-  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\command
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\core
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
-build CMakeFiles\OpenGL.dir\engine\src\command\application_quit_command.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\command\application_quit_command.cpp || cmake_object_order_depends_target_OpenGL
-  DEFINES = -DGLFW_INCLUDE_NONE
+build CMakeFiles\OpenGL.dir\engine\apps\editor\commands\application_quit_command.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\commands\application_quit_command.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
-  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\panels -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
   OBJECT_DIR = CMakeFiles\OpenGL.dir
-  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\command
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\apps\editor\commands
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\engine\src\graphics\graphics_api.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\graphics\graphics_api.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\graphics
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\engine\src\graphics\commands\graphics_set_clear_color_command.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\graphics\commands\graphics_set_clear_color_command.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\graphics\commands
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\engine\src\graphics\commands\graphics_set_wireframe_command.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\graphics\commands\graphics_set_wireframe_command.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\graphics\commands
+  TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
+  TARGET_PDB = OpenGL.pdb
+
+build CMakeFiles\OpenGL.dir\engine\src\graphics\shader_program.cpp.obj: CXX_COMPILER__OpenGL_unscanned_Debug C$:\Users\mansi\source\repos\OpenGl\OpenGl\engine\src\graphics\shader_program.cpp || cmake_object_order_depends_target_OpenGL
+  DEFINES = -DENGINE_ASSET_DIR=\"C:/Users/mansi/source/repos/OpenGl/OpenGl/assets\" -DGLFW_INCLUDE_NONE
+  FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -std:c++17 -MDd
+  INCLUDES = -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\src -IC:\Users\mansi\source\repos\OpenGl\OpenGl\engine\apps\editor\ui -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glad\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\glfw-3.5.1\include -IC:\Users\mansi\source\repos\OpenGl\OpenGl\dependencies\imgui
+  OBJECT_DIR = CMakeFiles\OpenGL.dir
+  OBJECT_FILE_DIR = CMakeFiles\OpenGL.dir\engine\src\graphics
   TARGET_COMPILE_PDB = CMakeFiles\OpenGL.dir\
   TARGET_PDB = OpenGL.pdb
 
@@ -263,7 +299,7 @@ build CMakeFiles\OpenGL.dir\engine\src\command\application_quit_command.cpp.obj:
 #############################################
 # Link the executable OpenGL.exe
 
-build OpenGL.exe: CXX_EXECUTABLE_LINKER__OpenGL_Debug CMakeFiles\OpenGL.dir\engine\apps\editor\src\main.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\engine.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\application.cpp.obj CMakeFiles\OpenGL.dir\engine\src\render\render_queue.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\src\editor.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\ui\editor_ui.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\panels\console\console.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\logger.cpp.obj CMakeFiles\OpenGL.dir\engine\src\command\command_registry.cpp.obj CMakeFiles\OpenGL.dir\engine\src\command\application_quit_command.cpp.obj | glad.lib dependencies\glfw-3.5.1\src\glfw3.lib imgui.lib dependencies\glfw-3.5.1\src\glfw3.lib || dependencies\glfw-3.5.1\src\glfw3.lib glad.lib imgui.lib
+build OpenGL.exe: CXX_EXECUTABLE_LINKER__OpenGL_Debug CMakeFiles\OpenGL.dir\engine\apps\editor\src\main.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\engine.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\application.cpp.obj CMakeFiles\OpenGL.dir\engine\src\render\render_queue.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\src\editor.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\ui\editor_ui.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\ui\panels\console\console.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\logger.cpp.obj CMakeFiles\OpenGL.dir\engine\src\core\command_registry.cpp.obj CMakeFiles\OpenGL.dir\engine\apps\editor\commands\application_quit_command.cpp.obj CMakeFiles\OpenGL.dir\engine\src\graphics\graphics_api.cpp.obj CMakeFiles\OpenGL.dir\engine\src\graphics\commands\graphics_set_clear_color_command.cpp.obj CMakeFiles\OpenGL.dir\engine\src\graphics\commands\graphics_set_wireframe_command.cpp.obj CMakeFiles\OpenGL.dir\engine\src\graphics\shader_program.cpp.obj | glad.lib dependencies\glfw-3.5.1\src\glfw3.lib imgui.lib dependencies\glfw-3.5.1\src\glfw3.lib || dependencies\glfw-3.5.1\src\glfw3.lib glad.lib imgui.lib
   FLAGS = /DWIN32 /D_WINDOWS /EHsc /Zi /Ob0 /Od /RTC1 -MDd
   LINK_FLAGS = /machine:x64 /debug /INCREMENTAL /subsystem:console
   LINK_LIBRARIES = glad.lib  dependencies\glfw-3.5.1\src\glfw3.lib  opengl32.lib  imgui.lib  dependencies\glfw-3.5.1\src\glfw3.lib  opengl32.lib  kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib

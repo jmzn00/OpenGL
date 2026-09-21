@@ -2,7 +2,11 @@
 #define ENGINE_H
 #include <memory>
 
+#include <eng/core/engine.h>
+#include <eng/core/engine_context.h>
 #include <eng/core/application.h>
+#include <eng/graphics/graphics_api.h>
+#include <eng/graphics/shader_program.h>
 #include <eng/core/logger.h>
 #include <glad/glad.h>
 
@@ -28,8 +32,10 @@ namespace eng
 		void SetApplication(Application* app);
 		Application* GetApplication();
 	private:
-		Logger m_logger;
 		GLFWwindow* m_window = nullptr;
+
+		GraphicsAPI m_graphicsApi;
+		Logger m_logger;
 		std::unique_ptr<Application> m_application;
 	};
 }

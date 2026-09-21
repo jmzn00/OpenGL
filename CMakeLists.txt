@@ -46,17 +46,23 @@ add_executable(OpenGL
     engine/src/render/render_queue.cpp
     engine/apps/editor/src/editor.cpp
     engine/apps/editor/ui/editor_ui.cpp
-    engine/apps/editor/panels/console/console.cpp
+    engine/apps/editor/ui/panels/console/console.cpp
     engine/src/core/logger.cpp    
-    engine/src/command/command_registry.cpp
-    engine/src/command/application_quit_command.cpp
+    engine/src/core/command_registry.cpp
+    engine/apps/editor/commands/application_quit_command.cpp
+    engine/src/graphics/graphics_api.cpp
+    engine/src/graphics/commands/graphics_set_clear_color_command.cpp
+    engine/src/graphics/commands/graphics_set_wireframe_command.cpp
+    engine/src/graphics/shader_program.cpp
 )
-target_compile_definitions(OpenGL PRIVATE GLFW_INCLUDE_NONE)
+target_compile_definitions(OpenGL PRIVATE
+    GLFW_INCLUDE_NONE
+    ENGINE_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets"
+)
 target_include_directories(OpenGL PRIVATE
     engine/include
     engine/apps/editor/src
     engine/apps/editor/ui
-    engine/apps/editor/panels
 )
 
 target_link_libraries(OpenGL PRIVATE

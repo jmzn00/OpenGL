@@ -3,12 +3,8 @@
   "WorkspaceRootPath": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\apps\\editor\\src\\editor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\apps\\editor\\src\\editor.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\apps\\editor\\panels\\console\\console.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\apps\\editor\\panels\\console\\console.h||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\src\\core\\engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:engine\\src\\core\\engine.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -18,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,28 +30,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "console.h",
-              "DocumentMoniker": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\apps\\editor\\panels\\console\\console.h",
-              "RelativeDocumentMoniker": "engine\\apps\\editor\\panels\\console\\console.h",
-              "ToolTip": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\apps\\editor\\panels\\console\\console.h",
-              "RelativeToolTip": "engine\\apps\\editor\\panels\\console\\console.h",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000680|",
-              "WhenOpened": "2026-09-21T09:47:24.918Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "editor.cpp",
-              "DocumentMoniker": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\apps\\editor\\src\\editor.cpp",
-              "RelativeDocumentMoniker": "engine\\apps\\editor\\src\\editor.cpp",
-              "ToolTip": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\apps\\editor\\src\\editor.cpp",
-              "RelativeToolTip": "engine\\apps\\editor\\src\\editor.cpp",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACUAAAAAAAAAAAAAAA==",
+              "Title": "engine.cpp",
+              "DocumentMoniker": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\src\\core\\engine.cpp",
+              "RelativeDocumentMoniker": "engine\\src\\core\\engine.cpp",
+              "ToolTip": "C:\\Users\\mansi\\source\\repos\\OpenGl\\OpenGl\\engine\\src\\core\\engine.cpp",
+              "RelativeToolTip": "engine\\src\\core\\engine.cpp",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAGsAAABAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2026-09-21T09:46:43.914Z",
+              "WhenOpened": "2026-09-21T19:32:45.365Z",
               "EditorCaption": ""
             }
           ]

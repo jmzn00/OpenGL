@@ -1,6 +1,8 @@
 #include "editor.h"
-#include "console/console.h"
+#include "panels/console/console.h"
 #include <eng/command/commands/application_quit_command.h>
+#include <eng/command/commands/graphics_set_clear_color_command.h>
+#include <eng/command/commands/graphics_set_wireframe_command.h>
 
 #include <iostream>
 
@@ -23,6 +25,12 @@ namespace eng
 
 		m_commands.Register(
 			std::make_unique<ApplicationQuitCommand>(*this)
+		);
+		m_commands.Register(
+			std::make_unique<GraphicsSetClearColorCommand>(ctx.GetGraphicsAPI())
+		);
+		m_commands.Register(
+			std::make_unique<GraphicsSetWireframeCommand>(ctx.GetGraphicsAPI())
 		);
 
 		m_components.push_back(std::make_unique<Console>(m_commands, *m_commandContext));

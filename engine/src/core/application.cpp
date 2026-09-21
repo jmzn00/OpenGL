@@ -1,5 +1,4 @@
 #include <eng/core/application.h>
-#include <eng/command/commands/application_quit_command.h>
 
 namespace eng
 {
