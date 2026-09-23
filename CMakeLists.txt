@@ -15,6 +15,7 @@ add_library(glad
 
 target_include_directories(glad PUBLIC
     dependencies/glad/include
+    dependencies/glm/
 )
 
 add_library(imgui
@@ -54,6 +55,10 @@ add_executable(OpenGL
     engine/src/graphics/commands/graphics_set_clear_color_command.cpp
     engine/src/graphics/commands/graphics_set_wireframe_command.cpp
     engine/src/graphics/shader_program.cpp
+    engine/src/util/stb_image_implementation.cpp
+    engine/src/input/input.cpp
+    engine/src/window/window.cpp
+    
 )
 target_compile_definitions(OpenGL PRIVATE
     GLFW_INCLUDE_NONE

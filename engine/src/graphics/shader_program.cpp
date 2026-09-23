@@ -53,6 +53,7 @@ namespace eng
 			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
 			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<
 				infoLog << std::endl;
+			throw;
 		};
 
 		fragment = glCreateShader(GL_FRAGMENT_SHADER);
@@ -64,6 +65,7 @@ namespace eng
 			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
 			std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" <<
 				infoLog << std::endl;
+			throw;
 		};
 
 		m_id = glCreateProgram();
@@ -77,9 +79,55 @@ namespace eng
 			glGetProgramInfoLog(m_id, 512, NULL, infoLog);
 			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" <<
 				infoLog << std::endl;
+			throw;
 		}
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
+
+		GLint uniformCount{ 0 };
+		glGetProgramiv(m_id, GL_ACTIVE_UNIFORMS, &uniformCount);
+
+		for (GLint i = 0; i < uniformCount; i++)
+		{
+			char name[256];
+			GLsizei length;
+			GLint size;
+			GLenum type;
+
+			glGetActiveUniform(
+				m_id,
+				i,
+				sizeof(name),
+				&length,
+				&size,
+				&type,
+				name
+			);
+			GLint location = glGetUniformLocation(m_id, name);
+			m_uniforms[name] = location;			
+		}
+	}
+	void ShaderProgram::SetFloat(const char* name, float x) const
+	{
+		auto it = m_uniforms.find(name);
+
+		if (it == m_uniforms.end())
+		{
+			std::cout << "Uniform not found: " << name << '\n';
+			return;			
+		}
+		glUniform1f(it->second, x);
+	}
+	void ShaderProgram::SetVec3(const std::string& name, glm::vec3 value) const
+	{
+		auto it = m_uniforms.find(name);
+
+		if (it == m_uniforms.end())
+		{
+			std::cout << "Uniform not found: " << name << '\n';
+			return;
+		}
+		glUniform3f(it->second, value.x, value.y, value.z);
 	}
 	ShaderProgram::~ShaderProgram()
 	{
@@ -92,12 +140,13 @@ namespace eng
 	{
 		return m_id;
 	}
-	GLint ShaderProgram::GetUniform4f(const std::string& name) const
+	GLint ShaderProgram::GetUniform(const std::string& name) const
 	{
-		return glGetUniformLocation(m_id, name.c_str());
-	}
-	void ShaderProgram::SetUniform4f(GLint location, float x, float y, float z, float w) const
-	{
-		glUniform4f(location, x, y, z, w);
+		auto it = m_uniforms.find(name);
+
+		if (it == m_uniforms.end())
+			return -1;
+
+		return it->second;
 	}
 }

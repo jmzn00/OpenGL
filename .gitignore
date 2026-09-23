@@ -1,0 +1,44 @@
+# Visual Studio
+.vs/
+*.ipch
+*.idb
+*.pdb
+*.ilk
+
+# Build directories
+out/
+build/
+*.obj
+*.o
+*.exe
+*.dll
+*.lib
+x64-Debug/
+x64-Release/
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+build.ninja
+.ninja_deps
+.ninja_log
+
+# Compiled objects
+*.obj
+*.o
+*.pch
+*.ipch
+
+# Executables
+*.exe
+*.dll
+*.lib
+*.pdb
+*.ilk
+
+# ImGui config
+imgui.ini
+
+*.log
+*.tlog/

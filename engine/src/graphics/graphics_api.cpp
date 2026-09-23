@@ -6,7 +6,8 @@ namespace eng
 {
 	bool GraphicsAPI::Init()
 	{
-		
+		glEnable(GL_DEPTH_TEST);
+
 		return true;
 	}
 	void GraphicsAPI::SetClearColor(float r, float g, float b, float a)
@@ -15,7 +16,7 @@ namespace eng
 	}
 	void GraphicsAPI::ClearBuffers()
 	{
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 	
 	void GraphicsAPI::BindShaderProgram(ShaderProgram* program)
