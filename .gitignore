@@ -1,6 +1,5 @@
 # Visual Studio
 .vs/
-*.ipch
 *.idb
 *.pdb
 *.ilk
@@ -8,11 +7,6 @@
 # Build directories
 out/
 build/
-*.obj
-*.o
-*.exe
-*.dll
-*.lib
 x64-Debug/
 x64-Release/
 
