@@ -8,6 +8,7 @@
 #include <gtc/type_ptr.hpp>
 #include <vector>
 #include <eng/camera/camera.h>
+#include <eng/graphics/light/light.h>
 
 namespace eng
 {	void Engine::FrameBufferSizeCallback(GLFWwindow* window, int w, int h)
@@ -256,13 +257,13 @@ namespace eng
                                   ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");
 
         m_graphicsApi.BindShaderProgram(&lightShader);
-
         unsigned int lightModelLoc = lightShader.GetUniform("model");
         unsigned int lightViewLoc = lightShader.GetUniform("view");
         unsigned int lightProjectionLoc = lightShader.GetUniform("projection");
 
         glm::mat4 lightModel{ 1.0 };
         glm::vec3 lightPos{ 2.0f, 0.0f, 0.0f };
+
         lightModel = glm::translate(lightModel, lightPos);
         lightModel = glm::scale(lightModel, glm::vec3(0.5f, 0.5f, 0.5));
 
@@ -271,9 +272,17 @@ namespace eng
         glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
 
         m_graphicsApi.BindShaderProgram(&shaderProgram);
+        //shaderProgram.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
 
-        shaderProgram.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
-        shaderProgram.SetVec3("lightColor", glm::vec3(1.0f, 1.0f, 1.0f));
+        Light light{lightPos, glm::vec3(0.2f, 0.2f, 0.2f)
+                            , glm::vec3(0.5f, 0.5f, 0.5f)
+                            , glm::vec3(1.0f, 1.0f, 1.0f)};
+
+        shaderProgram.SetLight(light);
+        shaderProgram.SetMaterial({ glm::vec3(1.0f, 0.5, 0.31f),
+                                    glm::vec3(1.0f, 0.5f, 0.31f),
+                                    glm::vec3(0.5f, 0.5f, 0.5f),
+                                    32.0f });
 
         glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture1"), 0);
         glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture2"), 1);        
@@ -364,9 +373,20 @@ namespace eng
 
             m_graphicsApi.ClearBuffers();
             m_graphicsApi.BindShaderProgram(&shaderProgram);
+            glm::vec3 lightColor;
+            lightColor.x = sin(m_time.Elapsed() * 2.0f);
+            lightColor.y = sin(m_time.Elapsed() * 0.7f);
+            lightColor.z = sin(m_time.Elapsed() * 1.3f);
+
+            glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+            glm::vec3 ambientColor = diffuseColor * glm::vec3(0.5f);
+
+            light.position = lightPos;
+            light.diffuse = diffuseColor;
+            light.ambient = ambientColor;
 
             shaderProgram.SetVec3("viewPos", camera.GetPosition());
-            shaderProgram.SetVec3("lightPos", lightPos);
+            shaderProgram.SetLight(light);
 
             glActiveTexture(GL_TEXTURE0);
             glBindTexture(GL_TEXTURE_2D, texture);

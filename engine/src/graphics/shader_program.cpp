@@ -129,6 +129,20 @@ namespace eng
 		}
 		glUniform3f(it->second, value.x, value.y, value.z);
 	}
+	void ShaderProgram::SetMaterial(Material material) const
+	{
+		SetVec3("material.ambient", material.ambient);
+		SetVec3("material.diffuse", material.diffuse);
+		SetVec3("material.specular", material.specular);
+		SetFloat("material.shininess", 32.0f);
+	}
+	void ShaderProgram::SetLight(const Light& light) const
+	{
+		SetVec3("light.position", light.position);
+		SetVec3("light.ambient", light.ambient);
+		SetVec3("light.diffuse", light.diffuse);
+		SetVec3("light.specular", light.specular);
+	}
 	ShaderProgram::~ShaderProgram()
 	{
 		if (m_id != 0)

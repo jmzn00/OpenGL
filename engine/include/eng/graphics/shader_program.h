@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include <vec3.hpp>
+#include <eng/graphics/material/material.h>
+#include <eng/graphics//light/light.h>
 
 #include <unordered_map>
 
@@ -23,6 +25,8 @@ namespace eng
 
 		void SetFloat(const char* name, float x) const;
 		void SetVec3(const std::string& name, glm::vec3 value) const;
+		void SetMaterial(Material material) const;		
+		void SetLight(const Light& light) const;
 
 	private:
 		GLuint m_id{0};
