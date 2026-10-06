@@ -5,6 +5,8 @@
 #include <fstream>
 #include <sstream>
 #include <vec3.hpp>
+#include <glm.hpp>
+#include <gtc/type_ptr.hpp>
 #include <eng/graphics/material/material.h>
 #include <eng/graphics//light/light.h>
 
@@ -23,6 +25,7 @@ namespace eng
 		GLuint GetId() const;
 		GLint GetUniform(const std::string& name) const;
 
+		void SetMat4(const std::string& name, glm::mat4 value) const;
 		void SetFloat(const char* name, float x) const;
 		void SetVec3(const std::string& name, glm::vec3 value) const;
 		void SetMaterial(Material material) const;		

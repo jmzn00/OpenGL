@@ -1,17 +1,16 @@
 #ifndef RENDER_QUEUE_H
 #define RENDER_QUEUE_H
+
+#include <eng/camera/camera.h>
 #include<vector>
+#include <eng/renderer/mesh.h>
+#include <eng/graphics/graphics_api.h>
 
 namespace eng
 {
-	class Mesh;
-	class Material;
-	class GraphicsAPI;
-
 	struct RenderCommand
 	{
 		Mesh* mesh = nullptr;
-		Material* material = nullptr;
 	};
 	struct CameraData
 	{
@@ -22,9 +21,7 @@ namespace eng
 	{
 	public:
 		void Submit(const RenderCommand& cmd);
-		void Draw(GraphicsAPI& gapi, const CameraData& cameraData);
-	private:
-		std::vector<RenderCommand> m_commands;
+		void Draw(GraphicsAPI& gapi, const Camera& camera);	
 	};
 }
 #endif // !RENDER_QUEUE_H

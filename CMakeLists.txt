@@ -44,7 +44,7 @@ add_executable(OpenGL
     engine/apps/editor/src/main.cpp
     engine/src/core/engine.cpp
     engine/src/core/application.cpp
-    engine/src/render/render_queue.cpp
+    
     engine/apps/editor/src/editor.cpp
     engine/apps/editor/ui/editor_ui.cpp
     engine/apps/editor/ui/panels/console/console.cpp
@@ -58,6 +58,13 @@ add_executable(OpenGL
     engine/src/util/stb_image_implementation.cpp
     engine/src/input/input.cpp
     engine/src/window/window.cpp
+    engine/src/core/layer_stack.cpp
+    engine/src/core/layer.cpp
+    engine/apps/editor/src/editor_layer.cpp
+    engine/src/imgui/imgui_layer.cpp
+    engine/src/scene/scene.cpp
+    engine/src/entity/commands/entity_create_command.cpp
+    engine/src/entity/commands/entity_move_command.cpp
     
 )
 target_compile_definitions(OpenGL PRIVATE

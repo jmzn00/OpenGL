@@ -7,8 +7,13 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 #include <vector>
+
 #include <eng/camera/camera.h>
 #include <eng/graphics/light/light.h>
+
+#include <eng/entity/entity.h>
+#include <eng/renderer/vertex_layout.h>
+#include <eng/renderer/mesh.h>
 
 namespace eng
 {	void Engine::FrameBufferSizeCallback(GLFWwindow* window, int w, int h)
@@ -56,7 +61,7 @@ namespace eng
         GLFWwindow* window = glfwCreateWindow(
             width,
             height,
-            "cmde",
+            "ENG",
             nullptr,
             nullptr
         );
@@ -86,13 +91,14 @@ namespace eng
         {
             return false;
         }        
-        EngineContext ctx{ window , m_logger, m_graphicsApi, m_input};
+        m_renderer = new Renderer{m_graphicsApi};
+        m_context = new EngineContext { *m_window , m_logger, m_graphicsApi, m_input, *m_renderer};
 
-        return m_application->Init(ctx);
+        return m_application->Init(*m_context);
 	}
 	void Engine::Run()
 	{        
-        float vertices[] =
+        std::vector<float> vertices =
         {
             // positions              // normals           // tex coords
 
@@ -132,7 +138,7 @@ namespace eng
                0.5f, -0.5f,  0.5f,      0,-1,0,             1,1,
               -0.5f, -0.5f,  0.5f,      0,-1,0,             0,1,
         };
-        unsigned int indices[] =
+        std::vector<unsigned int> indices =
         {
             // Front
             0, 1, 2,
@@ -157,19 +163,6 @@ namespace eng
             // Bottom
             20, 21, 22,
             22, 23, 20
-        };
-        std::vector<glm::vec3> cubes
-        {
-            glm::vec3(0.0f, 0.0f, 0.0f),
-            glm::vec3(2.0f, 5.0f, -15.0f),
-            glm::vec3(-1.5f, -2.2f, -2.5f),
-            glm::vec3(-3.8f, -2.0f, -12.3f),
-            glm::vec3(2.4f, -0.4f, -3.5f),
-            glm::vec3(-1.7f, -3.0f, -7.5f),
-            glm::vec3(1.3f, -2.0f, -2.5f),
-            glm::vec3(1.5f, 2.0f, -2.5f),
-            glm::vec3(1.5f, 0.2f, -1.5f),
-            glm::vec3(-1.3f, 1.0f, -1.5f),
         };
         unsigned int texture;
         glGenTextures(1, &texture);
@@ -215,93 +208,110 @@ namespace eng
         }
         stbi_image_free(data);
 
-        Camera camera{};
-        camera.SetViewportSize(m_window->GetWidth(), m_window->GetHeight());
+        //Camera camera{};
+        //camera.SetViewportSize(m_window->GetWidth(), m_window->GetHeight());
                                 
-        unsigned int VAO, VBO;
-        glGenVertexArrays(1, &VAO);
-        glGenBuffers(1, &VBO);
+        //unsigned int VAO, VBO;
+        //glGenVertexArrays(1, &VAO);
+        //glGenBuffers(1, &VBO);
+        //
+        //glBindVertexArray(VAO);
+        //glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
+        //glEnableVertexAttribArray(0);
+        //
+        //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float)
+        //    , (void*)(3 * sizeof(float)));
+        //glEnableVertexAttribArray(1);
+        //
+        //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float)
+        //    , (void*)(6 * sizeof(float)));
+        //glEnableVertexAttribArray(2);
+        //
+        //unsigned int EBO;
+        //glGenBuffers(1, &EBO);
+        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+        //VertexLayout cubeVertexLayout{};
+		//cubeVertexLayout.stride = 8 * sizeof(float);
+        //
+        //cubeVertexLayout.elements.push_back({
+        //    0,
+        //    3, 
+        //    GL_FLOAT,
+        //    0});
+        //cubeVertexLayout.elements.push_back({
+        //    1,
+        //    3,
+		//	GL_FLOAT,
+		//	3 * sizeof(float)});
+        //cubeVertexLayout.elements.push_back({
+        //    2,
+		//	2,
+		//	GL_FLOAT,
+		//	6 * sizeof(float)});
+        //ShaderProgram shaderProgram(ENGINE_ASSET_DIR "/shaders/vert.vert",
+        //    ENGINE_ASSET_DIR "/shaders/frag.frag");
+        //
+        //Mesh cubeMesh{cubeVertexLayout, vertices, indices};        
+        //MeshComponent cubeMeshComponent{ cubeMesh , shaderProgram};
+        //Entity cubeEntitiy{ cubeMeshComponent };
+        //
+        //ShaderProgram lightShader(ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.vert",
+        //    ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");
+        //
+		//Mesh lightMesh{ cubeVertexLayout, vertices, indices };
+        //MeshComponent lightMeshComponent{ lightMesh, lightShader };
+		//Entity lightEntity{ lightMeshComponent };        
+        //
+        //
+        //m_graphicsApi.BindShaderProgram(&lightShader);
+        //unsigned int lightModelLoc = lightShader.GetUniform("model");
+        //unsigned int lightViewLoc = lightShader.GetUniform("view");
+        //unsigned int lightProjectionLoc = lightShader.GetUniform("projection");
+        //
+        //glm::mat4 lightModel{ 1.0 };
+        //glm::vec3 lightPos{ 2.0f, 0.0f, 0.0f };
+        //
+        //lightModel = glm::translate(lightModel, lightPos);
+        //lightModel = glm::scale(lightModel, glm::vec3(0.5f, 0.5f, 0.5));
+        //
+        //glUniformMatrix4fv(lightModelLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
+        //glUniformMatrix4fv(lightViewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
+        //glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
+        //
+        //m_graphicsApi.BindShaderProgram(&shaderProgram);
+        //
+        //Light light{glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.2f, 0.2f, 0.2f)
+        //                    , glm::vec3(0.5f, 0.5f, 0.5f)
+        //                    , glm::vec3(1.0f, 1.0f, 1.0f)};
+        //
+        //shaderProgram.SetLight(light);
+        //shaderProgram.SetMaterial({ glm::vec3(1.0f, 0.5, 0.31f),
+          //                          glm::vec3(1.0f, 0.5f, 0.31f),
+          //                          glm::vec3(0.5f, 0.5f, 0.5f),
+          //                          32.0f });
+
+        //glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture1"), 0);
+        //glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture2"), 1);        
         
-        glBindVertexArray(VAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
+        //unsigned int modelLoc = shaderProgram.GetUniform("model");
+        //unsigned int viewLoc = shaderProgram.GetUniform("view");
+        //unsigned int projectionLoc = shaderProgram.GetUniform("projection");               
 
-        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float)
-            , (void*)(3 * sizeof(float)));
-        glEnableVertexAttribArray(1);
+        //glm::vec3 cameraPos = camera.GetPosition();
+        //glm::vec3 cameraFront = camera.GetForward();
+        //glm::vec3 cameraUp = camera.GetUp();
 
-        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float)
-            , (void*)(6 * sizeof(float)));
-        glEnableVertexAttribArray(2);
+        //glm::mat4 model = glm::mat4(1.0f);
+        //glm::mat4 projection = camera.GetProjection();
+        //glm::mat4 view = camera.GetView();
 
-        unsigned int EBO;
-        glGenBuffers(1, &EBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-        ShaderProgram shaderProgram(ENGINE_ASSET_DIR "/shaders/vert.vert", 
-                                    ENGINE_ASSET_DIR "/shaders/frag.frag"); 
-
-        unsigned int lightVAO;
-        glGenVertexArrays(1, &lightVAO);
-        glBindVertexArray(lightVAO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-        glBindVertexArray(0);
-
-        ShaderProgram lightShader(ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.vert",
-                                  ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");
-
-        m_graphicsApi.BindShaderProgram(&lightShader);
-        unsigned int lightModelLoc = lightShader.GetUniform("model");
-        unsigned int lightViewLoc = lightShader.GetUniform("view");
-        unsigned int lightProjectionLoc = lightShader.GetUniform("projection");
-
-        glm::mat4 lightModel{ 1.0 };
-        glm::vec3 lightPos{ 2.0f, 0.0f, 0.0f };
-
-        lightModel = glm::translate(lightModel, lightPos);
-        lightModel = glm::scale(lightModel, glm::vec3(0.5f, 0.5f, 0.5));
-
-        glUniformMatrix4fv(lightModelLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
-        glUniformMatrix4fv(lightViewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
-        glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
-
-        m_graphicsApi.BindShaderProgram(&shaderProgram);
-        //shaderProgram.SetVec3("objectColor", glm::vec3(1.0f, 0.5f, 0.31f));
-
-        Light light{lightPos, glm::vec3(0.2f, 0.2f, 0.2f)
-                            , glm::vec3(0.5f, 0.5f, 0.5f)
-                            , glm::vec3(1.0f, 1.0f, 1.0f)};
-
-        shaderProgram.SetLight(light);
-        shaderProgram.SetMaterial({ glm::vec3(1.0f, 0.5, 0.31f),
-                                    glm::vec3(1.0f, 0.5f, 0.31f),
-                                    glm::vec3(0.5f, 0.5f, 0.5f),
-                                    32.0f });
-
-        glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture1"), 0);
-        glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture2"), 1);        
-        
-        unsigned int modelLoc = shaderProgram.GetUniform("model");
-        unsigned int viewLoc = shaderProgram.GetUniform("view");
-        unsigned int projectionLoc = shaderProgram.GetUniform("projection");               
-
-        glm::vec3 cameraPos = camera.GetPosition();
-        glm::vec3 cameraFront = camera.GetForward();
-        glm::vec3 cameraUp = camera.GetUp();
-
-        glm::mat4 model = glm::mat4(1.0f);
-        glm::mat4 projection = camera.GetProjection();
-        glm::mat4 view = camera.GetView();
-
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
-        glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
+        //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
+        //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
+        //glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
 
         float mixAmount = 0.5f;
 
@@ -309,105 +319,73 @@ namespace eng
         float yaw = -90.0f;
         float pitch = 0.0f;
         
-        m_graphicsApi.SetClearColor(0, 0, 0, 1);
+        m_graphicsApi.SetClearColor(0.5, 0.5, 0.5, 1);        
 
         while (!m_application->NeedsToBeClosed())
         {                           
-            glm::vec2 delta = m_input.MouseDelta();
-            yaw += delta.x * sensitivity;
-            pitch -= delta.y * sensitivity;
-            pitch = math::clamp(pitch, -89.0f, 89.0f);
-                       
-            float cameraSpeed = 1 * m_time.Delta();;
-            glm::vec3 cameraPos = camera.GetPosition();
+            //glm::vec2 delta = m_input.MouseDelta();
+            //yaw += delta.x * sensitivity;
+            //pitch -= delta.y * sensitivity;
+            //pitch = math::clamp(pitch, -89.0f, 89.0f);
+            //           
+            //float cameraSpeed = 1 * m_time.Delta();;
+            //glm::vec3 cameraPos = camera.GetPosition();
+            //
+            //if (m_input.IsKeyPressed(GLFW_KEY_W))
+            //    cameraPos += cameraSpeed * camera.GetFlatForward();
+            //if (m_input.IsKeyPressed(GLFW_KEY_S))
+            //    cameraPos -= cameraSpeed * camera.GetFlatForward();
+            //if (m_input.IsKeyPressed(GLFW_KEY_A))
+            //    cameraPos -= cameraSpeed * camera.GetRight();
+            //if (m_input.IsKeyPressed(GLFW_KEY_D))
+            //    cameraPos += cameraSpeed * camera.GetRight();
 
-            if (m_input.IsKeyPressed(GLFW_KEY_W))
-                cameraPos += cameraSpeed * camera.GetFlatForward();
-            if (m_input.IsKeyPressed(GLFW_KEY_S))
-                cameraPos -= cameraSpeed * camera.GetFlatForward();
-            if (m_input.IsKeyPressed(GLFW_KEY_A))
-                cameraPos -= cameraSpeed * camera.GetRight();
-            if (m_input.IsKeyPressed(GLFW_KEY_D))
-                cameraPos += cameraSpeed * camera.GetRight();
-
-            camera.Look(pitch, yaw);
-            camera.MoveTo(cameraPos);
+            //camera.Look(pitch, yaw);
+            //camera.MoveTo(cameraPos);
             
 
-            view = camera.GetView();
-            projection = camera.GetProjection();
+            //view = camera.GetView();
+            //projection = camera.GetProjection();          
 
-            //for (int i = 0; i < cubes.size(); i++)
-            //{
-            //    glm::mat4 model = glm::mat4(1.0f);
-            //    model = glm::translate(model, cubes[i]);
-            //
-            //    float angle = 20.0f * i;
-            //    if (i % 3 == 0)
-            //    {
-            //        angle = m_time.Elapsed() * 25.0f;
-            //    }
-            //    model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3, 0.5f));
-            //    
-            //    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-            //    glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-            //}   
-
-            //if (m_input.IsKeyPressed(GLFW_KEY_UP))
-            //{
-            //    mixAmount += m_time.Delta() * 2.0f;
-            //}
-            //else if (m_input.IsKeyPressed(GLFW_KEY_DOWN))
-            //{
-            //    mixAmount -= m_time.Delta() * 2.0f;
-            //}
-            //mixAmount = math::clamp(mixAmount, 0.0f, 1.0f);
-            //shaderProgram.SetFloat("mixAmount", mixAmount);            
-
-            float radius = 5.0f;
-            lightPos.x = cos(m_time.Elapsed()) * radius;
-            lightPos.z = sin(m_time.Elapsed()) * radius;
-            lightModel = glm::mat4(1.0);
-            lightModel = glm::translate(lightModel, lightPos);
-            lightModel = glm::scale(lightModel, glm::vec3(0.5, 0.5, 0.5));
-
+            //float radius = 5.0f;
+            //lightPos.x = cos(m_time.Elapsed()) * radius;
+            //lightPos.z = sin(m_time.Elapsed()) * radius;
+            //lightModel = glm::mat4(1.0);
+            //lightModel = glm::translate(lightModel, lightPos);
+            //lightModel = glm::scale(lightModel, glm::vec3(0.5, 0.5, 0.5));
+            
             m_graphicsApi.ClearBuffers();
-            m_graphicsApi.BindShaderProgram(&shaderProgram);
-            glm::vec3 lightColor;
-            lightColor.x = sin(m_time.Elapsed() * 2.0f);
-            lightColor.y = sin(m_time.Elapsed() * 0.7f);
-            lightColor.z = sin(m_time.Elapsed() * 1.3f);
+            //m_graphicsApi.BindShaderProgram(&shaderProgram);
 
-            glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-            glm::vec3 ambientColor = diffuseColor * glm::vec3(0.5f);
+            //cubeEntitiy.Mesh().Draw();
 
-            light.position = lightPos;
-            light.diffuse = diffuseColor;
-            light.ambient = ambientColor;
+            //shaderProgram.SetVec3("viewPos", camera.GetPosition());
+            //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(cubeEntitiy.Transform().GetTransform()));
+            //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
+            //glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-            shaderProgram.SetVec3("viewPos", camera.GetPosition());
-            shaderProgram.SetLight(light);
+            //glm::vec3 lightColor{0.5f};
+            //lightColor.x = sin(m_time.Elapsed() * 2.0f);
+            //lightColor.y = sin(m_time.Elapsed() * 0.7f);
+            //lightColor.z = sin(m_time.Elapsed() * 1.3f);
+            
+            //glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
+            //glm::vec3 ambientColor = diffuseColor * glm::vec3(0.5f);
+            
+            //light.position = lightPos;
+            //light.diffuse = diffuseColor;
+            //light.ambient = ambientColor;
+                        
 
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, texture);
-            glActiveTexture(GL_TEXTURE1);
-            glBindTexture(GL_TEXTURE_2D, texture2);
+            //shaderProgram.SetLight(light);
 
-            glBindVertexArray(VAO);
-            glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-            glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-            glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
+            //m_graphicsApi.BindShaderProgram(&lightShader);  
+            //
+            //glUniformMatrix4fv(lightModelLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
+            //glUniformMatrix4fv(lightViewLoc, 1, GL_FALSE, glm::value_ptr(view));
+            //glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
 
-            m_graphicsApi.BindShaderProgram(&lightShader);  
-
-            glBindVertexArray(lightVAO);
-            glUniformMatrix4fv(lightModelLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
-            glUniformMatrix4fv(lightViewLoc, 1, GL_FALSE, glm::value_ptr(view));
-            glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-            glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-            glBindVertexArray(0);
+            //lightEntity.Mesh().Draw();
 
             glfwPollEvents();
             m_input.Update(m_window->GetNativeWindow());

@@ -16,8 +16,9 @@ namespace eng
 		Editor() = default;
 
 		bool Editor::Init(EngineContext& ctx);
-		void Editor::Update(float dt);
-		void Editor::Destroy();
+		void Editor::Destroy();		
+
+		static Editor& Get() { return *static_cast<Editor*>(m_instance); }
 	private:
 		EditorUI m_ui;
 		std::vector<std::unique_ptr<IEditorComponent>> m_components;		

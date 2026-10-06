@@ -5,6 +5,7 @@
 
 #include <eng/command/command_context.h>
 #include <eng/command/command_registry.h>
+#include "editor_context.h"
 
 namespace eng
 {

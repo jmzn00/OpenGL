@@ -2,6 +2,10 @@
 #define COMMAND_REGISTRY_H
 #include <eng/command/command.h>
 
+#include <eng/core/engine_context.h>
+#include <eng/scene/scene.h>
+
+
 #include <memory>
 #include <string>
 #include <string_view>
@@ -12,6 +16,7 @@ namespace eng
 	class CommandRegistry
 	{
 	public:
+		void RegisterAll(EngineContext& ctx, Scene& scene);
 		bool Register(std::unique_ptr<ICommand> command);
 
 		CommandResult Execute(

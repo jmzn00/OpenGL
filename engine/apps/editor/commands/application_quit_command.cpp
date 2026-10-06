@@ -26,7 +26,7 @@ namespace eng
     {
         if (!arguments.empty())
         {
-            return { false, "Usage: application.quit" };
+            return { false, "Usage: quit" };
         }
 
         m_application.SetNeedsToBeClosed(true);

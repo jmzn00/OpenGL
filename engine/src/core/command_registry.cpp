@@ -1,10 +1,37 @@
 #include <eng/command/command_registry.h>
+#include <eng/core/application.h>
 
 #include <cctype>
 #include <vector>
+#include <memory>
+
+// command headers
+#include <eng/command/commands/application_quit_command.h>
+#include <eng/command/commands/graphics_set_clear_color_command.h>
+#include <eng/command/commands/graphics_set_wireframe_command.h>
+#include <eng/command/commands/entity_create_command.h>
+#include <eng/command/commands/entity_move_command.h>
 
 namespace eng
 {
+	void CommandRegistry::RegisterAll(EngineContext& ctx, Scene& scene)
+	{
+		Register(
+			std::make_unique<ApplicationQuitCommand>(Application::Get())
+		);
+		Register(
+			std::make_unique<GraphicsSetClearColorCommand>(ctx.GetGraphicsAPI())
+		);
+		Register(
+			std::make_unique<GraphicsSetWireframeCommand>(ctx.GetGraphicsAPI())
+		);
+		Register(
+			std::make_unique<EntityCreateCommand>(scene)
+		);
+		Register(
+			std::make_unique<EntityMoveCommand>(scene)
+		);
+	}
 	bool CommandRegistry::Register(std::unique_ptr<ICommand> command)
 	{
 		if (!command)
@@ -19,6 +46,7 @@ namespace eng
 		std::string_view input,
 		CommandContext& context)
 	{
+
 		std::vector<std::string_view> tokens;
 		std::size_t position = 0;
 

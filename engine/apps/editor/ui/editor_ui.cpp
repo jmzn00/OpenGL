@@ -9,7 +9,7 @@ namespace eng
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		ImGui::StyleColorsDark();
 
-		if (!ImGui_ImplGlfw_InitForOpenGL(ctx.GetWindow(), true))
+		if (!ImGui_ImplGlfw_InitForOpenGL(ctx.GetNativeWindow(), true))
 		{
 			std::cerr << "ImGui GLFW initialization failed\n";
 			return false;

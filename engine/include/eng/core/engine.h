@@ -10,6 +10,7 @@
 #include <eng/input/input.h>
 #include <eng/time/time.h>
 #include <eng/window/window.h>
+#include <eng/renderer/renderer.h>
 
 namespace eng
 {
@@ -35,12 +36,14 @@ namespace eng
 		void SetApplication(Application* app);
 		Application* GetApplication();
 	private:
+		Renderer* m_renderer = nullptr;
 		Window* m_window = nullptr;
 		Time m_time{};
 		Input m_input{};
 		GraphicsAPI m_graphicsApi;
 		Logger m_logger;
 		std::unique_ptr<Application> m_application;
+		EngineContext* m_context;
 	};
 }
 #endif // !ENGINE_H
