@@ -6,6 +6,8 @@
 #include <unordered_map>
 #include <typeindex>
 #include <string>
+#include <memory>
+
 namespace eng
 {
 	class Entity
@@ -20,9 +22,12 @@ namespace eng
 		template<typename T, typename ... Args>
 		T& AddComponent(Args&&... args)
 		{
+			std::cout << "[Entity] AddComponent type=" << typeid(T).name() << " entity=" << m_name << "\n";
+
 			auto component = std::make_shared<T>(std::forward<Args>(args)...);
 			m_components[typeid(T)] = component;
 
+			std::cout << "[Entity] Component added type=" << typeid(T).name() << " ptr=" << component.get();
 			return *component;
 		}
 		template<typename T>
@@ -46,4 +51,4 @@ namespace eng
 		std::string m_name{ "Unnamed" };
 	};
 }
-#endif // !ENTITY_H
+#endif // ENTITY_H

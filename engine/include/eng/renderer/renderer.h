@@ -47,6 +47,9 @@ namespace eng
 
 			for (auto& cmd : m_commands)
 			{
+				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");
+				ENG_ASSERT(cmd.shader != nullptr, "SHADER NULL");
+
 				m_graphicsAPI.BindShaderProgram(cmd.shader);
 
 				cmd.shader->SetMat4(

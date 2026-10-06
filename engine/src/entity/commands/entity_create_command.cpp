@@ -1,4 +1,5 @@
 #include <eng/command/commands/entity_create_command.h>
+#include <eng/debug/assert.h>
 
 namespace eng
 {
@@ -18,13 +19,14 @@ namespace eng
 	CommandResult EntityCreateCommand::Execute(
 		const std::vector<std::string_view>& arguments,
 		CommandContext& context)
-	{
+	{		
 		if (arguments.empty())
 		{
 			return { false, "Usage: ent.create cube" };
 		}
 		if (arguments[0] == "cube")
 		{
+			std::cout << "Create Cube\n";
 			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "Cube Ent";
 
 			Entity& ent = m_scene.CreateEntity(name);
@@ -32,7 +34,7 @@ namespace eng
 				CubeMesh(),
 				ShaderLibrary::Get().Get("Default")
 			);
-
+			std::cout << "Done " << ent.GetName() << '\n';
 			return { true, "Created ent: " + ent.GetName()};
 		}
 		return { false, "Usage: ent.create cube" };

@@ -46,10 +46,9 @@ add_executable(OpenGL
     engine/src/core/application.cpp
     
     engine/apps/editor/src/editor.cpp
-    engine/apps/editor/ui/editor_ui.cpp
+    
     engine/apps/editor/ui/panels/console/console.cpp
-    engine/src/core/logger.cpp    
-    engine/src/core/command_registry.cpp
+    engine/src/core/logger.cpp        engine/src/core/command_registry.cpp
     engine/apps/editor/commands/application_quit_command.cpp
     engine/src/graphics/graphics_api.cpp
     engine/src/graphics/commands/graphics_set_clear_color_command.cpp

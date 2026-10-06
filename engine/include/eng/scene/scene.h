@@ -8,6 +8,8 @@
 
 #include <vector>
 #include <string>
+#include <memory>
+
 namespace eng
 {
 	class Scene
@@ -25,7 +27,7 @@ namespace eng
 
 		Entity* FindEntityByName(const std::string_view name);
 	private:
-		std::vector<Entity> m_entities{};
+		std::vector<std::unique_ptr<Entity>> m_entities{};
 		RenderQueue m_renderQueue{ };
 		EngineContext& m_engineContext;
 		Camera m_mainCamera{};
