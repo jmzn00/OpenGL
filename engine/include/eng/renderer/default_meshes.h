@@ -102,15 +102,6 @@ namespace eng
             	6 * sizeof(float)});
             return std::make_shared<Mesh>(cubeVertexLayout, vertices, indices);
 		}
-        inline Entity CubeEnt(std::shared_ptr<ShaderProgram> shader)
-        {            
-            MeshComponent mc{ CubeMesh(), shader};
-
-            Entity ent;
-            ent.AddComponent<MeshComponent>(mc);
-            
-            return {ent};
-        }
 	}
 }
 #endif // !DEFAULT_MESHES_H

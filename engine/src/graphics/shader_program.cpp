@@ -124,7 +124,7 @@ namespace eng
 
 		if (it == m_uniforms.end())
 		{
-			std::cout << "Unform not found: " << name << '\n';
+			std::cout << "SHADER_PROGRAM::SETMAT4 UNIFORM: " << name << " NOT FOUND\n";
 			return;
 		}
 		glUniformMatrix4fv(it->second, 1, GL_FALSE, glm::value_ptr(value));
@@ -135,19 +135,23 @@ namespace eng
 
 		if (it == m_uniforms.end())
 		{
-			std::cout << "Uniform not found: " << name << '\n';
+			//std::cout << "Uniform not found: " << name << '\n';
 			return;
 		}
 		glUniform3f(it->second, value.x, value.y, value.z);
 	}
-	void ShaderProgram::SetMaterial(Material material) const
+	void ShaderProgram::SetFloat(const std::string& name, float value) const
 	{
-		SetVec3("material.ambient", material.ambient);
-		SetVec3("material.diffuse", material.diffuse);
-		SetVec3("material.specular", material.specular);
-		SetFloat("material.shininess", 32.0f);
+		auto it = m_uniforms.find(name);
+
+		if (it == m_uniforms.end())
+		{
+			//std::cout << "Uniform not found: " << name << '\n';
+			return;
+		}
+		glUniform1f(it->second, value);
 	}
-	void ShaderProgram::SetLight(const Light& light) const
+	void ShaderProgram::SetLight(const RenderLight& light) const
 	{
 		SetVec3("light.position", light.position);
 		SetVec3("light.ambient", light.ambient);

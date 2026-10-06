@@ -7,6 +7,8 @@
 #include <eng/camera/camera.h>
 #include <eng/graphics/shader_program.h>
 #include <eng/entity/components.h>
+#include <eng/graphics/material/material.h>
+#include <eng/entity/entity.h>
 
 #include <vector>
 
@@ -15,11 +17,11 @@ namespace eng
 	struct DrawCommand
 	{
 		Mesh* mesh;
-		ShaderProgram* shader;
+		Material* material;
 		TransformComponent* transform;
 	};
 	class Renderer
-	{
+	{		
 	public:
 		Renderer(GraphicsAPI& gapi)
 			: m_graphicsAPI { gapi }
@@ -35,10 +37,24 @@ namespace eng
 		void BeginScene(Camera& camera)
 		{
 			m_currentCamera = &camera;
+
+			m_commands.clear();
+			m_lights.clear();
 		}
 		void EndScene()
 		{
 			m_currentCamera = nullptr;
+		}
+		void SubmitLight(const Entity& lightEntity)
+		{
+			LightComponent& light = lightEntity.GetComponent<LightComponent>();
+			const TransformComponent& transform{ lightEntity.Transform() };
+			m_lights.push_back({ 
+				transform.Translation,
+				light.ambient,
+				light.diffuse,
+				light.specular
+				});
 		}
 		void Render()
 		{
@@ -47,35 +63,42 @@ namespace eng
 
 			for (auto& cmd : m_commands)
 			{
-				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");
-				ENG_ASSERT(cmd.shader != nullptr, "SHADER NULL");
+				const ShaderProgram& shader{ cmd.material->GetShaderProgram() };
 
-				m_graphicsAPI.BindShaderProgram(cmd.shader);
+				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");												
 
-				cmd.shader->SetMat4(
+				cmd.material->Bind(m_graphicsAPI);
+
+				shader.SetMat4(
 					"view",
 					m_currentCamera->GetView());
 
-				cmd.shader->SetMat4(
+				shader.SetMat4(
 					"projection",
 					m_currentCamera->GetProjection());
 
-				cmd.shader->SetVec3(
+				shader.SetVec3(
 					"viewPos",
 					m_currentCamera->GetPosition());
 
-				cmd.shader->SetMat4(
+				shader.SetMat4(
 					"model",
 					cmd.transform->GetTransform());
+
+				if (!m_lights.empty())
+				{
+					shader.SetLight(m_lights[0]);
+				}
 
 
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();
 			}
-			m_commands.clear();
 		}
 	private:
 		std::vector<DrawCommand> m_commands;
+		std::vector<RenderLight> m_lights;
+
 		Camera* m_currentCamera = nullptr;
 		GraphicsAPI& m_graphicsAPI;
 		inline static Renderer* m_instance = nullptr;

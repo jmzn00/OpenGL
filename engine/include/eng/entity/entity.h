@@ -14,24 +14,28 @@ namespace eng
 	{
 	public:	
 		Entity(const std::string& name = "Unnamed")
-			: m_name {name}
-		{		
+			: m_name {name}, m_id {s_nextID++}
+		{					
 		}
-		TransformComponent& Transform() { return m_transform; }
+		TransformComponent& Transform()
+		{
+			return m_transform;
+		}
+		const TransformComponent& Transform() const
+		{
+			return m_transform;
+		}
 
 		template<typename T, typename ... Args>
 		T& AddComponent(Args&&... args)
 		{
-			std::cout << "[Entity] AddComponent type=" << typeid(T).name() << " entity=" << m_name << "\n";
-
 			auto component = std::make_shared<T>(std::forward<Args>(args)...);
 			m_components[typeid(T)] = component;
 
-			std::cout << "[Entity] Component added type=" << typeid(T).name() << " ptr=" << component.get();
 			return *component;
 		}
 		template<typename T>
-		T& GetComponent()
+		T& GetComponent() const
 		{
 			return *static_cast<T*>(m_components.at(typeid(T)).get());
 		}
@@ -44,7 +48,13 @@ namespace eng
 		{
 			return m_name;
 		}
-	private:		
+		std::uint32_t GetID() const
+		{
+			return m_id;
+		}
+	private:
+		std::uint32_t m_id;
+		inline static std::uint32_t s_nextID = 0;
 		TransformComponent m_transform{};
 
 		std::unordered_map<std::type_index, std::shared_ptr<void>> m_components;

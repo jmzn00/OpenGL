@@ -3,7 +3,7 @@
 #include "vec3.hpp"
 namespace eng
 {
-	struct Light
+	struct RenderLight
 	{
 		glm::vec3 position;
 

@@ -12,15 +12,11 @@ namespace eng
 
         m_mainCamera.SetViewportSize(window.GetWidth(), window.GetHeight());
     }
-
-    // definition MUST match declaration (no default arg here)
     Entity& Scene::CreateEntity(const std::string& name)
     {
-        std::cout << "[Scene] CreateEntity begin: " << name << "\n";
         m_entities.emplace_back(std::make_unique<Entity>(name));
-        Entity& created = *m_entities.back();
-        std::cout << "[Scene] CreateEntity done: " << created.GetName() << " (entities: " << m_entities.size() << ")\n";
-        return created;
+       
+        return *m_entities.back();
     }
     Entity& Scene::CreateEntity()
     {
@@ -45,6 +41,11 @@ namespace eng
         {
             Entity& entity = *entityPtr;
 
+            if (entity.HasComponent<LightComponent>())
+            {
+                Renderer::Get().SubmitLight(entity);
+            }
+
             if (!entity.HasComponent<MeshComponent>())
                 continue;
 
@@ -52,7 +53,7 @@ namespace eng
 
             Renderer::Get().Submit(
                 { meshComponent.mesh.get()
-                , meshComponent.shader.get()
+                , meshComponent.material.get()
                 , &entity.Transform()
                 });
         }

@@ -64,6 +64,7 @@ add_executable(OpenGL
     engine/src/scene/scene.cpp
     engine/src/entity/commands/entity_create_command.cpp
     engine/src/entity/commands/entity_move_command.cpp
+    engine/src/graphics/material/material.cpp
     
 )
 target_compile_definitions(OpenGL PRIVATE
