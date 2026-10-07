@@ -25,7 +25,10 @@ namespace eng
 		Entity& CreateEntity();
 		Entity& CreateEntity(const std::string& name);
 
-		Entity* FindEntityByName(const std::string_view name);
+		Entity* FindEntityByName(const std::string_view name) const;
+		Entity* FindEntityById(const std::uint32_t id) const;
+
+		const std::vector<std::unique_ptr<Entity>>& GetEntities() const;
 	private:
 		std::vector<std::unique_ptr<Entity>> m_entities{};
 		RenderQueue m_renderQueue{ };

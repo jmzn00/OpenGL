@@ -36,12 +36,12 @@ namespace eng
 	}
 	ShaderProgram& Material::GetShaderProgram() const
 	{
-		ENG_ASSERT(m_shaderProgram, "Material has no shader program");
+		ENG_ASSERT(m_shaderProgram, "MATERIAL::GET_SHADER_PROGRAM: NO SHADER_PROGRAM");
 		return *m_shaderProgram;
 	}
 	void Material::Bind(GraphicsAPI& gapi) const
 	{		
-		ENG_ASSERT(m_shaderProgram, "Material has no shader program");
+		ENG_ASSERT(m_shaderProgram, "MATERIAL::BIND: NO SHADER_PROGRAM");
 		gapi.BindShaderProgram(m_shaderProgram.get());
 
 		for (const auto& param : m_vec3Params)

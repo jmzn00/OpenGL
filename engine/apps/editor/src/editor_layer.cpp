@@ -14,12 +14,12 @@ namespace eng
 
 		m_shaderLibrary.Init();
 
-		m_editorContext = std::make_unique<EditorContext>(m_shaderLibrary);
-
 		m_commands.RegisterAll(m_ctx, *m_currentScene);
 		m_commandContext = std::make_unique<CommandContext>(m_ctx.GetLogger(), *m_currentScene);		
 
 		m_components.push_back(std::make_unique<Console>(m_commands, *m_commandContext));
+		m_components.push_back(std::make_unique<Inspector>(*m_currentScene, m_editorContext));
+		m_components.push_back(std::make_unique<PropertiesPanel>(*m_currentScene, m_editorContext));
 
 		for (auto& component : m_components)
 		{
@@ -51,5 +51,5 @@ namespace eng
 		{
 			component->Draw();
 		}
-	}
+	}	
 }

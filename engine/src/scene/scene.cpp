@@ -22,11 +22,20 @@ namespace eng
     {
         return CreateEntity("Unnamed");
     }
-    Entity* Scene::FindEntityByName(const std::string_view name)
+    Entity* Scene::FindEntityByName(const std::string_view name) const
     {
         for (auto& entityPtr : m_entities)
         {
             if (entityPtr->GetName() == name)
+                return entityPtr.get();
+        }
+        return nullptr;
+    }
+    Entity* Scene::FindEntityById(std::uint32_t id) const
+    {
+        for (auto& entityPtr : m_entities)
+        {
+            if (entityPtr->GetID() == id)
                 return entityPtr.get();
         }
         return nullptr;
@@ -65,4 +74,8 @@ namespace eng
 	{
 		return m_mainCamera;
 	}
+    const std::vector<std::unique_ptr<Entity>>& Scene::GetEntities() const
+    {
+        return m_entities;
+    }
 }

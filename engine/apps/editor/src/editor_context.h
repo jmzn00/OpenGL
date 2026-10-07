@@ -1,22 +1,21 @@
 #ifndef EDITOR_CONTEXT_H
 #define EDITOR_CONTEXT_H
-#include <eng/graphics/shader_library.h>
-#include <eng/renderer/mesh_library.h>
+
 namespace eng
 {
 	class EditorContext
 	{
 	public:
-		EditorContext(ShaderLibrary& shaderLibrary)
-			: m_shaderLibrary {shaderLibrary}
-		{		
-		}
-		ShaderLibrary& GetShaderLibrary() const
+		void SetSelectedEntityId(std::uint32_t entityId)
 		{
-			return m_shaderLibrary;
+			m_selectedEntityId = entityId;
+		}
+		std::uint32_t GetSelectedEntityId() const
+		{
+			return m_selectedEntityId;
 		}
 	private:
-		ShaderLibrary& m_shaderLibrary;
+		std::uint32_t m_selectedEntityId;
 	};
 }
 #endif // !EDITOR_CONTEXT_H

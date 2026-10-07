@@ -48,6 +48,11 @@ add_executable(OpenGL
     engine/apps/editor/src/editor.cpp
     
     engine/apps/editor/ui/panels/console/console.cpp
+    engine/apps/editor/ui/panels/inspector/inspector.cpp
+    engine/apps/editor/ui/panels/properties/properties_panel.cpp
+    
+
+
     engine/src/core/logger.cpp        engine/src/core/command_registry.cpp
     engine/apps/editor/commands/application_quit_command.cpp
     engine/src/graphics/graphics_api.cpp
