@@ -8,9 +8,7 @@ namespace eng
     Scene::Scene(EngineContext& ctx, const std::string& name)
         : m_engineContext{ ctx }, m_name{ name }
     {
-        Window& window{ ctx.GetWindow() };
-
-        m_mainCamera.SetViewportSize(window.GetWidth(), window.GetHeight());
+        Window& window{ ctx.GetWindow() };         
     }
     Entity& Scene::CreateEntity(const std::string& name)
     {
@@ -40,26 +38,26 @@ namespace eng
         }
         return nullptr;
     }
-	void Scene::Update(float dt)
-	{
+    void Scene::Render(Camera& camera) const
+    {
         if (m_entities.empty())
             return;
-
-        Renderer::Get().BeginScene(m_mainCamera);
-		for (auto& entityPtr : m_entities)
+    
+        Renderer::Get().BeginScene(camera);
+        for (auto& entityPtr : m_entities)
         {
             Entity& entity = *entityPtr;
-
+    
             if (entity.HasComponent<LightComponent>())
             {
                 Renderer::Get().SubmitLight(entity);
             }
-
+    
             if (!entity.HasComponent<MeshComponent>())
                 continue;
-
-            auto& meshComponent = entity.GetComponent<MeshComponent>();    
-
+    
+            auto& meshComponent = entity.GetComponent<MeshComponent>();
+    
             Renderer::Get().Submit(
                 { meshComponent.mesh.get()
                 , meshComponent.material.get()
@@ -67,12 +65,11 @@ namespace eng
                 });
         }
         Renderer::Get().Render();
-
+    
         Renderer::Get().EndScene();
-	}
-	Camera& Scene::GetMainCamera()
-	{
-		return m_mainCamera;
+    }
+	void Scene::Update(float dt)
+	{        
 	}
     const std::vector<std::unique_ptr<Entity>>& Scene::GetEntities() const
     {

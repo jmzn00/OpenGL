@@ -27,6 +27,12 @@ namespace eng
             return;
         }
         engine->m_window->SetSize(static_cast<uint32_t>(w), static_cast<uint32_t>(h));           
+
+        engine->m_context->WindowResizeEvents().Publish(
+            {
+                static_cast<uint32_t>(w),
+                static_cast<uint32_t>(h)
+            });
     }
     void Engine::ScrollCallback(GLFWwindow* window, double xo, double yo)
     {

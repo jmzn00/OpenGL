@@ -4,22 +4,24 @@
 #include "eng/core/layer.h"
 #include <eng/core/engine_context.h>
 #include "editor_component.h"
+#include "editor_context.h"
 
-#include <eng/command/command.h>
 #include <eng/command/command_registry.h>
+#include <eng/command/command_executor.h>
 
 #include "panels/console/console.h"
 #include "panels/inspector/inspector.h"
 #include "panels/properties/properties_panel.h"
 
+#include <eng/camera/camera.h>
 #include <eng/scene/scene.h>
-
 #include <eng/graphics/shader_library.h>
 
 #include <memory>
 #include <vector>
 
-#include "editor_context.h"
+
+
 
 namespace eng
 {
@@ -35,16 +37,19 @@ namespace eng
 		void Update(float dt) override;
 		virtual void OnImGuiRender() override;
 	private:
-		EngineContext& m_ctx;
+		Camera m_editorCamera{};
+
+		EngineContext& m_engineContext;
 		EditorContext m_editorContext{};
 
 		std::vector<std::unique_ptr<IEditorComponent>> m_components;
 
 		CommandRegistry m_commands;		
 		std::unique_ptr<CommandContext> m_commandContext;
+		std::unique_ptr<CommandExecutor> m_commandExecutor;
 		std::unique_ptr<Scene> m_currentScene;
 
-		ShaderLibrary m_shaderLibrary{};
+		ShaderLibrary m_shaderLibrary{};		
 	};
 }
 #endif // !EDITOR_LAYER_H

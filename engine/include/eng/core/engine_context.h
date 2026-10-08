@@ -7,6 +7,9 @@
 #include <eng/window/window.h>
 #include <eng/renderer/renderer.h>
 
+#include <eng/event/event_bus.h>
+#include <eng/event/events/window_resize_event.h>
+
 namespace eng
 {
 	class EngineContext
@@ -37,12 +40,20 @@ namespace eng
 		{
 			return m_input;
 		}
+		Event<WindowResizeEvent>& WindowResizeEvents()
+		{
+			return m_windowResizeEvent;
+		}
+
+		
 	private:
 		Renderer& m_renderer;
 		Window& m_window;
 		Logger& m_logger;
 		GraphicsAPI& m_graphicsApi;
 		Input& m_input;
+
+		Event<WindowResizeEvent> m_windowResizeEvent;
 	};
 }
 #endif // !ENGINE_CONTEXT_H

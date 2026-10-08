@@ -7,6 +7,8 @@
 #include <eng/command/command_registry.h>
 #include "editor_context.h"
 
+#include <eng/command/command_executor.h>
+
 namespace eng
 {
 #ifndef CONSOLE_H
@@ -14,7 +16,7 @@ namespace eng
 	class Console : public IEditorComponent, public ILogSink
 	{
 	public:
-		Console(CommandRegistry& commands, CommandContext& commandContext);
+		Console(CommandExecutor& commandExecutor);
 		bool Init(EngineContext& ctx) override;
 		void Update(float dt) override;
 		void Draw() override;
@@ -22,8 +24,7 @@ namespace eng
 
 		void Write(const Message& message) override;
 	private:
-		CommandRegistry& m_commands;
-		CommandContext& m_commandContext;
+		CommandExecutor& m_commandExecutor;
 
 		Logger* m_logger = nullptr;
 		std::vector<Message> m_messages;

@@ -6,8 +6,8 @@
 #include <cstring>
 namespace eng
 {
-    Console::Console(CommandRegistry& commands, CommandContext& commandContext)
-        : m_commands{commands}, m_commandContext{commandContext}
+    Console::Console(CommandExecutor& commandExecutor)
+        : m_commandExecutor{commandExecutor}
     {    
     }
 	bool Console::Init(EngineContext& ctx)
@@ -126,7 +126,7 @@ namespace eng
             //}
 
             const CommandResult result =
-                m_commands.Execute(m_input, m_commandContext);
+                m_commandExecutor.Submit(m_input);
 
             Write({
                 result.succeeded ? Level::Info : Level::Error,

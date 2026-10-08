@@ -5,14 +5,14 @@
 
 namespace eng
 {
-	Inspector::Inspector(Scene& scene, EditorContext& editorContext)
-		: m_scene {&scene}, m_editorContext {editorContext}
+	Inspector::Inspector(Scene& scene, EditorContext& editorContext, CommandExecutor& executor)
+		: m_scene {scene}, m_editorContext {editorContext}
+		, m_executor {executor}
 	{		
 	}
 	bool Inspector::Init(EngineContext& ctx)
 	{	
 		m_log = &ctx.GetLogger();
-
 		return true;
 	}
 	void Inspector::Destroy()
@@ -32,16 +32,43 @@ namespace eng
 			ImGuiWindowFlags_NoCollapse
 			);
 
-		auto& entities = m_scene->GetEntities();
+		if(ImGui::Button("Create"))
+		{
+			ImGui::OpenPopup("CreateEntityPopup");
+		}
+		if (ImGui::BeginPopup("CreateEntityPopup"))
+		{
+			if (ImGui::BeginMenu("Entity"))
+			{
+				if (ImGui::MenuItem("Cube"))
+				{
+					m_executor.Submit("ent.create cube");
+				}					
+
+
+				ImGui::EndMenu();
+			}
+			if (ImGui::BeginMenu("Lights"))
+			{
+				if (ImGui::MenuItem("Light"))
+				{
+					m_executor.Submit("ent.create light");
+				}					
+				ImGui::EndMenu();
+			}
+			ImGui::EndPopup();
+		}		
+
+		auto& entities = m_scene.GetEntities();
 		for (auto& entity : entities)
 		{
+			ImGui::PushID(static_cast<int>(entity->GetID()));
+			
 			if (ImGui::Selectable(entity->GetName().c_str()))
 			{
-				m_selectedEntity = entity.get();
-				m_log->Info("[Inspector] selected: " + entity->GetName());
-
 				m_editorContext.SetSelectedEntityId(entity->GetID());
 			}
+			ImGui::PopID();
 		}
 
 		ImGui::End();
