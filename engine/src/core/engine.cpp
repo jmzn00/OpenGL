@@ -83,8 +83,9 @@ namespace eng
             return false;
         } 
         glfwSetWindowUserPointer(window, this);
-        m_window = new Window{ window, static_cast<uint32_t>(width)
-            , static_cast<uint32_t>(height) };
+
+        m_window = std::make_unique<Window>
+            (window, static_cast<uint32_t>(width), static_cast<uint32_t>(height));        
         
         glfwSetFramebufferSizeCallback(window, FrameBufferSizeCallback);
         glfwSetScrollCallback(window, ScrollCallback);
@@ -97,9 +98,11 @@ namespace eng
         {
             return false;
         }        
-        m_renderer = new Renderer{m_graphicsApi};
-        m_context = new EngineContext { *m_window , m_logger, m_graphicsApi, m_input, *m_renderer};
 
+        m_renderer = std::make_unique<Renderer>(m_graphicsApi);
+        m_context = std::make_unique<EngineContext>
+            (*m_window, m_logger, m_graphicsApi, m_input, *m_renderer);
+        
         return m_application->Init(*m_context);
 	}
 	void Engine::Run()
@@ -415,9 +418,9 @@ namespace eng
         }                
         glfwTerminate();
 	}
-	void Engine::SetApplication(Application* app)
+	void Engine::SetApplication(std::unique_ptr<Application> app)
 	{
-		m_application.reset(app);
+		m_application = std::move(app);
 	}
 	Application* Engine::GetApplication()
 	{

@@ -67,6 +67,9 @@ namespace eng
 			m_position = position;
 			RecalculateView();
 		}
+
+		float Pitch{};
+		float Yaw{};
 	private:
 		void RecalculateView()
 		{
@@ -99,6 +102,7 @@ namespace eng
 		glm::mat4 m_view{ 1.0 };
 
 		float m_fov{ 45.0f };
+		
 	};
 }
 #endif // !CAMERA_H

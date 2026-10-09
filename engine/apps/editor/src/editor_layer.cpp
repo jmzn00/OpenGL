@@ -1,5 +1,6 @@
 #include "editor_layer.h"
 #include <eng/core/application.h>
+#include <eng/math/math.h>
 
 namespace eng
 {
@@ -7,11 +8,15 @@ namespace eng
 		: Layer("EditorLayer"), m_engineContext{ctx}
 	{
 		ctx.GetLogger().Info("[EditorLayer] Initialized");
+		m_input = &ctx.GetInput();
 	}
 	void EditorLayer::OnAttach()
 	{	
 		Window& window = m_engineContext.GetWindow();
-		m_editorCamera.SetViewportSize(window.GetWidth(), window.GetHeight());				
+		m_editorCamera.SetViewportSize(window.GetWidth(), window.GetHeight());	
+
+		m_editorCamera.Pitch = -90.0f;
+		m_editorCamera.Yaw = 0.0f;
 
 		m_engineContext.WindowResizeEvents().Subscribe(
 			[this]
@@ -56,6 +61,29 @@ namespace eng
 		{
 			component->Update(dt);
 		}	
+
+		//const float sensitivity = 0.1;
+		//glm::vec2 mouseDelta = m_input->MouseDelta();
+		//m_editorCamera.Yaw += mouseDelta.x * sensitivity;
+		//m_editorCamera.Pitch -= mouseDelta.y * sensitivity;
+		//m_editorCamera.Pitch = math::clamp(m_editorCamera.Pitch, -89.0f, 89.0f);
+		//
+		//
+		//m_editorCamera.Look(m_editorCamera.Pitch, m_editorCamera.Yaw);		
+
+		float cameraSpeed = 1 * dt;
+		glm::vec3 cameraPos = m_editorCamera.GetPosition();
+
+		if (m_input->IsKeyPressed(GLFW_KEY_W))
+			cameraPos += cameraSpeed * m_editorCamera.GetFlatForward();
+		if (m_input->IsKeyPressed(GLFW_KEY_S))
+			cameraPos -= cameraSpeed * m_editorCamera.GetFlatForward();
+		if (m_input->IsKeyPressed(GLFW_KEY_D))
+			cameraPos += cameraSpeed * m_editorCamera.GetRight();
+		if (m_input->IsKeyPressed(GLFW_KEY_A))
+			cameraPos -= cameraSpeed * m_editorCamera.GetRight();
+		m_editorCamera.MoveTo(cameraPos);
+
 		m_currentScene->Update(dt);
 		m_currentScene->Render(m_editorCamera);
 	}

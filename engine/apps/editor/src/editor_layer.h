@@ -38,18 +38,17 @@ namespace eng
 		virtual void OnImGuiRender() override;
 	private:
 		Camera m_editorCamera{};
-
-		EngineContext& m_engineContext;
 		EditorContext m_editorContext{};
+		CommandRegistry m_commands;
+		ShaderLibrary m_shaderLibrary{};
 
 		std::vector<std::unique_ptr<IEditorComponent>> m_components;
-
-		CommandRegistry m_commands;		
 		std::unique_ptr<CommandContext> m_commandContext;
 		std::unique_ptr<CommandExecutor> m_commandExecutor;
 		std::unique_ptr<Scene> m_currentScene;
 
-		ShaderLibrary m_shaderLibrary{};		
+		EngineContext& m_engineContext;		
+		Input* m_input;
 	};
 }
 #endif // !EDITOR_LAYER_H

@@ -64,6 +64,24 @@ namespace eng
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID())};
 			
 		}
+		if (arguments[0] == "pyramid")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "PyramidEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+
+			Material mat{ MaterialProperties
+				{
+					glm::vec3(0.2, 0.2, 0.2),
+					glm::vec3(0.5, 0.5, 0.5),
+					glm::vec3(0.2, 0.2, 0.2),
+					32.0f} };
+
+			mat.SetShaderProgram(ShaderLibrary::Get().Get("Default"));
+			ent.AddComponent<MeshComponent>(
+				PyramidMesh(), std::make_shared<Material>(mat));
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
 		return { false, "Usage: ent.create <cube / light>" };
 	}
 }

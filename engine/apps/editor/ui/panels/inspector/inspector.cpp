@@ -44,6 +44,10 @@ namespace eng
 				{
 					m_executor.Submit("ent.create cube");
 				}					
+				if (ImGui::MenuItem("Pyramid"))
+				{
+					m_executor.Submit("ent.create pyramid");
+				}
 
 
 				ImGui::EndMenu();

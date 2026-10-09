@@ -6,8 +6,8 @@
 int main()
 {
     eng::Engine engine{};
-    eng::Editor* editor = new eng::Editor{};
-    engine.SetApplication(editor);
+
+    engine.SetApplication(std::make_unique<eng::Editor>());
 
     if (engine.Init(960, 540))
     {        

@@ -1,6 +1,5 @@
 #include <eng/scene/scene.h>
 #include <eng/renderer/renderer.h>
-#include <eng/renderer/default_meshes.h>
 #include <iostream>
 
 namespace eng

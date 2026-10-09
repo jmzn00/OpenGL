@@ -94,5 +94,69 @@ namespace eng
             6 * sizeof(float) });
         return std::make_shared<Mesh>(cubeVertexLayout, vertices, indices);
     }
+    inline std::shared_ptr<Mesh> PyramidMesh()
+    {
+        std::vector<float> vertices =
+        {
+            -0.5f, -0.5f, -0.5f,   0.f,-1.f, 0.f,   0.f,0.f,
+             0.5f, -0.5f, -0.5f,   0.f,-1.f, 0.f,   1.f,0.f,
+             0.5f, -0.5f,  0.5f,   0.f,-1.f, 0.f,   1.f,1.f,
+            -0.5f, -0.5f,  0.5f,   0.f,-1.f, 0.f,   0.f,1.f,
+
+             0.0f,  0.5f,  0.0f,  -0.707f, 0.707f, 0.f,   0.5f,1.f,
+            -0.5f, -0.5f,  0.5f,  -0.707f, 0.707f, 0.f,   0.f,0.f,
+            -0.5f, -0.5f, -0.5f,  -0.707f, 0.707f, 0.f,   1.f,0.f,
+
+             0.0f,  0.5f,  0.0f,   0.f, 0.707f,-0.707f,   0.5f,1.f,
+            -0.5f, -0.5f, -0.5f,   0.f, 0.707f,-0.707f,   0.f,0.f,
+             0.5f, -0.5f, -0.5f,   0.f, 0.707f,-0.707f,   1.f,0.f,
+
+              0.0f,  0.5f,  0.0f,   0.707f, 0.707f, 0.f,   0.5f,1.f,
+              0.5f, -0.5f, -0.5f,   0.707f, 0.707f, 0.f,   0.f,0.f,
+              0.5f, -0.5f,  0.5f,   0.707f, 0.707f, 0.f,   1.f,0.f,
+
+               0.0f,  0.5f,  0.0f,   0.f, 0.707f, 0.707f,   0.5f,1.f,
+               0.5f, -0.5f,  0.5f,   0.f, 0.707f, 0.707f,   0.f,0.f,
+              -0.5f, -0.5f,  0.5f,   0.f, 0.707f, 0.707f,   1.f,0.f,
+        };
+        std::vector<unsigned int> indices =
+        {
+            // bottom face
+            0, 1, 2,
+            0, 2, 3,
+
+            // left triangle
+            4, 5, 6,
+
+            // back triangle
+            7, 8, 9,
+
+            // right triangle
+            10, 11, 12,
+
+            // front triangle
+            13, 14, 15
+        };    
+        VertexLayout vertexLayout{};
+
+        vertexLayout.stride = 8 * sizeof(float);
+        vertexLayout.elements.push_back({
+            0,
+            3,
+            GL_FLOAT,
+            0});
+        vertexLayout.elements.push_back({
+            1,
+            3,
+            GL_FLOAT,
+            3 * sizeof(float) });
+        vertexLayout.elements.push_back({
+            2,
+            2,
+            GL_FLOAT,
+            6 * sizeof(float) });
+
+        return std::make_shared<Mesh>(vertexLayout, vertices, indices);
+    }
 }
 #endif // !MESH_LIBRARY

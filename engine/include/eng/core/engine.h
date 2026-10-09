@@ -33,17 +33,19 @@ namespace eng
 		bool Init(int width, int height);
 		void Run();
 		void Destroy();
-		void SetApplication(Application* app);
+		void SetApplication(std::unique_ptr<Application> app);
 		Application* GetApplication();
 	private:
-		Renderer* m_renderer = nullptr;
-		Window* m_window = nullptr;
+
+		std::unique_ptr<EngineContext> m_context;
+		std::unique_ptr<Application> m_application;
+		std::unique_ptr<Renderer> m_renderer;
+		std::unique_ptr<Window> m_window;
+
 		Time m_time{};
 		Input m_input{};
 		GraphicsAPI m_graphicsApi;
 		Logger m_logger;
-		std::unique_ptr<Application> m_application;
-		EngineContext* m_context;
 	};
 }
 #endif // !ENGINE_H
