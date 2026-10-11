@@ -29,7 +29,10 @@ namespace eng
 		Entity* FindEntityById(const std::uint32_t id) const;
 
 
-
+		Camera& GetMainCamera()
+		{
+			return m_mainCamera;
+		}
 		const std::vector<std::unique_ptr<Entity>>& GetEntities() const;
 	private:
 		std::vector<std::unique_ptr<Entity>> m_entities{};

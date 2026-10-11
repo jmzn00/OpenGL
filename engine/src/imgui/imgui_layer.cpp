@@ -16,13 +16,13 @@ namespace eng
         const ImColor mutedBrown(92, 62, 38);
         const ImColor white(255, 255, 255);
 
-        style.WindowRounding = 6.0f;
-        style.ChildRounding = 5.0f;
-        style.FrameRounding = 4.0f;
+        style.WindowRounding = 0.0f;
+        style.ChildRounding = 0.0f;
+        style.FrameRounding = 5.0f;
         style.PopupRounding = 5.0f;
         style.ScrollbarRounding = 5.0f;
-        style.GrabRounding = 4.0f;
-        style.TabRounding = 4.0f;
+        style.GrabRounding = 0.0f;
+        style.TabRounding = 5.0f;
 
         style.WindowBorderSize = 1.0f;
         style.ChildBorderSize = 1.0f;
@@ -97,6 +97,7 @@ namespace eng
         style.Colors[ImGuiCol_ModalWindowDimBg] =
             ImVec4(0.16f, 0.10f, 0.05f, 0.35f);
     }
+
 	void ImGuiLayer::OnAttach()
 	{
 		IMGUI_CHECKVERSION();

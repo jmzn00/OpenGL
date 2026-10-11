@@ -41,5 +41,11 @@ namespace eng
 		{
 			sink->Write(message);
 		}
+
+		m_messageHistory.push_back(message);
+	}
+	const std::vector<Message>& Logger::GetMessageHistory() const
+	{
+		return m_messageHistory;
 	}
 }

@@ -99,82 +99,18 @@ namespace eng
         if (!m_input.Init(window))
         {
             return false;
-        }        
+        }                
 
+        m_shaderLibrary.Init();
         m_renderer = std::make_unique<Renderer>(m_graphicsApi);
         m_context = std::make_unique<EngineContext>
             (*m_window, m_logger, m_graphicsApi, m_input, *m_renderer);
         
+
         return m_application->Init(*m_context);
 	}
 	void Engine::Run()
-	{        
-        //std::vector<float> vertices =
-        //{
-        //    // positions              // normals           // tex coords
-        //
-        //    // Front face (+Z)
-        //    -0.5f, -0.5f,  0.5f,      0,0,1,              0,0,
-        //     0.5f, -0.5f,  0.5f,      0,0,1,              1,0,
-        //     0.5f,  0.5f,  0.5f,      0,0,1,              1,1,
-        //    -0.5f,  0.5f,  0.5f,      0,0,1,              0,1,
-        //
-        //    // Back face (-Z)
-        //     0.5f, -0.5f, -0.5f,      0,0,-1,             0,0,
-        //    -0.5f, -0.5f, -0.5f,      0,0,-1,             1,0,
-        //    -0.5f,  0.5f, -0.5f,      0,0,-1,             1,1,
-        //     0.5f,  0.5f, -0.5f,      0,0,-1,             0,1,
-        //
-        //     // Left face (-X)
-        //     -0.5f, -0.5f, -0.5f,     -1,0,0,              0,0,
-        //     -0.5f, -0.5f,  0.5f,     -1,0,0,              1,0,
-        //     -0.5f,  0.5f,  0.5f,     -1,0,0,              1,1,
-        //     -0.5f,  0.5f, -0.5f,     -1,0,0,              0,1,
-        //
-        //     // Right face (+X)
-        //      0.5f, -0.5f,  0.5f,      1,0,0,              0,0,
-        //      0.5f, -0.5f, -0.5f,      1,0,0,              1,0,
-        //      0.5f,  0.5f, -0.5f,      1,0,0,              1,1,
-        //      0.5f,  0.5f,  0.5f,      1,0,0,              0,1,
-        //
-        //      // Top face (+Y)
-        //      -0.5f,  0.5f,  0.5f,      0,1,0,              0,0,
-        //       0.5f,  0.5f,  0.5f,      0,1,0,              1,0,
-        //       0.5f,  0.5f, -0.5f,      0,1,0,              1,1,
-        //      -0.5f,  0.5f, -0.5f,      0,1,0,              0,1,
-        //
-        //      // Bottom face (-Y)
-        //      -0.5f, -0.5f, -0.5f,      0,-1,0,             0,0,
-        //       0.5f, -0.5f, -0.5f,      0,-1,0,             1,0,
-        //       0.5f, -0.5f,  0.5f,      0,-1,0,             1,1,
-        //      -0.5f, -0.5f,  0.5f,      0,-1,0,             0,1,
-        //};
-        //std::vector<unsigned int> indices =
-        //{
-        //    // Front
-        //    0, 1, 2,
-        //    2, 3, 0,
-        //
-        //    // Back
-        //    4, 5, 6,
-        //    6, 7, 4,
-        //
-        //    // Left
-        //    8, 9, 10,
-        //    10, 11, 8,
-        //
-        //    // Right
-        //    12, 13, 14,
-        //    14, 15, 12,
-        //
-        //    // Top
-        //    16, 17, 18,
-        //    18, 19, 16,
-        //
-        //    // Bottom
-        //    20, 21, 22,
-        //    22, 23, 20
-        //};
+	{                
         unsigned int texture;
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -218,186 +154,11 @@ namespace eng
             std::cout << "Failed to load texture\n";
         }
         stbi_image_free(data);
-
-        //Camera camera{};
-        //camera.SetViewportSize(m_window->GetWidth(), m_window->GetHeight());
-                                
-        //unsigned int VAO, VBO;
-        //glGenVertexArrays(1, &VAO);
-        //glGenBuffers(1, &VBO);
-        //
-        //glBindVertexArray(VAO);
-        //glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        //glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-        //glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-        //glEnableVertexAttribArray(0);
-        //
-        //glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float)
-        //    , (void*)(3 * sizeof(float)));
-        //glEnableVertexAttribArray(1);
-        //
-        //glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float)
-        //    , (void*)(6 * sizeof(float)));
-        //glEnableVertexAttribArray(2);
-        //
-        //unsigned int EBO;
-        //glGenBuffers(1, &EBO);
-        //glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        //glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-        //VertexLayout cubeVertexLayout{};
-		//cubeVertexLayout.stride = 8 * sizeof(float);
-        //
-        //cubeVertexLayout.elements.push_back({
-        //    0,
-        //    3, 
-        //    GL_FLOAT,
-        //    0});
-        //cubeVertexLayout.elements.push_back({
-        //    1,
-        //    3,
-		//	GL_FLOAT,
-		//	3 * sizeof(float)});
-        //cubeVertexLayout.elements.push_back({
-        //    2,
-		//	2,
-		//	GL_FLOAT,
-		//	6 * sizeof(float)});
-        //ShaderProgram shaderProgram(ENGINE_ASSET_DIR "/shaders/vert.vert",
-        //    ENGINE_ASSET_DIR "/shaders/frag.frag");
-        //
-        //Mesh cubeMesh{cubeVertexLayout, vertices, indices};        
-        //MeshComponent cubeMeshComponent{ cubeMesh , shaderProgram};
-        //Entity cubeEntitiy{ cubeMeshComponent };
-        //
-        //ShaderProgram lightShader(ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.vert",
-        //    ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");
-        //
-		//Mesh lightMesh{ cubeVertexLayout, vertices, indices };
-        //MeshComponent lightMeshComponent{ lightMesh, lightShader };
-		//Entity lightEntity{ lightMeshComponent };        
-        //
-        //
-        //m_graphicsApi.BindShaderProgram(&lightShader);
-        //unsigned int lightModelLoc = lightShader.GetUniform("model");
-        //unsigned int lightViewLoc = lightShader.GetUniform("view");
-        //unsigned int lightProjectionLoc = lightShader.GetUniform("projection");
-        //
-        //glm::mat4 lightModel{ 1.0 };
-        //glm::vec3 lightPos{ 2.0f, 0.0f, 0.0f };
-        //
-        //lightModel = glm::translate(lightModel, lightPos);
-        //lightModel = glm::scale(lightModel, glm::vec3(0.5f, 0.5f, 0.5));
-        //
-        //glUniformMatrix4fv(lightModelLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
-        //glUniformMatrix4fv(lightViewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
-        //glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
-        //
-        //m_graphicsApi.BindShaderProgram(&shaderProgram);
-        //
-        //Light light{glm::vec3(0.0f, 0.0f, -3.0f), glm::vec3(0.2f, 0.2f, 0.2f)
-        //                    , glm::vec3(0.5f, 0.5f, 0.5f)
-        //                    , glm::vec3(1.0f, 1.0f, 1.0f)};
-        //
-        //shaderProgram.SetLight(light);
-        //shaderProgram.SetMaterial({ glm::vec3(1.0f, 0.5, 0.31f),
-          //                          glm::vec3(1.0f, 0.5f, 0.31f),
-          //                          glm::vec3(0.5f, 0.5f, 0.5f),
-          //                          32.0f });
-
-        //glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture1"), 0);
-        //glUniform1i(glGetUniformLocation(shaderProgram.GetId(), "texture2"), 1);        
-        
-        //unsigned int modelLoc = shaderProgram.GetUniform("model");
-        //unsigned int viewLoc = shaderProgram.GetUniform("view");
-        //unsigned int projectionLoc = shaderProgram.GetUniform("projection");               
-
-        //glm::vec3 cameraPos = camera.GetPosition();
-        //glm::vec3 cameraFront = camera.GetForward();
-        //glm::vec3 cameraUp = camera.GetUp();
-
-        //glm::mat4 model = glm::mat4(1.0f);
-        //glm::mat4 projection = camera.GetProjection();
-        //glm::mat4 view = camera.GetView();
-
-        //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(model));
-        //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
-        //glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
-
-        //float mixAmount = 0.5f;
-        //
-        //const float sensitivity = 0.1;
-        //float yaw = -90.0f;
-        //float pitch = 0.0f;
         
         m_graphicsApi.SetClearColor(0.5, 0.5, 0.5, 1);        
 
         while (!m_application->NeedsToBeClosed())
         {                           
-            //glm::vec2 delta = m_input.MouseDelta();
-            //yaw += delta.x * sensitivity;
-            //pitch -= delta.y * sensitivity;
-            //pitch = math::clamp(pitch, -89.0f, 89.0f);
-            //           
-            //float cameraSpeed = 1 * m_time.Delta();;
-            //glm::vec3 cameraPos = camera.GetPosition();
-            //
-            //if (m_input.IsKeyPressed(GLFW_KEY_W))
-            //    cameraPos += cameraSpeed * camera.GetFlatForward();
-            //if (m_input.IsKeyPressed(GLFW_KEY_S))
-            //    cameraPos -= cameraSpeed * camera.GetFlatForward();
-            //if (m_input.IsKeyPressed(GLFW_KEY_A))
-            //    cameraPos -= cameraSpeed * camera.GetRight();
-            //if (m_input.IsKeyPressed(GLFW_KEY_D))
-            //    cameraPos += cameraSpeed * camera.GetRight();
-
-            //camera.Look(pitch, yaw);
-            //camera.MoveTo(cameraPos);
-            
-
-            //view = camera.GetView();
-            //projection = camera.GetProjection();          
-
-            //float radius = 5.0f;
-            //lightPos.x = cos(m_time.Elapsed()) * radius;
-            //lightPos.z = sin(m_time.Elapsed()) * radius;
-            //lightModel = glm::mat4(1.0);
-            //lightModel = glm::translate(lightModel, lightPos);
-            //lightModel = glm::scale(lightModel, glm::vec3(0.5, 0.5, 0.5));
-            
-            //m_graphicsApi.BindShaderProgram(&shaderProgram);
-
-            //cubeEntitiy.Mesh().Draw();
-
-            //shaderProgram.SetVec3("viewPos", camera.GetPosition());
-            //glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(cubeEntitiy.Transform().GetTransform()));
-            //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
-            //glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
-            //glm::vec3 lightColor{0.5f};
-            //lightColor.x = sin(m_time.Elapsed() * 2.0f);
-            //lightColor.y = sin(m_time.Elapsed() * 0.7f);
-            //lightColor.z = sin(m_time.Elapsed() * 1.3f);
-            
-            //glm::vec3 diffuseColor = lightColor * glm::vec3(0.5f);
-            //glm::vec3 ambientColor = diffuseColor * glm::vec3(0.5f);
-            
-            //light.position = lightPos;
-            //light.diffuse = diffuseColor;
-            //light.ambient = ambientColor;
-                        
-
-            //shaderProgram.SetLight(light);
-
-            //m_graphicsApi.BindShaderProgram(&lightShader);  
-            //
-            //glUniformMatrix4fv(lightModelLoc, 1, GL_FALSE, glm::value_ptr(lightModel));
-            //glUniformMatrix4fv(lightViewLoc, 1, GL_FALSE, glm::value_ptr(view));
-            //glUniformMatrix4fv(lightProjectionLoc, 1, GL_FALSE, glm::value_ptr(projection));
-
-            //lightEntity.Mesh().Draw();
-
-            
             Profiler::Get().BeginFrame();
 
             m_graphicsApi.ClearBuffers();

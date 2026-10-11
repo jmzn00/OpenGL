@@ -13,8 +13,14 @@ namespace eng
 	bool Console::Init(EngineContext& ctx)
 	{		
         m_logger = &ctx.GetLogger();
+        auto& history = m_logger->GetMessageHistory();
+        for (auto& msg : history)
+        {
+            m_messages.push_back(msg);
+        }
+
         m_logger->AddSink(*this);
-        
+            
 		return true;
 	}
 	void Console::Destroy()
@@ -86,7 +92,6 @@ namespace eng
             }
 
             ImGui::TextUnformatted(message.text.c_str());
-
             ImGui::PopStyleColor();
         }
         if (m_scroll_to_bottom)

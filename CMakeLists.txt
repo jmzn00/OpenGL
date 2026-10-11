@@ -79,6 +79,8 @@ add_executable(OpenGL
     engine/src/scene/scene.cpp
     engine/src/util/stb_image_implementation.cpp
     engine/src/window/window.cpp
+
+    engine/src/scene/scene_layer.cpp
 )
 
 target_compile_definitions(OpenGL PRIVATE

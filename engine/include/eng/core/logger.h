@@ -15,8 +15,11 @@ namespace eng
 		void Error(std::string text);
 
 		void Write(const Message& message);
+
+		const std::vector<Message>& GetMessageHistory() const;
 	private:
 		std::vector<ILogSink*> m_sinks;
+		std::vector<Message> m_messageHistory;
 	};
 #endif // !LOGGER_H
 }

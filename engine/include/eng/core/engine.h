@@ -11,6 +11,7 @@
 #include <eng/time/time.h>
 #include <eng/window/window.h>
 #include <eng/renderer/renderer.h>
+#include <eng/graphics/shader_library.h>
 
 namespace eng
 {
@@ -46,6 +47,7 @@ namespace eng
 		Input m_input{};
 		GraphicsAPI m_graphicsApi;
 		Logger m_logger;
+		ShaderLibrary m_shaderLibrary{};
 	};
 }
 #endif // !ENGINE_H
