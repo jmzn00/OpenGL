@@ -13,6 +13,7 @@
 #include "panels/inspector/inspector.h"
 #include "panels/properties/properties_panel.h"
 #include "panels/toolbar/toolbar.h"
+#include "panels/profiler/profiler_panel.h"
 
 #include <eng/camera/camera.h>
 #include <eng/scene/scene.h>
