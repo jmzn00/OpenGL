@@ -18,6 +18,8 @@ namespace eng
 
 		void Begin();
 		void End();
+
+		void SetEditorStyle(ImGuiStyle& style);
 	private:
 		GLFWwindow* m_window;
 	};
