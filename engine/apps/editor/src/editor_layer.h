@@ -12,6 +12,7 @@
 #include "panels/console/console.h"
 #include "panels/inspector/inspector.h"
 #include "panels/properties/properties_panel.h"
+#include "panels/toolbar/toolbar.h"
 
 #include <eng/camera/camera.h>
 #include <eng/scene/scene.h>

@@ -25,8 +25,10 @@ namespace eng
 	{
 		const float panelWidth = 200.0f;
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
-		ImGui::SetNextWindowPos(ImVec2(viewport->Size.x - panelWidth, 0.0f));
-		ImGui::SetNextWindowSize(ImVec2(panelWidth, viewport->Size.y / 1.33f));
+		ImGui::SetNextWindowPos(ImVec2(viewport->Size.x - panelWidth
+			, viewport->Size.y / 10.0f));
+		ImGui::SetNextWindowSize(ImVec2(panelWidth
+			, viewport->Size.y / 1.53f));
 
 		ImGui::Begin(
 			"Properties"

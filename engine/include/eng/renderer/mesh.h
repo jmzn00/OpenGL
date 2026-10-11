@@ -59,6 +59,10 @@ namespace eng
 		{
 			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indexCount), GL_UNSIGNED_INT, 0);			
 		}
+		size_t GetVertexCount() const
+		{
+			return m_vertexCount;
+		}
 	private:
 		VertexLayout m_vertexLayout;
 		GLuint m_VBO{ 0 };

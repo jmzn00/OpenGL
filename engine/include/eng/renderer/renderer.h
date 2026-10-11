@@ -9,6 +9,7 @@
 #include <eng/entity/components.h>
 #include <eng/graphics/material/material.h>
 #include <eng/entity/entity.h>
+#include <eng/profiler/profiler.h>
 
 #include <vector>
 
@@ -89,10 +90,11 @@ namespace eng
 				{
 					shader.SetLight(m_lights[0]);
 				}
-
-
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();
+
+				Profiler::Get().IncrementDrawCalls();
+				Profiler::Get().AddTriangles(cmd.mesh->GetVertexCount());
 			}
 		}
 	private:

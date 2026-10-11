@@ -15,6 +15,8 @@
 #include <eng/renderer/vertex_layout.h>
 #include <eng/renderer/mesh.h>
 
+#include <eng/profiler/profiler.h>
+
 namespace eng
 {	void Engine::FrameBufferSizeCallback(GLFWwindow* window, int w, int h)
     {
@@ -107,72 +109,72 @@ namespace eng
 	}
 	void Engine::Run()
 	{        
-        std::vector<float> vertices =
-        {
-            // positions              // normals           // tex coords
-
-            // Front face (+Z)
-            -0.5f, -0.5f,  0.5f,      0,0,1,              0,0,
-             0.5f, -0.5f,  0.5f,      0,0,1,              1,0,
-             0.5f,  0.5f,  0.5f,      0,0,1,              1,1,
-            -0.5f,  0.5f,  0.5f,      0,0,1,              0,1,
-
-            // Back face (-Z)
-             0.5f, -0.5f, -0.5f,      0,0,-1,             0,0,
-            -0.5f, -0.5f, -0.5f,      0,0,-1,             1,0,
-            -0.5f,  0.5f, -0.5f,      0,0,-1,             1,1,
-             0.5f,  0.5f, -0.5f,      0,0,-1,             0,1,
-
-             // Left face (-X)
-             -0.5f, -0.5f, -0.5f,     -1,0,0,              0,0,
-             -0.5f, -0.5f,  0.5f,     -1,0,0,              1,0,
-             -0.5f,  0.5f,  0.5f,     -1,0,0,              1,1,
-             -0.5f,  0.5f, -0.5f,     -1,0,0,              0,1,
-
-             // Right face (+X)
-              0.5f, -0.5f,  0.5f,      1,0,0,              0,0,
-              0.5f, -0.5f, -0.5f,      1,0,0,              1,0,
-              0.5f,  0.5f, -0.5f,      1,0,0,              1,1,
-              0.5f,  0.5f,  0.5f,      1,0,0,              0,1,
-
-              // Top face (+Y)
-              -0.5f,  0.5f,  0.5f,      0,1,0,              0,0,
-               0.5f,  0.5f,  0.5f,      0,1,0,              1,0,
-               0.5f,  0.5f, -0.5f,      0,1,0,              1,1,
-              -0.5f,  0.5f, -0.5f,      0,1,0,              0,1,
-
-              // Bottom face (-Y)
-              -0.5f, -0.5f, -0.5f,      0,-1,0,             0,0,
-               0.5f, -0.5f, -0.5f,      0,-1,0,             1,0,
-               0.5f, -0.5f,  0.5f,      0,-1,0,             1,1,
-              -0.5f, -0.5f,  0.5f,      0,-1,0,             0,1,
-        };
-        std::vector<unsigned int> indices =
-        {
-            // Front
-            0, 1, 2,
-            2, 3, 0,
-
-            // Back
-            4, 5, 6,
-            6, 7, 4,
-
-            // Left
-            8, 9, 10,
-            10, 11, 8,
-
-            // Right
-            12, 13, 14,
-            14, 15, 12,
-
-            // Top
-            16, 17, 18,
-            18, 19, 16,
-
-            // Bottom
-            20, 21, 22,
-            22, 23, 20
-        };
+        //std::vector<float> vertices =
+        //{
+        //    // positions              // normals           // tex coords
+        //
+        //    // Front face (+Z)
+        //    -0.5f, -0.5f,  0.5f,      0,0,1,              0,0,
+        //     0.5f, -0.5f,  0.5f,      0,0,1,              1,0,
+        //     0.5f,  0.5f,  0.5f,      0,0,1,              1,1,
+        //    -0.5f,  0.5f,  0.5f,      0,0,1,              0,1,
+        //
+        //    // Back face (-Z)
+        //     0.5f, -0.5f, -0.5f,      0,0,-1,             0,0,
+        //    -0.5f, -0.5f, -0.5f,      0,0,-1,             1,0,
+        //    -0.5f,  0.5f, -0.5f,      0,0,-1,             1,1,
+        //     0.5f,  0.5f, -0.5f,      0,0,-1,             0,1,
+        //
+        //     // Left face (-X)
+        //     -0.5f, -0.5f, -0.5f,     -1,0,0,              0,0,
+        //     -0.5f, -0.5f,  0.5f,     -1,0,0,              1,0,
+        //     -0.5f,  0.5f,  0.5f,     -1,0,0,              1,1,
+        //     -0.5f,  0.5f, -0.5f,     -1,0,0,              0,1,
+        //
+        //     // Right face (+X)
+        //      0.5f, -0.5f,  0.5f,      1,0,0,              0,0,
+        //      0.5f, -0.5f, -0.5f,      1,0,0,              1,0,
+        //      0.5f,  0.5f, -0.5f,      1,0,0,              1,1,
+        //      0.5f,  0.5f,  0.5f,      1,0,0,              0,1,
+        //
+        //      // Top face (+Y)
+        //      -0.5f,  0.5f,  0.5f,      0,1,0,              0,0,
+        //       0.5f,  0.5f,  0.5f,      0,1,0,              1,0,
+        //       0.5f,  0.5f, -0.5f,      0,1,0,              1,1,
+        //      -0.5f,  0.5f, -0.5f,      0,1,0,              0,1,
+        //
+        //      // Bottom face (-Y)
+        //      -0.5f, -0.5f, -0.5f,      0,-1,0,             0,0,
+        //       0.5f, -0.5f, -0.5f,      0,-1,0,             1,0,
+        //       0.5f, -0.5f,  0.5f,      0,-1,0,             1,1,
+        //      -0.5f, -0.5f,  0.5f,      0,-1,0,             0,1,
+        //};
+        //std::vector<unsigned int> indices =
+        //{
+        //    // Front
+        //    0, 1, 2,
+        //    2, 3, 0,
+        //
+        //    // Back
+        //    4, 5, 6,
+        //    6, 7, 4,
+        //
+        //    // Left
+        //    8, 9, 10,
+        //    10, 11, 8,
+        //
+        //    // Right
+        //    12, 13, 14,
+        //    14, 15, 12,
+        //
+        //    // Top
+        //    16, 17, 18,
+        //    18, 19, 16,
+        //
+        //    // Bottom
+        //    20, 21, 22,
+        //    22, 23, 20
+        //};
         unsigned int texture;
         glGenTextures(1, &texture);
         glBindTexture(GL_TEXTURE_2D, texture);
@@ -322,11 +324,11 @@ namespace eng
         //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(camera.GetView()));
         //glUniformMatrix4fv(projectionLoc, 1, GL_FALSE, glm::value_ptr(camera.GetProjection()));
 
-        float mixAmount = 0.5f;
-
-        const float sensitivity = 0.1;
-        float yaw = -90.0f;
-        float pitch = 0.0f;
+        //float mixAmount = 0.5f;
+        //
+        //const float sensitivity = 0.1;
+        //float yaw = -90.0f;
+        //float pitch = 0.0f;
         
         m_graphicsApi.SetClearColor(0.5, 0.5, 0.5, 1);        
 
@@ -363,7 +365,6 @@ namespace eng
             //lightModel = glm::translate(lightModel, lightPos);
             //lightModel = glm::scale(lightModel, glm::vec3(0.5, 0.5, 0.5));
             
-            m_graphicsApi.ClearBuffers();
             //m_graphicsApi.BindShaderProgram(&shaderProgram);
 
             //cubeEntitiy.Mesh().Draw();
@@ -396,12 +397,18 @@ namespace eng
 
             //lightEntity.Mesh().Draw();
 
+            
+            Profiler::Get().BeginFrame();
+
+            m_graphicsApi.ClearBuffers();
             glfwPollEvents();
             m_input.Update(m_window->GetNativeWindow());
             m_time.Update();
             m_application->Update(m_time.Delta());
 
             glfwSwapBuffers(m_window->GetNativeWindow());
+
+            Profiler::Get().EndFrame();
         }
 	}
 	void Engine::Destroy()

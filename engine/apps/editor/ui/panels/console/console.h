@@ -1,3 +1,6 @@
+#ifndef CONSOLE_H
+#define CONSOLE_H
+
 #include <eng/core/log.h>
 #include <eng/core/engine_context.h>
 #include "editor_component.h"
@@ -11,8 +14,6 @@
 
 namespace eng
 {
-#ifndef CONSOLE_H
-#define CONSOLE_H
 	class Console : public IEditorComponent, public ILogSink
 	{
 	public:
@@ -31,7 +32,5 @@ namespace eng
 		char m_input[256] = {};
 		bool m_scroll_to_bottom = false;
 	};
-#endif // !CONSOLE_H
-
-
 }
+#endif // !CONSOLE_H

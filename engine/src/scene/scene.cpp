@@ -2,6 +2,8 @@
 #include <eng/renderer/renderer.h>
 #include <iostream>
 
+#include <eng/profiler/profiler.h>
+
 namespace eng
 {
     Scene::Scene(EngineContext& ctx, const std::string& name)
@@ -63,9 +65,8 @@ namespace eng
                 , &entity.Transform()
                 });
         }
-        Renderer::Get().Render();
-    
-        Renderer::Get().EndScene();
+        Renderer::Get().Render();    
+        Renderer::Get().EndScene();                
     }
 	void Scene::Update(float dt)
 	{        

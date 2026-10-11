@@ -50,6 +50,7 @@ add_executable(OpenGL
     engine/apps/editor/ui/panels/console/console.cpp
     engine/apps/editor/ui/panels/inspector/inspector.cpp
     engine/apps/editor/ui/panels/properties/properties_panel.cpp
+    engine/apps/editor/ui/panels/toolbar/toolbar.cpp
     
 
 
