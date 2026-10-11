@@ -44,9 +44,9 @@ namespace eng
 			else
 			{
 				ImGui::TextDisabled("No profiler data yet");
-			}
-			ImGui::End();
+			}			
 		}
+		ImGui::End();
 	}
 	void ProfilerPanel::Update(float dt)
 	{

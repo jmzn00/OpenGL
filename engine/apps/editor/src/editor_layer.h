@@ -22,8 +22,8 @@
 #include <memory>
 #include <vector>
 
-
-
+#include <imgui.h>
+#include <imgui_internal.h>
 
 namespace eng
 {
@@ -37,8 +37,11 @@ namespace eng
 		virtual void OnDetach() override;
 
 		void Update(float dt) override;
-		virtual void OnImGuiRender() override;
-	private:
+		virtual void OnImGuiRender() override;		
+	private:		
+		void BuildDefaultDockLayout(ImGuiID dockspaceId, const ImVec2& dockspaceSize);
+		bool m_dockLayoutBuilt = false;
+
 		Camera m_editorCamera{};
 		EditorContext m_editorContext{};
 		CommandRegistry m_commands;

@@ -89,9 +89,96 @@ namespace eng
 
 		m_currentScene->Update(dt);
 		m_currentScene->Render(m_editorCamera);
+	}	
+	void EditorLayer::BuildDefaultDockLayout(ImGuiID dockspaceId, const ImVec2& dockspaceSize)
+	{
+		ImGui::DockBuilderRemoveNode(dockspaceId);
+
+		ImGui::DockBuilderAddNode(
+			dockspaceId,
+			ImGuiDockNodeFlags_DockSpace
+		);
+		ImGui::DockBuilderSetNodeSize(
+			dockspaceId,
+			dockspaceSize
+		);
+
+		ImGuiID mainNode = dockspaceId;
+		ImGuiID leftNode = 0;
+		ImGuiID rightNode = 0;
+		ImGuiID bottomNode = 0;
+
+		ImGui::DockBuilderSplitNode(
+			mainNode,
+			ImGuiDir_Left,
+			0.20f,
+			&leftNode,
+			&mainNode
+		);
+		ImGui::DockBuilderSplitNode(
+			mainNode,
+			ImGuiDir_Right,
+			0.25f,
+			&rightNode,
+			&mainNode
+		);
+		ImGui::DockBuilderSplitNode(
+			mainNode,
+			ImGuiDir_Down,
+			0.25f,
+			&bottomNode,
+			&mainNode
+		);
+
+		ImGui::DockBuilderDockWindow("Inspector", leftNode);
+		ImGui::DockBuilderDockWindow("Properties", rightNode);
+		ImGui::DockBuilderDockWindow("Profiler", rightNode);
+		ImGui::DockBuilderDockWindow("Console", bottomNode);
+
+		ImGui::DockBuilderFinish(dockspaceId);
 	}
 	void EditorLayer::OnImGuiRender()
 	{
+		ImGuiViewport* viewport = ImGui::GetMainViewport();
+		const float toolbarHeight = 48.0f;
+
+		ImGui::SetNextWindowPos(ImVec2(viewport->Pos.x, viewport->Pos.y + toolbarHeight));
+		ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, viewport->Size.y - toolbarHeight));
+		ImGui::SetNextWindowViewport(viewport->ID);
+
+		ImGuiWindowFlags hostFlags =
+			ImGuiWindowFlags_NoTitleBar |
+			ImGuiWindowFlags_NoCollapse |
+			ImGuiWindowFlags_NoResize |
+			ImGuiWindowFlags_NoMove |
+			ImGuiWindowFlags_NoBringToFrontOnFocus |
+			ImGuiWindowFlags_NoNavFocus |
+			ImGuiWindowFlags_NoDocking;
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+
+		ImGui::Begin("EditorDockspaceHost", nullptr, hostFlags);
+
+		ImGui::PopStyleVar(2);
+		
+		ImGuiID dockspaceId = ImGui::GetID("EditorDockspace");
+		ImVec2 dockspaceSize = ImGui::GetContentRegionAvail();
+
+		ImGui::DockSpace(
+			dockspaceId,
+			ImVec2(0.0f, 0.0f),
+			ImGuiDockNodeFlags_PassthruCentralNode
+		);
+
+		if (!m_dockLayoutBuilt)
+		{
+			BuildDefaultDockLayout(dockspaceId, dockspaceSize);
+			m_dockLayoutBuilt = true;
+		}
+
+		ImGui::End();
+
 		for (auto& component : m_components)
 		{
 			component->Draw();

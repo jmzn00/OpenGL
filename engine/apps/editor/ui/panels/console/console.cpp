@@ -34,12 +34,12 @@ namespace eng
 
         float height = viewport->Size.y * 0.25f;
 
-        ImGui::SetNextWindowPos(
-            ImVec2(
-                viewport->Pos.x,
-                viewport->Pos.y + viewport->Size.y - height
-            )
-        );
+        //ImGui::SetNextWindowPos(
+        //    ImVec2(
+        //        viewport->Pos.x,
+        //        viewport->Pos.y + viewport->Size.y - height
+        //    )
+        //);
 
         ImGui::SetNextWindowSize(
             ImVec2(viewport->Size.x, height)
@@ -48,8 +48,6 @@ namespace eng
         ImGui::Begin(
             "Console",
             nullptr,
-            ImGuiWindowFlags_NoMove |
-            ImGuiWindowFlags_NoResize |
             ImGuiWindowFlags_NoCollapse
         );
 

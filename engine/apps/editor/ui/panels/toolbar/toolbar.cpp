@@ -19,16 +19,20 @@ namespace eng
 	void Toolbar::Draw()
 	{
 		ImGuiViewport* viewport = ImGui::GetMainViewport();
-		ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f));
-		ImGui::SetNextWindowSize(ImVec2(viewport->Size.x
-			, viewport->Size.y / 10.0f));
 
-		ImGui::Begin("Toolbar"
-			, nullptr
-			, ImGuiWindowFlags_NoMove
+		const float toolbarHeight = 48.0f;
+
+		ImGui::SetNextWindowPos(viewport->Pos);
+		ImGui::SetNextWindowSize(ImVec2(viewport->Size.x, toolbarHeight));
+
+		ImGuiWindowFlags flags =
+			ImGuiWindowFlags_NoMove
 			| ImGuiWindowFlags_NoResize
 			| ImGuiWindowFlags_NoCollapse
-		);
+			| ImGuiWindowFlags_NoTitleBar
+			| ImGuiWindowFlags_NoDocking;
+
+		ImGui::Begin("Toolbar", nullptr, flags);
 
 		if (ImGui::Button("File"))
 		{	
