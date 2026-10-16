@@ -27,17 +27,22 @@ namespace eng
 			m_shaders["Light"] =
 				std::make_shared<ShaderProgram>(
 					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.vert",
-					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");
+					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");			
+		}		
+		static std::shared_ptr<ShaderProgram> Get(const std::string& name)
+		{
+			ENG_ASSERT(m_instance != nullptr, "SHADER_LIBRARY::GET: INSTANCE IS NULL");
+			return Instance().GetShader(name);
 		}
-		static ShaderLibrary& Get()
+		static ShaderLibrary& Instance()
 		{
 			return *m_instance;
 		}
-		std::shared_ptr<ShaderProgram> Get(const std::string& name)
+	private:
+		std::shared_ptr<ShaderProgram> GetShader(const std::string& name)
 		{
 			return m_shaders.at(name);
 		}
-	private:
 		std::unordered_map<std::string, std::shared_ptr<ShaderProgram>> m_shaders;
 		inline static ShaderLibrary* m_instance;
 	};

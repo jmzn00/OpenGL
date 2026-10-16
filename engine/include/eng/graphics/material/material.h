@@ -6,6 +6,7 @@
 #include <string>
 #include <eng/graphics/shader_program.h>
 #include <eng/graphics/graphics_api.h>
+#include <eng/graphics/texture/texture.h>
 
 namespace eng
 {	
@@ -25,10 +26,15 @@ namespace eng
 		void SetFloat(const std::string& name, const float value);
 		ShaderProgram& GetShaderProgram() const;
 		void Bind(GraphicsAPI& gapi) const;
+
+		void SetDiffuseTexture(const std::shared_ptr<Texture2D>& texture);
+
 	private:
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
 		std::unordered_map<std::string, glm::vec3> m_vec3Params;
 		std::unordered_map<std::string, float> m_floatParams;
+
+		std::shared_ptr<Texture2D> m_diffuseTexture;
 	};
 }
 #endif // !MATERIAL_H

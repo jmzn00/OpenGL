@@ -31,7 +31,7 @@ namespace eng
 		{
 			static Profiler instance;
 			return instance;
-		}
+		}		
 		void BeginFrame()
 		{
 			m_frameStart = Clock::now();

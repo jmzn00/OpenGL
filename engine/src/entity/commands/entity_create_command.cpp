@@ -1,6 +1,8 @@
 #include <eng/command/commands/entity_create_command.h>
 #include <eng/graphics/material/material.h>
+#include <eng/graphics/material/material_library.h>
 #include <eng/debug/assert.h>
+#include <eng/graphics/texture/texture.h>
 
 namespace eng
 {
@@ -31,16 +33,17 @@ namespace eng
 
 			Entity& ent = m_scene.CreateEntity(name);
 
-			Material mat{ MaterialProperties
-				{
-					glm::vec3(0.2, 0.2, 0.2),
-					glm::vec3(0.5, 0.5, 0.5),
-					glm::vec3(0.2, 0.2, 0.2),
-					32.0f} };
+			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Silver"));
+			std::shared_ptr<Texture2D> texture =
+				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container.jpg");
 
-			mat.SetShaderProgram(ShaderLibrary::Get().Get("Default"));
+
+			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
+			mat->SetDiffuseTexture(texture);
+
 			ent.AddComponent<MeshComponent>(
-				CubeMesh(),std::make_shared<Material>(mat));
+				CubeMesh(),mat);
+
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
 		if (arguments[0] == "light")
@@ -48,16 +51,11 @@ namespace eng
 			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "LightEnt";
 			Entity& ent = m_scene.CreateEntity(name);
 
-			Material mat{ MaterialProperties
-				{
-					glm::vec3(0.2, 0.2, 0.2),
-					glm::vec3(0.2, 0.2, 0.2),
-					glm::vec3(0.2, 0.2, 0.2),
-					32.0f} };
-
-			mat.SetShaderProgram(ShaderLibrary::Get().Get("Light"));
+			auto mat = MaterialLibrary::Get("Default");
+			
+			mat->SetShaderProgram(ShaderLibrary::Get("Light"));
 			ent.AddComponent<MeshComponent>(
-				CubeMesh(), std::make_shared<Material>(mat));
+				CubeMesh(), mat);
 			ent.AddComponent<LightComponent>();
 			ent.Transform().SetScale(glm::vec3(0.5f));
 
@@ -70,16 +68,14 @@ namespace eng
 
 			Entity& ent = m_scene.CreateEntity(name);
 
-			Material mat{ MaterialProperties
-				{
-					glm::vec3(0.2, 0.2, 0.2),
-					glm::vec3(0.5, 0.5, 0.5),
-					glm::vec3(0.2, 0.2, 0.2),
-					32.0f} };
+			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Silver"));
+			std::shared_ptr<Texture2D> texture =
+				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/awesomeface.png");
 
-			mat.SetShaderProgram(ShaderLibrary::Get().Get("Default"));
+			mat->SetDiffuseTexture(texture);
+			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
 			ent.AddComponent<MeshComponent>(
-				PyramidMesh(), std::make_shared<Material>(mat));
+				PyramidMesh(), mat);
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
 		return { false, "Usage: ent.create <cube / light>" };

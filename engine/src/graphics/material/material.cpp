@@ -34,6 +34,10 @@ namespace eng
 		}
 		it->second = value;
 	}
+	void Material::SetDiffuseTexture(const std::shared_ptr<Texture2D>& tex)
+	{
+		m_diffuseTexture = tex;
+	}
 	ShaderProgram& Material::GetShaderProgram() const
 	{
 		ENG_ASSERT(m_shaderProgram, "MATERIAL::GET_SHADER_PROGRAM: NO SHADER_PROGRAM");
@@ -51,6 +55,12 @@ namespace eng
 		for (const auto& param : m_floatParams)
 		{
 			m_shaderProgram->SetFloat(param.first, param.second);
+		}
+
+		if (m_diffuseTexture)
+		{
+			m_diffuseTexture->Bind(0);
+			m_shaderProgram->SetInt("material.diffuse", 0);
 		}
 	}
 }

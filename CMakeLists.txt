@@ -72,6 +72,7 @@ add_executable(OpenGL
     engine/src/graphics/commands/graphics_set_wireframe_command.cpp
     engine/src/graphics/graphics_api.cpp
     engine/src/graphics/material/material.cpp
+    engine/src/graphics/texture/texture.cpp
     engine/src/graphics/shader_program.cpp
 
     engine/src/imgui/imgui_layer.cpp

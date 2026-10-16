@@ -140,6 +140,16 @@ namespace eng
 		}
 		glUniform3f(it->second, value.x, value.y, value.z);
 	}
+	void ShaderProgram::SetInt(const std::string& name, int value) const
+	{
+		auto it = m_uniforms.find(name);
+		
+		if (it == m_uniforms.end())
+		{
+			return;
+		}
+		glUniform1i(it->second, value);
+	}
 	void ShaderProgram::SetFloat(const std::string& name, float value) const
 	{
 		auto it = m_uniforms.find(name);
