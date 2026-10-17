@@ -100,7 +100,6 @@ namespace eng
         {
             return false;
         }                
-
         m_shaderLibrary.Init();
         m_materialLibrary.Init();
 

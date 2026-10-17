@@ -4,27 +4,24 @@
 #include <glad/glad.h>
 #include <string>
 
+#include <array>
+#include <cstdint>
+
 namespace eng
 {
 	class Texture2D
 	{
 	public:
+		using Color = std::array<std::uint8_t, 4>;
+
 		explicit Texture2D(const std::string& path);
-		~Texture2D()
-		{
-			if (m_id != 0)
-			{
-				glDeleteTextures(1, &m_id);
-			}
-		}
+		explicit Texture2D(const Color& color);
+
+		~Texture2D();
 		Texture2D(const Texture2D&) = delete;
 		Texture2D& operator=(const Texture2D&) = delete;
+		void Bind(GLuint textureUnit) const;
 
-		void Bind(GLuint textureUnit) const
-		{
-			glActiveTexture(GL_TEXTURE0 + textureUnit);
-			glBindTexture(GL_TEXTURE_2D, m_id);
-		}
 		GLuint GetId() const
 		{
 			return m_id;

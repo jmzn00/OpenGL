@@ -1,6 +1,7 @@
 #include <eng/graphics/material/material.h>
 #include <iostream>
 #include <eng/debug/assert.h>
+#include <eng/graphics/texture/texture_library.h>
 namespace eng
 {	
 	Material::Material(MaterialProperties props)
@@ -9,6 +10,10 @@ namespace eng
 		m_vec3Params["material.diffuse"] = props.diffuse;
 		m_vec3Params["material.specular"] = props.specular;
 		m_floatParams["material.shininess"] = props.shininess;
+		
+		SetDiffuseTexture(TextureLibrary::GetTexture({ 255, 255, 255, 255 }));
+		SetSpecularMap(TextureLibrary::GetTexture({ 255, 255, 255, 255 }));
+		SetEmissionMap(TextureLibrary::GetTexture({0, 0, 0, 255}));		
 	}
 	void Material::SetShaderProgram(const std::shared_ptr<ShaderProgram>& shaderProgram)
 	{
@@ -38,6 +43,14 @@ namespace eng
 	{
 		m_diffuseTexture = tex;
 	}
+	void Material::SetSpecularMap(const std::shared_ptr<Texture2D>& spec)
+	{
+		m_specularMap = spec;
+	}
+	void Material::SetEmissionMap(const std::shared_ptr<Texture2D>& emission)
+	{
+		m_emissionMap = emission;
+	}
 	ShaderProgram& Material::GetShaderProgram() const
 	{
 		ENG_ASSERT(m_shaderProgram, "MATERIAL::GET_SHADER_PROGRAM: NO SHADER_PROGRAM");
@@ -61,6 +74,16 @@ namespace eng
 		{
 			m_diffuseTexture->Bind(0);
 			m_shaderProgram->SetInt("material.diffuse", 0);
+		}
+		if (m_specularMap)
+		{
+			m_specularMap->Bind(1);
+			m_shaderProgram->SetInt("material.specular", 1);
+		}
+		if (m_emissionMap)
+		{
+			m_emissionMap->Bind(2);
+			m_shaderProgram->SetInt("material.emission", 2);
 		}
 	}
 }

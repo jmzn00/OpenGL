@@ -35,11 +35,17 @@ namespace eng
 
 			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Silver"));
 			std::shared_ptr<Texture2D> texture =
-				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container.jpg");
+				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2.png");
+			std::shared_ptr<Texture2D> specular =
+				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2_specular.png");
+			std::shared_ptr<Texture2D> emission =
+				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/matrix.jpg");
 
 
 			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
 			mat->SetDiffuseTexture(texture);
+			mat->SetSpecularMap(specular);
+			mat->SetEmissionMap(emission);
 
 			ent.AddComponent<MeshComponent>(
 				CubeMesh(),mat);
@@ -69,13 +75,11 @@ namespace eng
 			Entity& ent = m_scene.CreateEntity(name);
 
 			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Silver"));
-			std::shared_ptr<Texture2D> texture =
-				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/awesomeface.png");
 
-			mat->SetDiffuseTexture(texture);
 			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
 			ent.AddComponent<MeshComponent>(
 				PyramidMesh(), mat);
+
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
 		return { false, "Usage: ent.create <cube / light>" };

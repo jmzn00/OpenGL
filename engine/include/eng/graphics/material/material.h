@@ -28,6 +28,8 @@ namespace eng
 		void Bind(GraphicsAPI& gapi) const;
 
 		void SetDiffuseTexture(const std::shared_ptr<Texture2D>& texture);
+		void SetSpecularMap(const std::shared_ptr<Texture2D>& specular);
+		void SetEmissionMap(const std::shared_ptr<Texture2D>& emission);
 
 	private:
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
@@ -35,6 +37,8 @@ namespace eng
 		std::unordered_map<std::string, float> m_floatParams;
 
 		std::shared_ptr<Texture2D> m_diffuseTexture;
+		std::shared_ptr<Texture2D> m_specularMap;
+		std::shared_ptr<Texture2D> m_emissionMap;
 	};
 }
 #endif // !MATERIAL_H
