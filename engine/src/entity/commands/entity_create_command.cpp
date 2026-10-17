@@ -38,14 +38,14 @@ namespace eng
 				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2.png");
 			std::shared_ptr<Texture2D> specular =
 				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2_specular.png");
-			std::shared_ptr<Texture2D> emission =
-				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/matrix.jpg");
+			//std::shared_ptr<Texture2D> emission =
+			//	std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/matrix.jpg");
 
 
 			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
 			mat->SetDiffuseTexture(texture);
 			mat->SetSpecularMap(specular);
-			mat->SetEmissionMap(emission);
+			//mat->SetEmissionMap(emission);
 
 			ent.AddComponent<MeshComponent>(
 				CubeMesh(),mat);

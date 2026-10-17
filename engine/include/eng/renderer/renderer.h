@@ -12,6 +12,7 @@
 #include <eng/profiler/profiler.h>
 
 #include <vector>
+#include <iostream>
 
 namespace eng
 {
@@ -40,7 +41,10 @@ namespace eng
 			m_currentCamera = &camera;
 
 			m_commands.clear();
-			m_lights.clear();
+
+			m_pointLights.clear();
+			m_directionalLights.clear();
+			m_spotLights.clear();
 		}
 		void EndScene()
 		{
@@ -50,12 +54,48 @@ namespace eng
 		{
 			LightComponent& light = lightEntity.GetComponent<LightComponent>();
 			const TransformComponent& transform{ lightEntity.Transform() };
-			m_lights.push_back({ 
+
+			RenderLight renderLight{
+				light.type,
 				transform.Translation,
+				transform.GetForward(),
 				light.ambient,
 				light.diffuse,
-				light.specular
-				});
+				light.specular,
+				light.constant,
+				light.linear,
+				light.quadratic,
+				light.innerCutoff,
+				light.outerCutoff
+			};
+
+			switch (renderLight.type)
+			{
+			case LightType::Point:
+				m_pointLights.push_back(renderLight);
+				break;
+			case LightType::Direction:
+				m_directionalLights.push_back(renderLight);
+				break;
+			case LightType::Spot:
+				m_spotLights.push_back(renderLight);
+				break;
+			}
+		}		
+		void RenderLights(const ShaderProgram& shader)
+		{
+			if (!m_pointLights.empty())
+			{
+				shader.SetPointLights(m_pointLights);
+			}
+			if (!m_directionalLights.empty())
+			{
+				shader.SetDirectionalLights(m_directionalLights);
+			}
+			if (!m_spotLights.empty())
+			{
+				shader.SetSpotLights(m_spotLights);
+			}
 		}
 		void Render()
 		{
@@ -85,11 +125,9 @@ namespace eng
 				shader.SetMat4(
 					"model",
 					cmd.transform->GetTransform());
+				
+				RenderLights(shader);
 
-				if (!m_lights.empty())
-				{
-					shader.SetLight(m_lights[0]);
-				}
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();
 
@@ -100,6 +138,10 @@ namespace eng
 	private:
 		std::vector<DrawCommand> m_commands;
 		std::vector<RenderLight> m_lights;
+		
+		std::vector<RenderLight> m_pointLights;
+		std::vector<RenderLight> m_directionalLights;
+		std::vector<RenderLight> m_spotLights;
 
 		Camera* m_currentCamera = nullptr;
 		GraphicsAPI& m_graphicsAPI;

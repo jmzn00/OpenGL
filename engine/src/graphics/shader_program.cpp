@@ -113,7 +113,7 @@ namespace eng
 
 		if (it == m_uniforms.end())
 		{
-			std::cout << "Uniform not found: " << name << '\n';
+			//std::cout << "Uniform not found: " << name << '\n';
 			return;			
 		}
 		glUniform1f(it->second, x);
@@ -163,10 +163,109 @@ namespace eng
 	}
 	void ShaderProgram::SetLight(const RenderLight& light) const
 	{
-		SetVec3("light.position", light.position);
-		SetVec3("light.ambient", light.ambient);
-		SetVec3("light.diffuse", light.diffuse);
-		SetVec3("light.specular", light.specular);
+		switch (light.type)
+		{
+		case LightType::Point:
+			std::cout << "point light" << '\n';
+
+			SetVec3("pointLights[0].position", light.position);
+			SetVec3("pointLights[0].ambient", light.ambient);
+			SetVec3("pointLights[0].diffuse", light.diffuse);
+			SetVec3("pointLights[0].specular", light.specular);
+
+			SetFloat("pointLights[0].constant", light.constant);
+			SetFloat("pointLights[0].linear", light.linear);
+			SetFloat("pointLights[0].quadratic", light.quadratic);
+			break;
+		case LightType::Direction:
+			break;
+
+		}
+		//SetInt("light.type", static_cast<int>(light.type));
+		//
+		//SetVec3("light.position", light.position);
+		//SetVec3("light.direction", light.direction);
+		//
+		//SetVec3("light.ambient", light.ambient);
+		//SetVec3("light.diffuse", light.diffuse);
+		//SetVec3("light.specular", light.specular);
+		//
+		//SetFloat("light.constant", light.constant);
+		//SetFloat("light.linear", light.linear);
+		//SetFloat("light.quadratic", light.quadratic);
+		//
+		//SetFloat("light.innerCutoff", light.innerCutoff);
+		//SetFloat("light.outerCutoff", light.outerCutoff);
+	}
+	void ShaderProgram::SetPointLights(const std::vector<RenderLight>& lights) const
+	{
+		constexpr std::size_t maxPointLights = 32;
+		const std::size_t count = std::min(lights.size(), maxPointLights);
+
+		SetInt("pointLightCount", static_cast<int>(count));
+
+		for (std::size_t i = 0; i < count; i++)
+		{
+			const std::string prefix{
+				"pointLights[" + std::to_string(i) + "]."
+			};
+
+			SetVec3(prefix + "position", lights[i].position);
+			SetVec3(prefix + "ambient", lights[i].ambient);
+			SetVec3(prefix + "diffuse", lights[i].diffuse);
+			SetVec3(prefix + "specular", lights[i].specular);
+
+			SetFloat(prefix + "constant", lights[i].constant);
+			SetFloat(prefix + "linear", lights[i].linear);
+			SetFloat(prefix + "quadratic", lights[i].quadratic);
+		}
+	}
+	void ShaderProgram::SetDirectionalLights(const std::vector<RenderLight>& lights) const
+	{
+		constexpr std::size_t maxDirectionalLights = 4;
+		const std::size_t count = std::min(lights.size(), maxDirectionalLights);
+
+		SetInt("directionalLightCount", static_cast<int>(count));
+		for (std::size_t i = 0; i < count; i++)
+		{
+			const std::string prefix{
+				"directionalLights[" + std::to_string(i) + "]."
+			};
+
+			SetVec3(prefix + "direction", lights[i].direction);
+			SetVec3(prefix + "ambient", lights[i].ambient);
+			SetVec3(prefix + "diffuse", lights[i].diffuse);
+			SetVec3(prefix + "specular", lights[i].specular);
+		}
+	}
+	void ShaderProgram::SetSpotLights(const std::vector<RenderLight>& lights) const
+	{
+		constexpr std::size_t maxSpotLights = 32;
+		const std::size_t count = std::min(lights.size(), maxSpotLights);
+
+		SetInt("spotLightCount", static_cast<int>(count));
+
+		for (std::size_t i = 0; i < count; i++)
+		{
+			const std::string prefix{
+				"spotLights[" + std::to_string(i) + "]."
+			};
+
+			SetFloat(prefix + "innerCutoff", lights[i].innerCutoff);
+			SetFloat(prefix + "outerCutoff", lights[i].outerCutoff);
+			SetFloat(prefix + "constant", lights[i].constant);
+			SetFloat(prefix + "linear", lights[i].linear);
+			SetFloat(prefix + "quadratic", lights[i].quadratic);
+
+
+			SetVec3(prefix + "position", lights[i].position);
+			SetVec3(prefix + "direction", lights[i].direction);
+			SetVec3(prefix + "ambient", lights[i].ambient);
+			SetVec3(prefix + "diffuse", lights[i].diffuse);
+			SetVec3(prefix + "specular", lights[i].specular);
+
+
+		}
 	}
 	ShaderProgram::~ShaderProgram()
 	{

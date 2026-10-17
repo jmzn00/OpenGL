@@ -32,6 +32,10 @@ namespace eng
 		void SetVec3(const std::string& name, glm::vec3 value) const;	
 		void SetLight(const RenderLight& light) const;
 
+		void SetPointLights(const std::vector<RenderLight>& lights) const;
+		void SetDirectionalLights(const std::vector<RenderLight>& lights) const;
+		void SetSpotLights(const std::vector<RenderLight>& lights) const;
+
 	private:
 		GLuint m_id{0};
 		[[maybe_unused]]std::unordered_map<std::string, GLuint> m_uniforms;

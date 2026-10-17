@@ -5,6 +5,8 @@
 
 #include <eng/graphics/material/material_library.h>
 
+#include <string>
+
 namespace eng
 {
 	PropertiesPanel::PropertiesPanel(Scene& scene, EditorContext& editorContext)
@@ -49,27 +51,32 @@ namespace eng
 			ImGui::DragFloat3("Rotation", &tc.Rotation.x, 0.1f);
 			ImGui::DragFloat3("Scale", &tc.Scale.x, 0.1f);			
 						
-			if (ent->HasComponent<MeshComponent>())
+			if (ent->HasComponent<LightComponent>())
 			{
-				ImGui::SeparatorText("Material");				
-				MeshComponent& mc = ent->GetComponent<MeshComponent>();				
-
-				if (ImGui::Button("Set", ImVec2(width, 0)))
+				ImGui::SeparatorText("Light");			
+				auto& lc = ent->GetComponent<LightComponent>();
+				
+				if (ImGui::Button("Type"))
 				{
-					ImGui::OpenPopup("MaterialSetPopup");
+					ImGui::OpenPopup("LightTypePopup");
 				}
-				if (ImGui::BeginPopup("MaterialSetPopup"))
-				{
-					auto& materials = MaterialLibrary::GetAllMaterials();
-					for (auto& mat : materials)
+				if (ImGui::BeginPopup("LightTypePopup"))
+				{					
+					for (int i = 0; i < static_cast<int>(LightType::Count); i++)
 					{
-						if (ImGui::Button(mat.first.c_str()))
+						LightType type = static_cast<LightType>(i);
+						if (ImGui::MenuItem(Light::ToString(type)))
 						{
-							mc.material = mat.second;							
-						}
-					}
+							lc.type = type;
+						}									
+					}					
 					ImGui::EndPopup();
-				}									
+				}
+				if (lc.type == LightType::Spot)
+				{
+					ImGui::DragFloat("Inner Cutoff", &lc.innerCutoff, 0.01);
+					ImGui::DragFloat("Outer Cutoff", &lc.outerCutoff, 0.01);
+				}				
 			}
 		}
 		ImGui::End();
