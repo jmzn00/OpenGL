@@ -2,15 +2,22 @@ cmake_minimum_required(VERSION 3.20)
 
 project(OpenGL LANGUAGES C CXX)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
 add_subdirectory(dependencies/glfw-3.5.1)
 
+set(ASSIMP_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(ASSIMP_INSTALL OFF CACHE BOOL "" FORCE)
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+
+add_subdirectory(dependencies/assimp)
+
 add_library(glad
     dependencies/glad/src/glad.c
 )
+
 
 target_include_directories(glad PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/glad/include
@@ -99,6 +106,7 @@ target_link_libraries(OpenGL PRIVATE
     glad
     glfw
     imgui
+    assimp
     opengl32
 )
 

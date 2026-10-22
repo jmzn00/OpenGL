@@ -20,7 +20,8 @@ namespace eng
 			m_VBO = 0;
 			glGenBuffers(1, &m_VBO);
 			glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
-			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float), vertices.data(), GL_STATIC_DRAW);
+			glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(float)
+				, vertices.data(), GL_STATIC_DRAW);
 
 			for (auto& element : m_vertexLayout.elements)
 			{
@@ -32,7 +33,8 @@ namespace eng
 			m_EBO = 0;
 			glGenBuffers(1, &m_EBO);
 			glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
-			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t), indices.data(), GL_STATIC_DRAW);
+			glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(uint32_t)
+				, indices.data(), GL_STATIC_DRAW);
 
 			// restore previously bound VAO
 			glBindVertexArray(static_cast<GLuint>(prevVAO));
