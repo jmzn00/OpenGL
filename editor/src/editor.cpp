@@ -1,7 +1,7 @@
 #include "editor.h"
 
 #include "editor_layer.h"
-#include <eng/scene/scene_layer.h>
+#include "scene_layer.h"
 
 #include <iostream>
 

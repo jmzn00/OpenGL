@@ -1,7 +1,5 @@
-#include <iostream>
 #include <eng/core/engine.h>
 #include "editor.h"
-#include <string_view>
 
 int main()
 {
