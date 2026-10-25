@@ -8,6 +8,7 @@
 #include <eng/graphics/material/material.h>
 #include <memory>
 #include <eng/graphics/light/light.h>
+#include <eng/renderer/model.h>
 
 
 namespace eng
@@ -51,6 +52,10 @@ namespace eng
 		{
 			Scale = scale;
 		}
+	};
+	struct ModelComponent
+	{
+		std::shared_ptr<Model> model;
 	};
 	struct MeshComponent
 	{

@@ -21,11 +21,11 @@ namespace eng
 		std::vector<VertexElement> elements;
 		uint32_t stride = 0;
 	};
-	struct Vertex
-	{
-		glm::vec3 Position;
-		glm::vec3 Normal;
-		glm::vec3 TexCoords;
-	};
+	//struct Vertex
+	//{
+	//	glm::vec3 Position;
+	//	glm::vec3 Normal;
+	//	glm::vec3 TexCoords;
+	//};
 }
 #endif // !VERTEX_LAYOUT_H

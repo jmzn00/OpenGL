@@ -53,6 +53,20 @@ namespace eng
             {
                 Renderer::Get().SubmitLight(entity);
             }
+            if (entity.HasComponent<ModelComponent>())
+            {
+                auto& mc = entity.GetComponent<ModelComponent>();
+
+                for (auto& part : mc.model->GetParts())
+                {
+                    Renderer::Get().Submit(
+                        {
+                            part.mesh.get(),
+                            part.material.get(),
+                            &entity.Transform()
+                        });
+                }
+            }
     
             if (!entity.HasComponent<MeshComponent>())
                 continue;

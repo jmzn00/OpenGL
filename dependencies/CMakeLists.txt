@@ -23,7 +23,6 @@ target_include_directories(glm INTERFACE
 set(IMGUI_DIR
     ${CMAKE_CURRENT_SOURCE_DIR}/imgui-docking
 )
-
 add_library(imgui
     ${IMGUI_DIR}/imgui.cpp
     ${IMGUI_DIR}/imgui_draw.cpp

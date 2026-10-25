@@ -1,3 +1,6 @@
+#ifndef MATERIAL_LIBRARY_H
+#define MATERIAL_LIBRARY_H
+
 #include <eng/graphics/material/material.h>
 #include <eng/debug/assert.h>
 
@@ -105,7 +108,7 @@ namespace eng
 			ENG_ASSERT(m_instance != nullptr, "MATERIAL_LIBRARY:Get: INSTANCE IS NULL");
 			return Instance().GetMaterial(name);
 		}
-		static std::unordered_map<std::string, std::shared_ptr<Material>>& GetAllMaterials() 
+		static std::unordered_map<std::string, std::shared_ptr<Material>>& GetAllMaterials()
 		{
 			ENG_ASSERT(m_instance != nullptr, "MATERIAL_LIBRARY:GetAll: INSTANCE IS NULL");
 			return Instance().GetAll();
@@ -129,3 +132,6 @@ namespace eng
 		inline static MaterialLibrary* m_instance;
 	};
 }
+#endif // !MATERIAL_LIBRARY_H
+
+

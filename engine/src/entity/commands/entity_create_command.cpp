@@ -3,6 +3,7 @@
 #include <eng/graphics/material/material_library.h>
 #include <eng/debug/assert.h>
 #include <eng/graphics/texture/texture.h>
+#include <eng/renderer/model.h>
 
 namespace eng
 {
@@ -79,6 +80,17 @@ namespace eng
 			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
 			ent.AddComponent<MeshComponent>(
 				PyramidMesh(), mat);
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
+		if (arguments[0] == "backpack")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "BackpackEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+
+			auto& modelComp = ent.AddComponent<ModelComponent>();
+			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/backpack/backpack.obj");
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
