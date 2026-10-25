@@ -11,9 +11,9 @@ namespace eng
 		m_vec3Params["material.specular"] = props.specular;
 		m_floatParams["material.shininess"] = props.shininess;
 		
-		SetDiffuseTexture(TextureLibrary::GetTexture({ 255, 255, 255, 255 }));
-		SetSpecularMap(TextureLibrary::GetTexture({ 255, 255, 255, 255 }));
-		SetEmissionMap(TextureLibrary::GetTexture({0, 0, 0, 255}));		
+		SetDiffuseTexture(TextureLibrary::GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
+		SetSpecularMap(TextureLibrary::GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
+		SetEmissionMap(TextureLibrary::GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
 	}
 	void Material::SetShaderProgram(const std::shared_ptr<ShaderProgram>& shaderProgram)
 	{

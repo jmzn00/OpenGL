@@ -8,6 +8,8 @@
 #include <array>
 #include <cstdint>
 #include <map>
+#include <unordered_map>
+#include <string>
 
 namespace eng
 {
@@ -36,6 +38,10 @@ namespace eng
 		{
 			return Instance().GetTextureInternal(color);
 		}
+		static std::shared_ptr<Texture2D> GetTexture(const std::string& path)
+		{
+			return Instance().GetTextureInternal(path);
+		}
 	private:
 		std::shared_ptr<Texture2D> GetTextureInternal(const Color& color)
 		{
@@ -49,9 +55,26 @@ namespace eng
 
 			return newTexture;
 		}
+		std::shared_ptr<Texture2D> GetTextureInternal(const std::string& path)
+		{
+			auto texture = m_fileTextures.find(path);
+
+			if (texture != m_fileTextures.end())
+			{
+				return texture->second;
+			}
+
+			auto newTexture =
+				std::make_shared<Texture2D>(path);
+
+			m_fileTextures.emplace(path, newTexture);
+
+			return newTexture;
+		}
 
 		inline static TextureLibrary* m_instance{ nullptr };
 		std::map<Color, std::shared_ptr<Texture2D>> m_colorTextures;
+		std::unordered_map<std::string, std::shared_ptr<Texture2D>> m_fileTextures;
 	};
 }
 

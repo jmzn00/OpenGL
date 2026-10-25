@@ -94,6 +94,19 @@ namespace eng
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
+		if (arguments[0] == "sponza")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "SponzaEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+
+			ent.Transform().SetScale(glm::vec3(0.1, 0.1, 0.1));
+
+			auto& modelComp = ent.AddComponent<ModelComponent>();
+			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/sponza/sponza.obj");
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
 		return { false, "Usage: ent.create <cube / light>" };
 	}
 }

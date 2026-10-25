@@ -9,6 +9,11 @@
 #include <unordered_map>
 #include <eng/graphics/shader_library.h>
 
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
+#include <eng/graphics/texture/texture_library.h>
+
 namespace eng
 {
 	class MaterialLibrary
@@ -112,8 +117,74 @@ namespace eng
 		{
 			ENG_ASSERT(m_instance != nullptr, "MATERIAL_LIBRARY:GetAll: INSTANCE IS NULL");
 			return Instance().GetAll();
+		}		
+		static std::shared_ptr<Material> Create(aiMaterial* aiMat, const std::string& directory)
+		{
+			return Instance().CreateInternal(aiMat, directory);
 		}
 	private:
+		std::shared_ptr<Texture2D> LoadMaterialTexture(aiMaterial* aiMat, aiTextureType type
+			, const std::string& directory)
+		{
+			if (aiMat->GetTextureCount(type) == 0)
+				return nullptr;
+
+			aiString path;
+			aiMat->GetTexture(type, 0, &path);
+
+			std::string texturePath =
+				directory + "/" + path.C_Str();
+
+			return TextureLibrary::GetTexture(texturePath);
+		}
+		std::shared_ptr<Material> CreateInternal(aiMaterial* aiMat, const std::string& directory)
+		{
+			MaterialProperties props{};
+
+			aiColor3D color;
+
+			if (aiMat->Get(AI_MATKEY_COLOR_AMBIENT, color) == AI_SUCCESS)
+				props.ambient = { color.r, color.g, color.b };
+			if (aiMat->Get(AI_MATKEY_COLOR_DIFFUSE, color) == AI_SUCCESS)
+				props.diffuse = { color.r, color.g, color.b };
+			if (aiMat->Get(AI_MATKEY_COLOR_SPECULAR, color) == AI_SUCCESS)
+				props.specular = { color.r, color.g, color.b };
+
+			float shininess;
+			if (aiMat->Get(AI_MATKEY_SHININESS, shininess) == AI_SUCCESS)
+				props.shininess = shininess;
+
+			auto material = std::make_shared<Material>(props);
+
+			if (auto tex =
+				LoadMaterialTexture(
+					aiMat,
+					aiTextureType_DIFFUSE,
+					directory))
+			{
+				material->SetDiffuseTexture(tex);
+			}
+
+			if (auto tex =
+				LoadMaterialTexture(
+					aiMat,
+					aiTextureType_SPECULAR,
+					directory))
+			{
+				material->SetSpecularMap(tex);
+			}
+
+			if (auto tex =
+				LoadMaterialTexture(
+					aiMat,
+					aiTextureType_EMISSIVE,
+					directory))
+			{
+				material->SetEmissionMap(tex);
+			}
+
+			return material;
+		}
 		std::shared_ptr<Material> GetMaterial(const std::string& name)
 		{
 			auto material = m_materials.find(name);

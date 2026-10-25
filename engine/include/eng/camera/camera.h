@@ -21,7 +21,7 @@ namespace eng
 		void SetViewportSize(uint32_t w, uint32_t h)
 		{
 			m_projection = glm::perspective(glm::radians(m_fov)
-				, static_cast<float>(w) / h, 0.1f, 100.0f);
+				, static_cast<float>(w) / h, 0.1f, 1000.0f);
 		}
 		glm::vec3 GetPosition() const
 		{
