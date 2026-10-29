@@ -9,7 +9,7 @@ namespace eng
     Scene::Scene(EngineContext& ctx, const std::string& name)
         : m_engineContext{ ctx }, m_name{ name }
     {
-        Window& window{ ctx.GetWindow() };         
+        Window& window{ ctx.GetWindow() };           
     }
     Entity& Scene::CreateEntity(const std::string& name)
     {
@@ -63,7 +63,8 @@ namespace eng
                         {
                             part.mesh.get(),
                             part.material.get(),
-                            &entity.Transform()
+                            &entity.Transform(),
+                            &entity
                         });
                 }
             }
@@ -77,6 +78,7 @@ namespace eng
                 { meshComponent.mesh.get()
                 , meshComponent.material.get()
                 , &entity.Transform()
+                , &entity
                 });
         }
         Renderer::Get().Render();    

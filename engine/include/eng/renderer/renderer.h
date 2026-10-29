@@ -10,18 +10,19 @@
 #include <eng/graphics/material/material.h>
 #include <eng/entity/entity.h>
 #include <eng/profiler/profiler.h>
+#include <eng/renderer/render_pass.h>
+#include <eng/renderer/draw_command.h>
+
+#include <eng/renderer/passes/geometry_pass.h>
 
 #include <vector>
 #include <iostream>
+#include <memory>
+#include <utility>
 
 namespace eng
 {
-	struct DrawCommand
-	{
-		Mesh* mesh;
-		Material* material;
-		TransformComponent* transform;
-	};
+	
 	class Renderer
 	{		
 	public:
@@ -30,8 +31,30 @@ namespace eng
 		{
 			ENG_ASSERT(m_instance == nullptr, "Renderer instance exists");
 			m_instance = this;
+
+			AddPass<GeometryPass>();			
 		}
 		static Renderer& Get() { return *m_instance; }
+
+		template<typename T, typename... Args>
+		T& AddPass(Args&&... args)
+		{
+			static_assert(
+				std::is_base_of_v<RenderPass, T>,
+				"T must derive from RenderPass");
+
+			auto pass = std::make_unique<T>(
+				std::forward<Args>(args)...);
+
+			pass->Init();
+
+			T& ref = *pass;
+
+			m_passes.push_back(std::move(pass));
+
+			return ref;
+		}
+		
 		void Submit(const DrawCommand& cmd)
 		{
 			m_commands.push_back(cmd);
@@ -82,62 +105,28 @@ namespace eng
 				break;
 			}
 		}		
-		void RenderLights(const ShaderProgram& shader)
-		{
-			if (!m_pointLights.empty())
-			{
-				shader.SetPointLights(m_pointLights);
-			}
-			if (!m_directionalLights.empty())
-			{
-				shader.SetDirectionalLights(m_directionalLights);
-			}
-			if (!m_spotLights.empty())
-			{
-				shader.SetSpotLights(m_spotLights);
-			}
-		}
 		void Render()
 		{
 			ENG_ASSERT(m_currentCamera != nullptr,
 				"No active scene");
 
-			for (auto& cmd : m_commands)
+			RenderContext context
 			{
-				const ShaderProgram& shader{ cmd.material->GetShaderProgram() };
+				m_graphicsAPI,
+				*m_currentCamera,
+				m_commands,
+				m_pointLights,
+				m_directionalLights,
+				m_spotLights
+			};
 
-				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");												
-
-				cmd.material->Bind(m_graphicsAPI);
-
-				shader.SetMat4(
-					"view",
-					m_currentCamera->GetView());
-
-				shader.SetMat4(
-					"projection",
-					m_currentCamera->GetProjection());
-
-				shader.SetVec3(
-					"viewPos",
-					m_currentCamera->GetPosition());
-
-				shader.SetMat4(
-					"model",
-					cmd.transform->GetTransform());
-				
-				RenderLights(shader);
-
-				cmd.mesh->Bind();
-				cmd.mesh->Draw();
-
-				Profiler::Get().IncrementDrawCalls();
-				Profiler::Get().AddTriangles(cmd.mesh->GetVertexCount());
+			for (auto& pass : m_passes)
+			{
+				pass->Execute(context);
 			}
 		}
 	private:
 		std::vector<DrawCommand> m_commands;
-		std::vector<RenderLight> m_lights;
 		
 		std::vector<RenderLight> m_pointLights;
 		std::vector<RenderLight> m_directionalLights;
@@ -146,6 +135,8 @@ namespace eng
 		Camera* m_currentCamera = nullptr;
 		GraphicsAPI& m_graphicsAPI;
 		inline static Renderer* m_instance = nullptr;
+
+		std::vector<std::unique_ptr<RenderPass>> m_passes;
 	};
 }
 #endif // !RENDERER_H

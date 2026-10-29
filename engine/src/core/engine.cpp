@@ -65,6 +65,8 @@ namespace eng
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_FOCUSED, GLFW_TRUE);
         glfwWindowHint(GLFW_FOCUS_ON_SHOW, GLFW_TRUE);
+        glfwWindowHint(GLFW_DEPTH_BITS, 24);
+        glfwWindowHint(GLFW_STENCIL_BITS, 8);
         
         GLFWwindow* window = glfwCreateWindow(
             width,
@@ -106,7 +108,6 @@ namespace eng
         m_renderer = std::make_unique<Renderer>(m_graphicsApi);
         m_context = std::make_unique<EngineContext>
             (*m_window, m_logger, m_graphicsApi, m_input, *m_renderer);
-        
 
         return m_application->Init(*m_context);
 	}

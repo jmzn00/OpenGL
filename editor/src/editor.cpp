@@ -5,6 +5,9 @@
 
 #include <iostream>
 
+#include <eng/renderer/renderer.h>
+#include <outline_pass.h>
+
 namespace eng
 {
 	bool Editor::Init(EngineContext& ctx)
@@ -22,6 +25,8 @@ namespace eng
 		PushOverlay(m_imguiLayer);
 		PushLayer(new SceneLayer(ctx, *m_currentScene, *m_editorContext));
 		PushLayer(new EditorLayer(ctx, *m_editorContext));		
+
+		Renderer::Get().AddPass<OutlinePass>(*m_editorContext);
 				
 		return true;
 	}

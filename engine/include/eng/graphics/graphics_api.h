@@ -15,18 +15,28 @@ namespace eng
 	{
 	public:
 		bool Init();
-		GLuint CreateVertexBuffer(const std::vector<float>& vertices);
-		GLuint CreateIndexBuffer(const std::vector<uint32_t>& indices);		
 
 		void SetClearColor(float r, float g, float b, float a);
 		void ClearBuffers();
 
 		void BindShaderProgram(ShaderProgram* shaderProgram);
-		void BindMaterial(Material* material);
-		void BindMesh(Mesh* mesh);
-		void DrawMesh(Mesh* mesh);
 
 		void ToggleWireframe(bool isWireframe);
+
+		static void SetStencilFunc(
+			GLenum func,
+			GLint ref,
+			GLuint mask);
+		static void SetStencilOp(
+			GLenum sfail,
+			GLenum dpfail,
+			GLenum dppass);
+		static void SetStencilMask(GLuint mask);
+		static void SetColorMask(GLenum a, GLenum b, GLenum c, GLenum d);
+
+		static void EnableTest(GLenum test);
+		static void DisableTest(GLenum test);
+
 	};
 }
 #endif // !GRAPHICS_API_H

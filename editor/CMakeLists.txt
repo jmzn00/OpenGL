@@ -14,6 +14,10 @@ target_include_directories(Editor
     PUBLIC
         include
 )
+target_compile_definitions(Editor
+    PRIVATE
+        EDITOR_ASSET_DIR="${CMAKE_CURRENT_SOURCE_DIR}/assets"
+)
 
 target_link_libraries(Editor
     PRIVATE
