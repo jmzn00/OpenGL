@@ -158,5 +158,41 @@ namespace eng
 
         return std::make_shared<Mesh>(vertexLayout, vertices, indices);
     }
+    inline std::shared_ptr<Mesh> QuadMesh()
+    {
+        std::vector<float> vertices =
+        {
+            // positions          // normals         // tex coords
+            -0.5f,  0.5f, 0.0f,   0.f, 0.f, 1.f,    0.f, 1.f,
+             0.5f,  0.5f, 0.0f,   0.f, 0.f, 1.f,    1.f, 1.f,
+             0.5f, -0.5f, 0.0f,   0.f, 0.f, 1.f,    1.f, 0.f,
+            -0.5f, -0.5f, 0.0f,   0.f, 0.f, 1.f,    0.f, 0.f
+		};
+        std::vector<unsigned int> indices =
+        {
+            0, 1, 2,
+            2, 3, 0
+		};
+        VertexLayout layout{};
+
+		layout.stride = 8 * sizeof(float);
+        layout.elements.push_back({
+            0,
+            3,
+            GL_FLOAT,
+            0 });
+        layout.elements.push_back({
+            1,
+            3,
+            GL_FLOAT,
+            3 * sizeof(float) });
+        layout.elements.push_back({
+            2,
+            2,
+            GL_FLOAT,
+            6 * sizeof(float) });
+
+        return std::make_shared<Mesh>(layout, vertices, indices);
+    }
 }
 #endif // !MESH_LIBRARY

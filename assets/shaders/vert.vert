@@ -19,7 +19,6 @@
 
             // inverse is expensive, okay for small scale but preferrably done on the cpu
             // and sent to the shader via uniform
-
             Normal = mat3(transpose(inverse(model))) * aNormal;
             TexCoords = aTexCoords;
         }

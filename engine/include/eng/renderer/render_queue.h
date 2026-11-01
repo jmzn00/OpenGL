@@ -17,11 +17,33 @@ namespace eng
 		// viewMatrix
 		// projectionMatrix
 	};
-	class RenderQueue
+	struct RenderQueue
 	{
-	public:
-		void Submit(const RenderCommand& cmd);
-		void Draw(GraphicsAPI& gapi, const Camera& camera);	
+		std::vector<DrawCommand> opaque;
+		std::vector<DrawCommand> masked;
+		std::vector<DrawCommand> transparent;
+
+		void Clear()
+		{
+			opaque.clear();
+			masked.clear();
+			transparent.clear();
+		}
+		void Submit(const DrawCommand& cmd)
+		{
+			switch (cmd.material->GetAlphaMode())
+			{
+			case AlphaMode::Opaque:
+				opaque.push_back(cmd);
+				break;
+			case AlphaMode::Mask:
+				masked.push_back(cmd);
+				break;
+			case AlphaMode::Blend:
+				transparent.push_back(cmd);
+				break;
+			}
+		}
 	};
 }
 #endif // !RENDER_QUEUE_H

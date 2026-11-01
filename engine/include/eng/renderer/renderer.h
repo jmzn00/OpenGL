@@ -13,7 +13,8 @@
 #include <eng/renderer/render_pass.h>
 #include <eng/renderer/draw_command.h>
 
-#include <eng/renderer/passes/geometry_pass.h>
+#include <eng/renderer/passes/opaque_pass.h>
+#include <eng/renderer/passes/transparent_pass.h>
 
 #include <vector>
 #include <iostream>
@@ -32,7 +33,8 @@ namespace eng
 			ENG_ASSERT(m_instance == nullptr, "Renderer instance exists");
 			m_instance = this;
 
-			AddPass<GeometryPass>();			
+			AddPass<OpaquePass>();
+			AddPass<TransparentPass>();
 		}
 		static Renderer& Get() { return *m_instance; }
 
@@ -50,7 +52,16 @@ namespace eng
 
 			T& ref = *pass;
 
-			m_passes.push_back(std::move(pass));
+			auto it = std::find_if(
+				m_passes.begin(),
+				m_passes.end(),
+				[&](const auto& other)
+				{
+					return static_cast<int>(pass->Stage()) <
+						static_cast<int>(other->Stage());
+				});
+
+			m_passes.insert(it, std::move(pass));
 
 			return ref;
 		}
@@ -63,6 +74,7 @@ namespace eng
 		{
 			m_currentCamera = &camera;
 
+			m_renderQueue.Clear();
 			m_commands.clear();
 
 			m_pointLights.clear();
@@ -110,11 +122,13 @@ namespace eng
 			ENG_ASSERT(m_currentCamera != nullptr,
 				"No active scene");
 
+			BuildRenderQueue(*m_currentCamera);
+
 			RenderContext context
 			{
 				m_graphicsAPI,
 				*m_currentCamera,
-				m_commands,
+				m_renderQueue,
 				m_pointLights,
 				m_directionalLights,
 				m_spotLights
@@ -126,17 +140,71 @@ namespace eng
 			}
 		}
 	private:
-		std::vector<DrawCommand> m_commands;
-		
+		void BuildRenderQueue(Camera& camera)
+		{
+			m_renderQueue.Clear();
+
+			for (const DrawCommand& cmd : m_commands)
+			{
+				ENG_ASSERT(cmd.material != nullptr, "MATERIAL NULL");
+
+				switch (cmd.material->GetAlphaMode())
+				{
+					case AlphaMode::Opaque:
+						m_renderQueue.opaque.push_back(cmd);
+						break;
+					case AlphaMode::Mask:
+						m_renderQueue.masked.push_back(cmd);
+						break;
+					case AlphaMode::Blend:
+						m_renderQueue.transparent.push_back(cmd);
+						break;
+				}
+			}
+			std::sort(
+				m_renderQueue.opaque.begin(),
+				m_renderQueue.opaque.end(),
+				[&](const DrawCommand& a, const DrawCommand& b)
+				{
+					const glm::vec4 aView =
+						camera.GetView() *
+						glm::vec4(a.transform->Translation, 1.0f);
+					const glm::vec4 bView =
+						camera.GetView() *
+						glm::vec4(b.transform->Translation, 1.0f);
+
+					return aView.z < bView.z;
+				}
+			);
+			std::sort(
+				m_renderQueue.transparent.begin(),
+				m_renderQueue.transparent.end(),
+				[&](const DrawCommand& a, const DrawCommand& b)
+				{
+					const glm::vec4 aView =
+						camera.GetView() *
+						glm::vec4(a.transform->Translation, 1.0f);
+					const glm::vec4 bView =
+						camera.GetView() *
+						glm::vec4(b.transform->Translation, 1.0f);
+
+					return aView.z < bView.z;
+				}
+			);
+		}
+		inline static Renderer* m_instance = nullptr;
+
+		std::vector<std::unique_ptr<RenderPass>> m_passes;
+
+		std::vector<DrawCommand> m_commands;		
 		std::vector<RenderLight> m_pointLights;
 		std::vector<RenderLight> m_directionalLights;
 		std::vector<RenderLight> m_spotLights;
 
 		Camera* m_currentCamera = nullptr;
-		GraphicsAPI& m_graphicsAPI;
-		inline static Renderer* m_instance = nullptr;
+		GraphicsAPI& m_graphicsAPI;		
 
-		std::vector<std::unique_ptr<RenderPass>> m_passes;
+		RenderQueue m_renderQueue;
 	};
 }
 #endif // !RENDERER_H

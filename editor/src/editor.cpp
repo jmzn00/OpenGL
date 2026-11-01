@@ -6,7 +6,7 @@
 #include <iostream>
 
 #include <eng/renderer/renderer.h>
-#include <outline_pass.h>
+//#include <outline_pass.h>
 
 namespace eng
 {
@@ -26,7 +26,7 @@ namespace eng
 		PushLayer(new SceneLayer(ctx, *m_currentScene, *m_editorContext));
 		PushLayer(new EditorLayer(ctx, *m_editorContext));		
 
-		Renderer::Get().AddPass<OutlinePass>(*m_editorContext);
+		//Renderer::Get().AddPass<OutlinePass>(*m_editorContext);		
 				
 		return true;
 	}

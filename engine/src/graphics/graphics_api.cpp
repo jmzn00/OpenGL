@@ -8,6 +8,9 @@ namespace eng
 	{
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_STENCIL_TEST);
+		glEnable(GL_BLEND);
+
+		SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 		return true;
 	}
@@ -42,6 +45,12 @@ namespace eng
 		{
 			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 		}
+	}
+	// source factor
+	// destination factor
+	void GraphicsAPI::SetBlendFunc(GLenum sfactor, GLenum dfactor)
+	{
+		glBlendFunc(sfactor, dfactor);
 	}
 	// func: can be GL_NEVER, GL_LESS, GL_LEQUAL, GL_GREATER, GL_GEQUAL, GL_EQUAL, GL_NOTEQUAL, GL_ALWAYS
 	// ref: specifies the reference value for the stencil test, stencil buffers value is compared to this

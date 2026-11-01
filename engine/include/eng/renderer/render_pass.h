@@ -8,12 +8,23 @@ namespace eng
 	class GraphicsAPI;
 	struct DrawCommand;
 	struct RenderLight;	
+	struct RenderQueue;
+
+	enum class RenderStage
+	{
+		PreGeometry,
+		Opaque,
+		Masked,
+		Transparent,
+		PostProcess,
+	};
 
 	struct RenderContext
 	{
 		GraphicsAPI& graphicsAPI;
 		Camera& camera;
-		std::vector<DrawCommand>& commands;
+		
+		RenderQueue& renderQueue;
 
 		std::vector<RenderLight>& pointLights;
 		std::vector<RenderLight>& directionalLights;
@@ -24,6 +35,7 @@ namespace eng
 	public:
 		virtual ~RenderPass() = default;
 
+		virtual RenderStage Stage() const = 0;
 		virtual void Init() {}
 		virtual void Execute(RenderContext& context) = 0;
 		virtual const char* Name() const = 0;

@@ -23,6 +23,8 @@ namespace eng
 
 		void ToggleWireframe(bool isWireframe);
 
+		static void SetBlendFunc(GLenum sfactor, GLenum dfactor);
+
 		static void SetStencilFunc(
 			GLenum func,
 			GLint ref,

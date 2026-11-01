@@ -28,7 +28,10 @@ namespace eng
 				EDITOR_ASSET_DIR "/shaders/outline/outline.vert",
 				EDITOR_ASSET_DIR "/shaders/outline/outline.frag");
 		}
-
+		RenderStage Stage() const override
+		{
+			return RenderStage::PostProcess;
+		}
 		const char* Name() const override
 		{
 			return "Outline";

@@ -46,7 +46,19 @@ namespace eng
 				{
 					m_executor.Submit("ent.create pyramid");
 				}
-
+				if (ImGui::MenuItem("Window"))
+				{
+					m_executor.Submit("ent.create window");
+				}
+				if (ImGui::MenuItem("Backpack"))
+				{
+					m_executor.Submit("ent.create backpack");
+				}
+				if (ImGui::MenuItem("Grass"))
+				{
+					m_executor.Submit("ent.create grass");
+				}
+				
 
 				ImGui::EndMenu();
 			}

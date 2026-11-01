@@ -58,7 +58,7 @@ namespace eng
 			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "LightEnt";
 			Entity& ent = m_scene.CreateEntity(name);
 
-			auto mat = MaterialLibrary::Get("Default");
+			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
 			
 			mat->SetShaderProgram(ShaderLibrary::Get("Light"));
 			ent.AddComponent<MeshComponent>(
@@ -104,6 +104,30 @@ namespace eng
 
 			auto& modelComp = ent.AddComponent<ModelComponent>();
 			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/sponza/sponza.obj");
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
+		if (arguments[0] == "grass")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "GrassEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
+			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/grass.png"));
+			mat->SetAlphaMode(AlphaMode::Mask);
+			ent.AddComponent<MeshComponent>(QuadMesh(), mat);
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
+		if (arguments[0] == "window")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "WindowEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
+			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/window.png"));
+			mat->SetAlphaMode(AlphaMode::Blend);
+			ent.AddComponent<MeshComponent>(QuadMesh(), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}

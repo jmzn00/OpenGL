@@ -17,19 +17,30 @@ namespace eng
 		glm::vec3 specular;
 		float shininess;
 	};
+	enum class AlphaMode {
+		Opaque,
+		Mask,
+		Blend
+	};
 	class Material
 	{
 	public:
 		Material(MaterialProperties props);
 		void SetShaderProgram(const std::shared_ptr<ShaderProgram>& shaderProgram);
 		void SetVec3(const std::string& name, const glm::vec3& value);
-		void SetFloat(const std::string& name, const float value);
+		void SetFloat(const std::string& name, const float value);		
 		ShaderProgram& GetShaderProgram() const;
 		void Bind(GraphicsAPI& gapi) const;
 
 		void SetDiffuseTexture(const std::shared_ptr<Texture2D>& texture);
 		void SetSpecularMap(const std::shared_ptr<Texture2D>& specular);
 		void SetEmissionMap(const std::shared_ptr<Texture2D>& emission);
+
+		void SetAlphaMode(AlphaMode mode)
+		{
+			m_alphaMode = mode;
+		}
+		AlphaMode GetAlphaMode() const { return m_alphaMode; }
 
 	private:
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
@@ -39,6 +50,8 @@ namespace eng
 		std::shared_ptr<Texture2D> m_diffuseTexture;
 		std::shared_ptr<Texture2D> m_specularMap;
 		std::shared_ptr<Texture2D> m_emissionMap;
+
+		AlphaMode m_alphaMode = AlphaMode::Opaque;
 	};
 }
 #endif // !MATERIAL_H
