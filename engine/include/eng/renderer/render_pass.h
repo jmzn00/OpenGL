@@ -10,7 +10,7 @@ namespace eng
 	struct RenderLight;	
 	struct RenderQueue;
 
-	enum class RenderStage
+	enum class RenderStage : std::uint8_t
 	{
 		PreGeometry,
 		Opaque,

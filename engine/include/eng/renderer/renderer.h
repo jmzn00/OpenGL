@@ -12,9 +12,11 @@
 #include <eng/profiler/profiler.h>
 #include <eng/renderer/render_pass.h>
 #include <eng/renderer/draw_command.h>
+#include <eng/graphics/framebuffer.h>
 
 #include <eng/renderer/passes/opaque_pass.h>
 #include <eng/renderer/passes/transparent_pass.h>
+#include <eng/renderer/passes/masked_pass.h>
 
 #include <vector>
 #include <iostream>
@@ -35,6 +37,7 @@ namespace eng
 
 			AddPass<OpaquePass>();
 			AddPass<TransparentPass>();
+			AddPass<MaskedPass>();
 		}
 		static Renderer& Get() { return *m_instance; }
 
@@ -138,7 +141,7 @@ namespace eng
 			{
 				pass->Execute(context);
 			}
-		}
+		}		
 	private:
 		void BuildRenderQueue(Camera& camera)
 		{

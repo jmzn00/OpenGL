@@ -28,14 +28,38 @@ namespace eng
 						e.Width,
 						e.Height
 					);
+				m_cameraWidth = e.Width;
+				m_cameraHeight = e.Height;
 			});
 	}
 	void SceneLayer::Update(float dt)
 	{
 		UpdateCamera(dt);
 
+		Viewport& viewport = m_editorContext.GetSceneViewport();
+		GraphicsAPI& graphicsApi = m_engineContext.GetGraphicsAPI();
+
+		viewport.ApplyPendingResize();
+
+		const uint32_t width = viewport.GetWidth();
+		const uint32_t height = viewport.GetHeight();
+
+		if (width != m_cameraWidth || height != m_cameraHeight)
+		{
+			m_editorCamera.SetViewportSize(width, height);
+			m_cameraWidth = width;
+			m_cameraHeight = height;
+		}
+
+		viewport.BindTarget();
+		viewport.SetRenderArea();
+
+		graphicsApi.ClearBuffers();
+		
 		m_scene.Update(dt);
 		m_scene.Render(m_editorCamera);
+
+		viewport.BindDefaultTarget();
 	}
 	void SceneLayer::UpdateCamera(float dt)
 	{	

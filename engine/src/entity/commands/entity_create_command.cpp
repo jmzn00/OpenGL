@@ -131,6 +131,19 @@ namespace eng
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
+		if (arguments[0] == "cwindow")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "CWindowEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
+			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container_window.png"));
+			mat->SetSpecularMap(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2_specular.png"));
+			mat->SetAlphaMode(AlphaMode::Blend);
+			ent.AddComponent<MeshComponent>(QuadMesh(), mat);
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
 		return { false, "Usage: ent.create <cube / light>" };
 	}
 }

@@ -6,6 +6,7 @@
 #include <eng/command/command_executor.h>
 #include <eng/command/command_context.h>
 #include <eng/command/command_registry.h>
+#include <eng/renderer/viewport.h>
 
 #include <eng/scene/scene.h>
 
@@ -35,6 +36,8 @@ namespace eng
 		std::unique_ptr<CommandExecutor> m_commandExecutor;
 
 		std::unique_ptr<Scene> m_currentScene;					
+
+		Viewport m_editorViewport;
 	};
 }
 #endif // !EDITOR_H

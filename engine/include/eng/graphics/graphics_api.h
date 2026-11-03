@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <glad/glad.h>
+#include <cstdint>
 
 namespace eng
 {
@@ -20,6 +21,7 @@ namespace eng
 		void ClearBuffers();
 
 		void BindShaderProgram(ShaderProgram* shaderProgram);
+		void BindFramebuffer(GLuint frameBufferId);
 
 		void ToggleWireframe(bool isWireframe);
 
@@ -38,7 +40,6 @@ namespace eng
 
 		static void EnableTest(GLenum test);
 		static void DisableTest(GLenum test);
-
 	};
 }
 #endif // !GRAPHICS_API_H

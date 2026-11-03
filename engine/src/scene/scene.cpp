@@ -12,7 +12,7 @@ namespace eng
         Window& window{ ctx.GetWindow() };           
     }
     Entity& Scene::CreateEntity(const std::string& name)
-    {
+    {		
         m_entities.emplace_back(std::make_unique<Entity>(name));
        
         return *m_entities.back();
@@ -40,9 +40,11 @@ namespace eng
         return nullptr;
     }
     void Scene::Render(Camera& camera) const
-    {
+    {		
         if (m_entities.empty())
+        {
             return;
+        }            
     
         Renderer::Get().BeginScene(camera);
         for (auto& entityPtr : m_entities)

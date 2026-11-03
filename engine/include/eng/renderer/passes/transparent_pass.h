@@ -49,6 +49,7 @@ namespace eng
 					shader->SetMat4(
 						"projection",
 						context.camera.GetProjection());
+					RenderLights(*shader, context);
 					currentShader = shader;
 				}
 				shader->SetMat4(
@@ -60,7 +61,21 @@ namespace eng
 			}
 		}
 	private:
-		
+		void RenderLights(const ShaderProgram& shader, const RenderContext& context)
+		{
+			if (!context.pointLights.empty())
+			{
+				shader.SetPointLights(context.pointLights);
+			}
+			if (!context.directionalLights.empty())
+			{
+				shader.SetDirectionalLights(context.directionalLights);
+			}
+			if (!context.spotLights.empty())
+			{
+				shader.SetSpotLights(context.spotLights);
+			}
+		}
 	};
 }
 #endif // !TRANSPARENT_PASS_H

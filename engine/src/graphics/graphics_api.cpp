@@ -9,6 +9,7 @@ namespace eng
 		glEnable(GL_DEPTH_TEST);
 		glEnable(GL_STENCIL_TEST);
 		glEnable(GL_BLEND);
+		//glEnable(GL_CULL_FACE);
 
 		SetBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
@@ -30,7 +31,10 @@ namespace eng
 	{
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
 	}
-	
+	void GraphicsAPI::BindFramebuffer(GLuint frameBufferId)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, frameBufferId);
+	}
 	void GraphicsAPI::BindShaderProgram(ShaderProgram* program)
 	{
 		glUseProgram(program ? program->GetId() : 0);

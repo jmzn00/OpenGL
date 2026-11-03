@@ -1,12 +1,8 @@
 #include "editor.h"
-
 #include "editor_layer.h"
 #include "scene_layer.h"
 
 #include <iostream>
-
-#include <eng/renderer/renderer.h>
-//#include <outline_pass.h>
 
 namespace eng
 {
@@ -20,13 +16,12 @@ namespace eng
 		m_commandContext = std::make_unique<CommandContext>(m_engineContext->GetLogger(), *m_currentScene);
 		m_commandExecutor = std::make_unique<CommandExecutor>(m_commands, *m_commandContext);
 
-		m_editorContext = std::make_unique<EditorContext>(*m_commandExecutor, *m_currentScene);		
+		m_editorViewport.Create(ctx.GetWindow().GetWidth(), ctx.GetWindow().GetHeight());
+		m_editorContext = std::make_unique<EditorContext>(*m_commandExecutor, *m_currentScene, m_editorViewport);		
 
 		PushOverlay(m_imguiLayer);
 		PushLayer(new SceneLayer(ctx, *m_currentScene, *m_editorContext));
 		PushLayer(new EditorLayer(ctx, *m_editorContext));		
-
-		//Renderer::Get().AddPass<OutlinePass>(*m_editorContext);		
 				
 		return true;
 	}

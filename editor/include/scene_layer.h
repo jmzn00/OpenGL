@@ -29,6 +29,10 @@ namespace eng
 		EditorContext& m_editorContext;
 
 		Camera m_editorCamera{};
+
+		uint32_t m_cameraWidth = 0;
+		uint32_t m_cameraHeight = 0;
+
 		Input* m_input = nullptr;
 	};
 }

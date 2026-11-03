@@ -17,6 +17,7 @@ namespace eng
 		m_components.push_back(std::make_unique<PropertiesPanel>(currentScene, m_editorContext));
 		m_components.push_back(std::make_unique<Toolbar>(commandExecutor));
 		m_components.push_back(std::make_unique<ProfilerPanel>());
+		m_components.push_back(std::make_unique<ScenePanel>(currentScene, m_editorContext.GetSceneViewport()));
 
 		for (auto& component : m_components)
 		{
@@ -85,6 +86,7 @@ namespace eng
 		ImGui::DockBuilderDockWindow("Properties", rightNode);
 		ImGui::DockBuilderDockWindow("Profiler", rightNode);
 		ImGui::DockBuilderDockWindow("Console", bottomNode);
+		ImGui::DockBuilderDockWindow("Scene", mainNode);
 
 		ImGui::DockBuilderFinish(dockspaceId);
 	}
@@ -104,8 +106,7 @@ namespace eng
 			ImGuiWindowFlags_NoMove |
 			ImGuiWindowFlags_NoBringToFrontOnFocus |
 			ImGuiWindowFlags_NoNavFocus |
-			ImGuiWindowFlags_NoDocking |
-			ImGuiWindowFlags_NoBackground;
+			ImGuiWindowFlags_NoDocking;
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
@@ -119,8 +120,7 @@ namespace eng
 
 		ImGui::DockSpace(
 			dockspaceId,
-			ImVec2(0.0f, 0.0f),
-			ImGuiDockNodeFlags_PassthruCentralNode
+			ImVec2(0.0f, 0.0f)
 		);
 
 		if (!m_dockLayoutBuilt)

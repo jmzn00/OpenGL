@@ -3,6 +3,7 @@
 
 #include <cstdint>
 #include <eng/command/command_executor.h>
+#include <eng/renderer/viewport.h>
 #include <eng/scene/scene.h>
 
 namespace eng
@@ -10,8 +11,8 @@ namespace eng
 	class EditorContext
 	{
 	public:
-		EditorContext(CommandExecutor& commandExecutor, Scene& scene)
-			: m_commandExecutor {commandExecutor}, m_currentScene {scene}
+		EditorContext(CommandExecutor& commandExecutor, Scene& scene, Viewport& sceneViewport)
+			: m_commandExecutor{ commandExecutor }, m_currentScene{ scene }, m_sceneViewport{ sceneViewport }
 		{
 		}		
 
@@ -31,7 +32,12 @@ namespace eng
 		{
 			return m_currentScene;
 		}
+		Viewport& GetSceneViewport()
+		{
+			return m_sceneViewport;
+		}
 	private:
+		Viewport& m_sceneViewport;
 		std::uint32_t m_selectedEntityId{};
 		CommandExecutor& m_commandExecutor;
 		Scene& m_currentScene;
