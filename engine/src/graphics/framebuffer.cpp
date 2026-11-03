@@ -6,10 +6,7 @@ namespace eng
 {
 	Framebuffer::~Framebuffer()
 	{
-		if (m_framebuffer != 0)
-		{
-			glDeleteFramebuffers(1, &m_framebuffer);
-		}
+		Destroy();
 	}
 	bool Framebuffer::Create(uint32_t width, uint32_t height)
 	{
@@ -83,7 +80,7 @@ namespace eng
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0
 			, GL_TEXTURE_2D, m_colorTexture, 0);
 
-		// depth and stenice storage
+		// depth and stencil storage
 		glBindRenderbuffer(GL_RENDERBUFFER, m_depthStencil);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height);
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT
@@ -98,7 +95,7 @@ namespace eng
 
 		if (!complete)
 		{
-			std::cerr << "Framebuffer is not complete!\n";
+			std::cerr << "FRAMEBUFFER NOT COMPLETE\n";
 			return false;
 		}
 

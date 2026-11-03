@@ -1,4 +1,4 @@
-#include "scene_panel.h"
+#include "viewport_panel.h"
 #include <imgui.h>
 #include <algorithm>
 #include <cmath>
@@ -6,23 +6,23 @@
 
 namespace eng
 {
-	bool ScenePanel::Init(EngineContext& ctx)
+	bool ViewportPanel::Init(EngineContext& ctx)
 	{		
 		return true;
 	}
 
-	void ScenePanel::Update(float dt)
+	void ViewportPanel::Update(float dt)
 	{		
 	}
 
-	void ScenePanel::UpdateCamera(float dt)
+	void ViewportPanel::UpdateCamera(float dt)
 	{
 		
 	}
 
-	void ScenePanel::Draw()
+	void ViewportPanel::Draw()
 	{
-		if (ImGui::Begin("Scene"))
+		if (ImGui::Begin("Viewport"))
 		{
 			const ImVec2 size = ImGui::GetContentRegionAvail();
 
@@ -34,7 +34,7 @@ namespace eng
 			m_viewport.RequestResize(width, height);
 
 			ImGui::Image(
-				static_cast<ImTextureID>(m_viewport.GetColorTexture()),
+				static_cast<ImTextureID>(m_viewport.GetOutputTexture()),
 				size,
 				ImVec2(0, 1),
 				ImVec2(1, 0));

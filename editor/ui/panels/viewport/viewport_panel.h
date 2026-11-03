@@ -1,5 +1,5 @@
-#ifndef SCENE_PANEL_H
-#define SCENE_PANEL_H
+#ifndef VIEWPORT_PANEL_H
+#define VIEWPORT_PANEL_H
 
 #include <editor_component.h>
 #include <eng/scene/scene.h>
@@ -8,10 +8,10 @@
 
 namespace eng
 {
-	class ScenePanel final : public IEditorComponent
+	class ViewportPanel final : public IEditorComponent
 	{
 	public:
-		explicit ScenePanel(Scene& scene, Viewport& viewport) : m_scene(scene), m_viewport(viewport) {}
+		explicit ViewportPanel(Scene& scene, Viewport& viewport) : m_scene(scene), m_viewport(viewport) {}
 		bool Init(EngineContext& ctx) override;
 		void Update(float dt) override;
 		void Draw() override;

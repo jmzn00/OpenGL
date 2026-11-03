@@ -50,16 +50,11 @@ namespace eng
 			m_cameraWidth = width;
 			m_cameraHeight = height;
 		}
-
-		viewport.BindTarget();
 		viewport.SetRenderArea();
-
-		graphicsApi.ClearBuffers();
 		
 		m_scene.Update(dt);
-		m_scene.Render(m_editorCamera);
-
-		viewport.BindDefaultTarget();
+		m_scene.Render(m_editorCamera
+			, viewport.GetSceneTarget(), viewport.GetOutputTarget());
 	}
 	void SceneLayer::UpdateCamera(float dt)
 	{	

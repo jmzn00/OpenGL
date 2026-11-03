@@ -39,13 +39,8 @@ namespace eng
         }
         return nullptr;
     }
-    void Scene::Render(Camera& camera) const
+    void Scene::Render(Camera& camera, Framebuffer& scene, Framebuffer& output) const
     {		
-        if (m_entities.empty())
-        {
-            return;
-        }            
-    
         Renderer::Get().BeginScene(camera);
         for (auto& entityPtr : m_entities)
         {
@@ -83,7 +78,7 @@ namespace eng
                 , &entity
                 });
         }
-        Renderer::Get().Render();    
+        Renderer::Get().Render(scene, output);
         Renderer::Get().EndScene();                
     }
 	void Scene::Update(float dt)

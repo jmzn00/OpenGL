@@ -17,6 +17,7 @@
 #include <eng/renderer/passes/opaque_pass.h>
 #include <eng/renderer/passes/transparent_pass.h>
 #include <eng/renderer/passes/masked_pass.h>
+#include <eng/renderer/passes/post_process_pass.h>
 
 #include <vector>
 #include <iostream>
@@ -38,6 +39,7 @@ namespace eng
 			AddPass<OpaquePass>();
 			AddPass<TransparentPass>();
 			AddPass<MaskedPass>();
+			AddPass<PostProcessPass>();
 		}
 		static Renderer& Get() { return *m_instance; }
 
@@ -120,7 +122,7 @@ namespace eng
 				break;
 			}
 		}		
-		void Render()
+		void Render(Framebuffer& sceneTarget, Framebuffer& outputTarget)
 		{
 			ENG_ASSERT(m_currentCamera != nullptr,
 				"No active scene");
@@ -132,15 +134,21 @@ namespace eng
 				m_graphicsAPI,
 				*m_currentCamera,
 				m_renderQueue,
+				sceneTarget,
+				outputTarget,
 				m_pointLights,
 				m_directionalLights,
 				m_spotLights
 			};
 
+			sceneTarget.Bind();
+			m_graphicsAPI.ClearBuffers();
+
 			for (auto& pass : m_passes)
 			{
 				pass->Execute(context);
 			}
+			Framebuffer::BindDefault();
 		}		
 	private:
 		void BuildRenderQueue(Camera& camera)

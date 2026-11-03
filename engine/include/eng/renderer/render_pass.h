@@ -9,6 +9,7 @@ namespace eng
 	struct DrawCommand;
 	struct RenderLight;	
 	struct RenderQueue;
+	class Framebuffer;
 
 	enum class RenderStage : std::uint8_t
 	{
@@ -25,6 +26,9 @@ namespace eng
 		Camera& camera;
 		
 		RenderQueue& renderQueue;
+
+		Framebuffer& sceneTarget;
+		Framebuffer& outputTarget;
 
 		std::vector<RenderLight>& pointLights;
 		std::vector<RenderLight>& directionalLights;

@@ -5,6 +5,7 @@
 #include <eng/camera/camera.h>
 #include <eng/core/engine_context.h>
 #include <eng/renderer/render_queue.h>
+#include <eng/graphics/framebuffer.h>
 
 #include <vector>
 #include <string>
@@ -20,7 +21,7 @@ namespace eng
 		Scene& operator=(const Scene&) = delete;
 
 		void Update(float dt);
-		void Render(Camera& camera) const;
+		void Render(Camera& camera, Framebuffer& scene, Framebuffer& output) const;
 
 		Entity& CreateEntity();
 		Entity& CreateEntity(const std::string& name);

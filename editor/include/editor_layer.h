@@ -14,7 +14,7 @@
 #include "panels/properties/properties_panel.h"
 #include "panels/toolbar/toolbar.h"
 #include "panels/profiler/profiler_panel.h"
-#include "panels/scene/scene_panel.h"
+#include "panels/viewport/viewport_panel.h"
 
 #include <memory>
 #include <vector>

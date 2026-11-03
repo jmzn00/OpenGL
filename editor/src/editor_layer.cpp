@@ -17,7 +17,7 @@ namespace eng
 		m_components.push_back(std::make_unique<PropertiesPanel>(currentScene, m_editorContext));
 		m_components.push_back(std::make_unique<Toolbar>(commandExecutor));
 		m_components.push_back(std::make_unique<ProfilerPanel>());
-		m_components.push_back(std::make_unique<ScenePanel>(currentScene, m_editorContext.GetSceneViewport()));
+		m_components.push_back(std::make_unique<ViewportPanel>(currentScene, m_editorContext.GetSceneViewport()));
 
 		for (auto& component : m_components)
 		{

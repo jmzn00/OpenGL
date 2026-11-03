@@ -10,11 +10,17 @@ namespace eng
 	{
 	public:
 		bool Create(uint32_t width, uint32_t height)
-		{
-			m_width = width;
-			m_height = height;
+		{			
+			bool complete = m_sceneTarget.Create(width, height)
+				&& m_outputTarget.Create(width, height);
 
-			return m_target.Create(width, height);
+			if (complete)
+			{
+				m_width = width;
+				m_height = height;
+			}
+
+			return complete;
 		}
 		bool Resize(uint32_t width, uint32_t height);
 
@@ -22,14 +28,28 @@ namespace eng
 		void ApplyPendingResize();
 		void SetRenderArea();
 
-		void BindTarget() const;
+		void BindSceneTarget() const;
+		void BindOutputTarget() const;
+
+		Framebuffer& GetSceneTarget()
+		{
+			return m_sceneTarget;
+		}
+		Framebuffer& GetOutputTarget()
+		{
+			return m_outputTarget;
+		}
+
 		static void BindDefaultTarget();
 		
-		GLuint GetColorTexture() const;
+		GLuint GetOutputTexture() const;
+		GLuint GetSceneTexture() const;
+
 		uint32_t GetWidth() const;
 		uint32_t GetHeight() const;
 	private:
-		Framebuffer m_target;
+		Framebuffer m_sceneTarget;
+		Framebuffer m_outputTarget;
 
 		uint32_t m_width = 0;
 		uint32_t m_height = 0;				
