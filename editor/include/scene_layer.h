@@ -22,7 +22,7 @@ namespace eng
 		void Update(float dt) override;
 
 	private:
-		void UpdateCamera(float dt);
+		void UpdateCamera(float dt, Viewport& viewport);
 		
 		EngineContext& m_engineContext;
 		Scene& m_scene;

@@ -23,7 +23,7 @@ namespace eng
 		Scene& m_scene;
 		Viewport& m_viewport;
 
-		bool m_viewportActive = false;
+		bool m_focused = false;
 	};
 }
 #endif

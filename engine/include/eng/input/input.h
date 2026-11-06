@@ -19,7 +19,7 @@ namespace eng
 	private:		
 		void SetKeyPressed(int key, bool pressed);		
 		std::array<bool, GLFW_KEY_LAST + 1> m_keys = { false };
-		std::array<bool, 16> m_mouseKeys{ false };
+		std::array<bool, GLFW_MOUSE_BUTTON_LAST + 1> m_mouseKeys{ false };
 
 		// BAD BAD BAD
 		float m_mouseLastX{ 960 };

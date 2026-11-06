@@ -1,5 +1,5 @@
-// engine/include/eng/command/command.h
-#pragma once
+#ifndef COMMAND_H
+#define COMMAND_H
 
 #include <eng/command/command_context.h>
 
@@ -28,3 +28,5 @@ namespace eng
             CommandContext& context) = 0;
     };
 }
+
+#endif // !COMMAND_H

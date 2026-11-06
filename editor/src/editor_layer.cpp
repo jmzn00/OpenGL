@@ -1,5 +1,14 @@
 #include "editor_layer.h"
 
+#include "panels/console/console.h"
+#include "panels/inspector/inspector.h"
+#include "panels/properties/properties_panel.h"
+#include "panels/toolbar/toolbar.h"
+#include "panels/profiler/profiler_panel.h"
+#include "panels/viewport/viewport_panel.h"
+#include "panels/post_process/post_process_panel.h"
+
+
 namespace eng
 {
 	EditorLayer::EditorLayer(EngineContext& ctx, EditorContext& editorContext)
@@ -18,6 +27,7 @@ namespace eng
 		m_components.push_back(std::make_unique<Toolbar>(commandExecutor));
 		m_components.push_back(std::make_unique<ProfilerPanel>());
 		m_components.push_back(std::make_unique<ViewportPanel>(currentScene, m_editorContext.GetSceneViewport()));
+		m_components.push_back(std::make_unique<PostProcessPanel>(commandExecutor));
 
 		for (auto& component : m_components)
 		{
@@ -56,9 +66,12 @@ namespace eng
 		);
 
 		ImGuiID mainNode = dockspaceId;
-		ImGuiID leftNode = 0;
-		ImGuiID rightNode = 0;
+		ImGuiID leftNode = 0;		
+		ImGuiID rightNode = 0;		
 		ImGuiID bottomNode = 0;
+
+		ImGuiID rightTopNode = 0;
+		ImGuiID rightBottomNode = 0;
 
 		ImGui::DockBuilderSplitNode(
 			mainNode,
@@ -75,6 +88,13 @@ namespace eng
 			&mainNode
 		);
 		ImGui::DockBuilderSplitNode(
+			rightNode,
+			ImGuiDir_Down,
+			0.5f,             
+			&rightBottomNode,  
+			&rightTopNode      
+		);
+		ImGui::DockBuilderSplitNode(
 			mainNode,
 			ImGuiDir_Down,
 			0.25f,
@@ -83,10 +103,11 @@ namespace eng
 		);
 
 		ImGui::DockBuilderDockWindow("Inspector", leftNode);
-		ImGui::DockBuilderDockWindow("Properties", rightNode);
-		ImGui::DockBuilderDockWindow("Profiler", rightNode);
+		ImGui::DockBuilderDockWindow("Properties", rightTopNode);
+		ImGui::DockBuilderDockWindow("Profiler", rightBottomNode);
 		ImGui::DockBuilderDockWindow("Console", bottomNode);
-		ImGui::DockBuilderDockWindow("Scene", mainNode);
+		ImGui::DockBuilderDockWindow("Viewport", mainNode);
+		ImGui::DockBuilderDockWindow("PostProcess", rightTopNode);
 
 		ImGui::DockBuilderFinish(dockspaceId);
 	}

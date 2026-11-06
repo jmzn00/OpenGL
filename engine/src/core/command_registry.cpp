@@ -11,6 +11,7 @@
 #include <eng/command/commands/graphics_set_wireframe_command.h>
 #include <eng/command/commands/entity_create_command.h>
 #include <eng/command/commands/entity_move_command.h>
+#include <eng/command/commands/post_process_set_command.h>
 
 namespace eng
 {
@@ -30,6 +31,9 @@ namespace eng
 		);
 		Register(
 			std::make_unique<EntityMoveCommand>(scene)
+		);
+		Register(
+			std::make_unique<PostProcessSetCommand>()
 		);
 	}
 	bool CommandRegistry::Register(std::unique_ptr<ICommand> command)

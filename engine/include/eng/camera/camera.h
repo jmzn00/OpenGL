@@ -92,7 +92,7 @@ namespace eng
 			m_flatForward = glm::normalize(
 				glm::vec3(m_forward.x, 0.0f, m_forward.z));
 		}
-		glm::vec3 m_position {0.0, 0.0, 3.0};
+		glm::vec3 m_position {0.0, 0.0, 0.0};
 		glm::vec3 m_forward {0.0, 0.0, -1.0};
 		glm::vec3 m_flatForward{};
 		glm::vec3 m_up {0.0, 1.0, 0.0};

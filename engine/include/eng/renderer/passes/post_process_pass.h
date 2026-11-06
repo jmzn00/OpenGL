@@ -16,6 +16,8 @@
 
 #include <eng/graphics/post_process/post_process_effect.h>
 #include <eng/graphics/post_process/inversion_effect.h>
+#include <eng/graphics/post_process/grayscale_effect.h>
+#include <eng/graphics/post_process/kernel_effect.h>
 
 namespace eng
 {
@@ -32,12 +34,13 @@ namespace eng
 		{
 			m_draw.Init();
             m_copyShader = std::make_unique<ShaderProgram>
-				(ENGINE_ASSET_DIR "/shaders/post_process/inversion.vert",
+				(ENGINE_ASSET_DIR "/shaders/post_process/copy.vert",
                 ENGINE_ASSET_DIR "/shaders/post_process/copy.frag");            
 
-            AddEffect<InversionEffect>();            
+            AddEffect<InversionEffect>();         
+            AddEffect<GrayscaleEffect>();
+            AddEffect<KernelEffect>();
 
-            ToggleEffect("InversionEffect", true);
 		}
         template<typename T, typename... Args>
         T& AddEffect(Args&&... args)
@@ -114,6 +117,20 @@ namespace eng
                 }
             }            
             return exists;
+        }
+        bool IsActive(const std::string& name)
+        {
+            bool exists = false;
+
+            for (auto& effect : m_effects)
+            {
+                if (effect->Name() == name)
+                {
+                    return effect->IsEnabled();
+                }
+            }
+            if (!exists)
+                return false;            
         }
 	private:
         std::vector<std::unique_ptr<PostProcessEffect>> m_effects;

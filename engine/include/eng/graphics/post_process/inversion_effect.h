@@ -13,12 +13,12 @@ namespace eng
 	public:
 		const char* Name() const override
 		{
-			return "InversionEffect";
+			return "inversion";
 		}
 		void Init() override
 		{
 			m_shader = std::make_unique<ShaderProgram>(
-				ENGINE_ASSET_DIR "/shaders/post_process/inversion.vert",
+				ENGINE_ASSET_DIR "/shaders/post_process/copy.vert",
 				ENGINE_ASSET_DIR "/shaders/post_process/inversion.frag");
 		}
 		void Render(

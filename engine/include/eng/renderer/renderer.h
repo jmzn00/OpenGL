@@ -70,6 +70,34 @@ namespace eng
 
 			return ref;
 		}
+		template<typename T>
+		bool HasPass()
+		{
+			static_assert(
+				std::is_base_of_v<RenderPass, T>,
+				"T must derive from RenderPass");
+
+			return std::any_of(
+				m_passes.begin(),
+				m_passes.end(),
+				[](const auto& pass)
+				{
+					return dynamic_cast<T*>(pass.get()) != nullptr;
+				});
+		}
+		template<typename T>
+		T* GetPass()
+		{
+			static_assert(std::is_base_of_v<RenderPass, T>);
+
+			for (auto& pass : m_passes)
+			{
+				if (auto* p = dynamic_cast<T*>(pass.get()))
+					return p;
+			}
+
+			return nullptr;
+		}
 		
 		void Submit(const DrawCommand& cmd)
 		{

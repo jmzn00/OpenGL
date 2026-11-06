@@ -32,7 +32,7 @@ namespace eng
 			m_enabled = enabled;
 		}
 	private:
-		bool m_enabled = true;
+		bool m_enabled = false;
 
 	};
 }

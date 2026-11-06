@@ -12,11 +12,17 @@ namespace eng
 		for (int i = 0; i < GLFW_KEY_LAST; i++)
 		{
 			m_keys[i] = glfwGetKey(window, i) == GLFW_PRESS;
-		}			
+		}
 
-		double x, y;
+		for (int i = 0; i <= GLFW_MOUSE_BUTTON_LAST; i++)
+		{
+			m_mouseKeys[i] =
+				glfwGetMouseButton(window, i) == GLFW_PRESS;
+		}
+
+		double x;
+		double y;
 		glfwGetCursorPos(window, &x, &y);
-		
 
 		if (m_firstMouse)
 		{
@@ -25,8 +31,8 @@ namespace eng
 			m_firstMouse = false;
 		}
 
-		m_mouseDelta.x = x - m_mouseLastX;
-		m_mouseDelta.y = y - m_mouseLastY;
+		m_mouseDelta.x = static_cast<float>(x - m_mouseLastX);
+		m_mouseDelta.y = static_cast<float>(y - m_mouseLastY);
 
 		m_mouseLastX = x;
 		m_mouseLastY = y;
@@ -60,4 +66,5 @@ namespace eng
 	{
 		return m_scroll;
 	}
+
 }

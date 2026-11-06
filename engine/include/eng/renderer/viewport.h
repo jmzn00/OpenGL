@@ -47,6 +47,15 @@ namespace eng
 
 		uint32_t GetWidth() const;
 		uint32_t GetHeight() const;
+
+		bool GetFocused() const
+		{
+			return m_focused;
+		}
+		void SetFocused(bool value)
+		{
+			m_focused = value;
+		}
 	private:
 		Framebuffer m_sceneTarget;
 		Framebuffer m_outputTarget;
@@ -56,6 +65,8 @@ namespace eng
 
 		uint32_t m_pendingWidth = 0;
 		uint32_t m_pendingHeight = 0;
+
+		bool m_focused = false;
 	};
 }
 #endif // !VIEWPORT_H

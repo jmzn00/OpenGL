@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <cmath>
 #include <cstdint>
+#include <iostream>
 
 namespace eng
 {
@@ -38,6 +39,17 @@ namespace eng
 				size,
 				ImVec2(0, 1),
 				ImVec2(1, 0));
+
+			bool hovered = ImGui::IsWindowHovered();	
+			bool rmbHeld = ImGui::IsMouseDown(ImGuiMouseButton_Right);
+
+			if (hovered && rmbHeld)
+				m_focused = true;
+
+			if (!rmbHeld && m_focused)
+				m_focused = false;
+			
+			m_viewport.SetFocused(m_focused);
 		}
 		ImGui::End();
 	}
