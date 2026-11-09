@@ -91,7 +91,6 @@ namespace eng
 			std::string texturePath =
 				directory + "/" + path.C_Str();
 
-			//return std::make_shared<Texture2D>(texturePath);
 			return TextureLibrary::GetTexture(texturePath);
 		}
 		inline static MaterialFactory* m_instance;

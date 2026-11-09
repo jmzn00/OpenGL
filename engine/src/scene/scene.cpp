@@ -21,6 +21,10 @@ namespace eng
     {
         return CreateEntity("Unnamed");
     }
+    void Scene::ReplaceEntities(std::vector<std::unique_ptr<Entity>> entities)
+    {
+        m_entities = std::move(entities);
+    }
     Entity* Scene::FindEntityByName(const std::string_view name) const
     {
         for (auto& entityPtr : m_entities)

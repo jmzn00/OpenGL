@@ -137,6 +137,7 @@ namespace eng
             m_application->Destroy();
             m_application.reset();
         }
+        m_meshLibrary.Clear();
         if (m_window)
         {
             glfwDestroyWindow(m_window->GetNativeWindow());

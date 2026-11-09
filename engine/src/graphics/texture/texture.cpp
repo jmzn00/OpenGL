@@ -7,6 +7,7 @@
 namespace eng
 {
 	Texture2D::Texture2D(const std::string& path)
+		: m_key { path }
 	{
 		int width = 0;
 		int height = 0;

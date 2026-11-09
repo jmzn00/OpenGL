@@ -9,6 +9,7 @@
 #include <memory>
 #include <eng/graphics/light/light.h>
 #include <eng/renderer/model.h>
+#include <string>
 
 
 namespace eng
@@ -55,6 +56,7 @@ namespace eng
 	};
 	struct ModelComponent
 	{
+		std::string assetPath;
 		std::shared_ptr<Model> model;
 	};
 	struct MeshComponent
@@ -71,8 +73,9 @@ namespace eng
 				mesh->Bind();
 				mesh->Draw();
 			}
-		}
+		}		
 		std::shared_ptr<Material> material;
+
 		std::shared_ptr<Mesh> mesh;
 	};
 	struct LightComponent

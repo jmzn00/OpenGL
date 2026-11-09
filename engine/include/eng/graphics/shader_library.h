@@ -23,11 +23,13 @@ namespace eng
 				std::make_shared<ShaderProgram>(
 					ENGINE_ASSET_DIR "/shaders/vert.vert",
 					ENGINE_ASSET_DIR "/shaders/frag.frag");
+			m_shaders["Default"]->SetKey("Default");
 
 			m_shaders["Light"] =
 				std::make_shared<ShaderProgram>(
 					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.vert",
 					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");			
+			m_shaders["Light"]->SetKey("Light");
 		}		
 		static std::shared_ptr<ShaderProgram> Get(const std::string& name)
 		{

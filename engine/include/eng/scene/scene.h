@@ -25,6 +25,7 @@ namespace eng
 
 		Entity& CreateEntity();
 		Entity& CreateEntity(const std::string& name);
+		void ReplaceEntities(std::vector<std::unique_ptr<Entity>> entities);
 
 		Entity* FindEntityByName(const std::string_view name) const;
 		Entity* FindEntityById(const std::uint32_t id) const;

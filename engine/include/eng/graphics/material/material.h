@@ -42,8 +42,30 @@ namespace eng
 		}
 		AlphaMode GetAlphaMode() const { return m_alphaMode; }
 
+		const std::string& GetDiffuseTextureKey() const
+		{
+			return m_diffuseTextureKey;
+		}
+		const std::string& GetSpecularTextureKey() const
+		{
+			return m_specularTextureKey;
+		}
+		const std::string& GetEmissionTextureKey() const
+		{
+			return m_emissionTextureKey;
+		}
+		const std::unordered_map<std::string, glm::vec3>& GetVec3Params() const
+		{
+			return m_vec3Params;
+		}
+		const std::unordered_map<std::string, float>& GetFloatParams() const
+		{
+			return m_floatParams;
+		}
+
 	private:
 		std::shared_ptr<ShaderProgram> m_shaderProgram;
+
 		std::unordered_map<std::string, glm::vec3> m_vec3Params;
 		std::unordered_map<std::string, float> m_floatParams;
 
@@ -52,6 +74,10 @@ namespace eng
 		std::shared_ptr<Texture2D> m_emissionMap;
 
 		AlphaMode m_alphaMode = AlphaMode::Opaque;
+
+		std::string m_diffuseTextureKey;
+		std::string m_specularTextureKey;
+		std::string m_emissionTextureKey;
 	};
 }
 #endif // !MATERIAL_H

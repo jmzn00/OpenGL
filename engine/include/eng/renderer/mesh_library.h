@@ -3,8 +3,66 @@
 #include <eng/renderer/mesh.h>
 #include <memory>
 #include <vector>
+#include <eng/debug/assert.h>
+#include <string>
+#include <unordered_map>
 namespace eng
 {
+    inline std::shared_ptr<Mesh> CubeMesh();
+    inline std::shared_ptr<Mesh> PyramidMesh();
+    inline std::shared_ptr<Mesh> QuadMesh();
+
+    class MeshLibrary
+    {
+    public:
+        MeshLibrary()
+        {
+            ENG_ASSERT(m_instance == nullptr, "MESH_LIBRARY::INSTANCE ALREADY EXISTS");
+            m_instance = this;
+        }
+        ~MeshLibrary()
+        {
+            m_meshes.clear();
+            if (m_instance == this)
+                m_instance = nullptr;
+        }
+        static MeshLibrary& Instance()
+        {
+            ENG_ASSERT(m_instance != nullptr, "MESH_LIBRARY::INSTANCE IS NULL");
+            return *m_instance;
+        }
+        static std::shared_ptr<Mesh> Create(const std::string& key)
+        {
+            return Instance().CreateInternal(key);
+        }
+        void Clear()
+        {
+            m_meshes.clear();
+        }
+    private:
+        std::shared_ptr<Mesh> CreateInternal(const std::string& key)
+        {
+            if (const auto it = m_meshes.find(key); it != m_meshes.end())
+                return it->second;
+
+            std::shared_ptr<Mesh> mesh;
+            if (key == "primitives::cube")
+                mesh = CubeMesh();
+            else if (key == "primitives::pyramid")
+                mesh = PyramidMesh();
+            else if (key == "primitives::quad")
+                mesh = QuadMesh();
+            else
+                return nullptr;
+
+            mesh->SetKey(key);
+            m_meshes.emplace(key, mesh);
+            return mesh;
+        }
+
+        std::unordered_map<std::string, std::shared_ptr<Mesh>> m_meshes;
+        inline static MeshLibrary* m_instance{ nullptr };
+    };
     inline std::shared_ptr<Mesh> CubeMesh()
     {
         std::vector<float> vertices =

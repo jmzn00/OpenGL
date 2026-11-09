@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 #include <eng/renderer/vertex_layout.h>
 #include <iostream>
+#include <string>
 namespace eng
 {
 	class Mesh
@@ -65,6 +66,15 @@ namespace eng
 		{
 			return m_vertexCount;
 		}
+
+		void SetKey(const std::string& key)
+		{
+			m_key = key;
+		}
+		const std::string& GetKey() const
+		{
+			return m_key;
+		}
 	private:
 		VertexLayout m_vertexLayout;
 		GLuint m_VBO{ 0 };
@@ -73,6 +83,7 @@ namespace eng
 
 		size_t m_vertexCount{ 0 };
 		size_t m_indexCount{ 0 };
+		std::string m_key;
 	};
 }
 #endif // !MESH_H

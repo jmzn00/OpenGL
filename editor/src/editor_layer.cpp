@@ -21,10 +21,12 @@ namespace eng
 		CommandExecutor& commandExecutor = m_editorContext.GetCommandExecutor();
 		Scene& currentScene = m_editorContext.GetCurrentScene();
 
+		m_sceneSerializer = std::make_unique<SceneSerializer>(currentScene);
+
 		m_components.push_back(std::make_unique<Console>(commandExecutor));
 		m_components.push_back(std::make_unique<Inspector>(currentScene, m_editorContext, commandExecutor));
 		m_components.push_back(std::make_unique<PropertiesPanel>(currentScene, m_editorContext));
-		m_components.push_back(std::make_unique<Toolbar>(commandExecutor));
+		m_components.push_back(std::make_unique<Toolbar>(commandExecutor, *m_sceneSerializer));
 		m_components.push_back(std::make_unique<ProfilerPanel>());
 		m_components.push_back(std::make_unique<ViewportPanel>(currentScene, m_editorContext.GetSceneViewport()));
 		m_components.push_back(std::make_unique<PostProcessPanel>(commandExecutor));

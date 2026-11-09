@@ -36,9 +36,19 @@ namespace eng
 		void SetDirectionalLights(const std::vector<RenderLight>& lights) const;
 		void SetSpotLights(const std::vector<RenderLight>& lights) const;
 
+		void SetKey(const std::string& key)
+		{
+			m_key = key;
+		}
+		const std::string& GetKey() const
+		{
+			return m_key;
+		}
+
 	private:
 		GLuint m_id{0};
 		[[maybe_unused]]std::unordered_map<std::string, GLuint> m_uniforms;
+		std::string m_key;
 	};
 }
 #endif // !SHADER_PROGRAM_H

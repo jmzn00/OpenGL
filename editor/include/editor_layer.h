@@ -15,6 +15,8 @@
 #include <imgui.h>
 #include <imgui_internal.h>
 
+#include <eng/scene/scene_serializer.h>
+
 namespace eng
 {
 	class EditorLayer : public Layer
@@ -36,6 +38,8 @@ namespace eng
 		EngineContext& m_engineContext;
 
 		std::vector<std::unique_ptr<IEditorComponent>> m_components;
+
+		std::unique_ptr<SceneSerializer> m_sceneSerializer;
 	};
 }
 #endif // !EDITOR_LAYER_H

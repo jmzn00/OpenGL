@@ -2,15 +2,18 @@
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include <iostream>
+#include <filesystem>
 
 namespace eng
 {
-	Toolbar::Toolbar(CommandExecutor& commandExecutor)
-		: m_commandExecutor{commandExecutor}
+	Toolbar::Toolbar(CommandExecutor& commandExecutor, SceneSerializer& sceneSerializer)
+		: m_commandExecutor{commandExecutor}, m_sceneSerialzier {sceneSerializer}
 	{
 	}
 	bool Toolbar::Init(EngineContext& engineContext)
 	{
+		m_logger = &engineContext.GetLogger();
+
 		return true;
 	}
 	void Toolbar::Destroy()
@@ -42,11 +45,19 @@ namespace eng
 		{
 			if (ImGui::BeginMenu("Scene"))
 			{
+				const std::filesystem::path scenePath =
+					std::filesystem::path{ ENGINE_ASSET_DIR } / "scenes/current.scene.json";
+
 				if (ImGui::MenuItem("Save"))
 				{
+					if (!m_sceneSerialzier.Save(scenePath))
+						m_logger->Error("Failed to save scene");
+						
 				}
 				if (ImGui::MenuItem("Load"))
 				{
+					if (!m_sceneSerialzier.Load(scenePath))
+						m_logger->Error("Failed to load scene");
 				}
 				ImGui::EndMenu();
 			}

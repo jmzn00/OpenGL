@@ -26,8 +26,13 @@ namespace eng
 		{
 			return m_id;
 		}
+		const std::string& GetKey() const
+		{
+			return m_key;
+		}
 	private:
 		GLuint m_id{0};
+		std::string m_key;
 	};
 }
 #endif // !TEXTURE_H

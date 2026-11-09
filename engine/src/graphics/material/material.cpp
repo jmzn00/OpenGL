@@ -42,14 +42,17 @@ namespace eng
 	void Material::SetDiffuseTexture(const std::shared_ptr<Texture2D>& tex)
 	{
 		m_diffuseTexture = tex;
+		m_diffuseTextureKey = tex->GetKey();
 	}
 	void Material::SetSpecularMap(const std::shared_ptr<Texture2D>& spec)
 	{
 		m_specularMap = spec;
+		m_specularTextureKey = spec->GetKey();
 	}
 	void Material::SetEmissionMap(const std::shared_ptr<Texture2D>& emission)
 	{
 		m_emissionMap = emission;
+		m_emissionTextureKey = emission->GetKey();
 	}
 	ShaderProgram& Material::GetShaderProgram() const
 	{

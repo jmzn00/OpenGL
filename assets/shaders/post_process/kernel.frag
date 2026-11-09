@@ -23,10 +23,12 @@ void main()
 		vec2( offset, -offset) // bottom-right
 		);
 
+		const float div = 16;
+
 		float kernel[9] = float[](
-			-1, -1, -1,
-			-1, 9, -1,
-			-1, -1, -1
+			1.0 / div, 2.0 / div, 1.0 / div,
+			2.0 / div, 4.0 / div, 2.0 / div,
+			1.0 / div, 2.0 / div, 1.0 / div
 			);
 
 		vec3 sampleTex[9];

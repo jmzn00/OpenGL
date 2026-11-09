@@ -14,6 +14,7 @@
 #include <eng/graphics/shader_library.h>
 #include <eng/graphics/material/material_library.h>
 #include <eng/graphics/texture/texture_library.h>
+#include <eng/renderer/mesh_library.h>
 namespace eng
 {
 	class Engine
@@ -48,9 +49,11 @@ namespace eng
 		Input m_input{};
 		GraphicsAPI m_graphicsApi;
 		Logger m_logger;
+
 		ShaderLibrary m_shaderLibrary{};
 		MaterialLibrary m_materialLibrary{};
 		TextureLibrary m_textureLibrary{};
+		MeshLibrary m_meshLibrary{};
 	};
 }
 #endif // !ENGINE_H
