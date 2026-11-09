@@ -85,7 +85,6 @@ namespace eng
 			Entity& ent = m_scene.CreateEntity(name);
 
 			auto& modelComp = ent.AddComponent<ModelComponent>();
-			modelComp.assetPath = "models/backpack/backpack.obj";
 			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/backpack/backpack.obj");
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
@@ -99,7 +98,6 @@ namespace eng
 			ent.Transform().SetScale(glm::vec3(0.1, 0.1, 0.1));
 
 			auto& modelComp = ent.AddComponent<ModelComponent>();
-			modelComp.assetPath = "models/sponza/sponza.obj";
 			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/sponza/sponza.obj");
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };

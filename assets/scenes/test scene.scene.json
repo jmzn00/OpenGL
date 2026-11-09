@@ -34,8 +34,8 @@
             "name": "CubeEnt",
             "transform": {
                 "rotation": [
-                    0.0,
-                    0.0,
+                    0.699999988079071,
+                    0.6000000238418579,
                     0.0
                 ],
                 "scale": [
@@ -46,7 +46,7 @@
                 "translation": [
                     0.0,
                     0.0,
-                    0.0
+                    -1.2999999523162842
                 ]
             }
         },
@@ -108,7 +108,7 @@
             "transform": {
                 "rotation": [
                     0.0,
-                    0.5,
+                    0.0,
                     0.0
                 ],
                 "scale": [
@@ -117,112 +117,13 @@
                     0.5
                 ],
                 "translation": [
-                    0.8999999761581421,
-                    0.0,
-                    1.7000000476837158
-                ]
-            }
-        },
-        {
-            "material": {
-                "alphamode": 0,
-                "floatParams": {
-                    "material.shininess": 51.20000076293945
-                },
-                "shader": "Default",
-                "textures": {
-                    "diffuse": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/textures/container2/container2.png",
-                    "emission": "",
-                    "specular": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/textures/container2/container2_specular.png"
-                },
-                "vec3Params": {
-                    "material.ambient": [
-                        0.19224999845027924,
-                        0.19224999845027924,
-                        0.19224999845027924
-                    ],
-                    "material.diffuse": [
-                        0.5075399875640869,
-                        0.5075399875640869,
-                        0.5075399875640869
-                    ],
-                    "material.specular": [
-                        0.5082730054855347,
-                        0.5082730054855347,
-                        0.5082730054855347
-                    ]
-                }
-            },
-            "mesh": "primitives::cube",
-            "name": "CubeEnt",
-            "transform": {
-                "rotation": [
                     0.0,
                     0.0,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translation": [
-                    -1.2999999523162842,
-                    0.0,
-                    -1.399999976158142
-                ]
-            }
-        },
-        {
-            "material": {
-                "alphamode": 2,
-                "floatParams": {
-                    "material.shininess": 32.0
-                },
-                "shader": "Default",
-                "textures": {
-                    "diffuse": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/textures/window.png",
-                    "emission": "",
-                    "specular": ""
-                },
-                "vec3Params": {
-                    "material.ambient": [
-                        0.10000000149011612,
-                        0.10000000149011612,
-                        0.10000000149011612
-                    ],
-                    "material.diffuse": [
-                        0.5,
-                        0.5,
-                        0.5
-                    ],
-                    "material.specular": [
-                        1.0,
-                        1.0,
-                        1.0
-                    ]
-                }
-            },
-            "mesh": "primitives::quad",
-            "name": "WindowEnt",
-            "transform": {
-                "rotation": [
-                    0.0,
-                    -0.30000001192092896,
-                    0.0
-                ],
-                "scale": [
-                    1.0,
-                    1.0,
-                    1.0
-                ],
-                "translation": [
-                    0.699999988079071,
-                    0.0,
-                    0.800000011920929
+                    0.5
                 ]
             }
         }
     ],
+    "sceneName": "test scene",
     "version": 1
 }

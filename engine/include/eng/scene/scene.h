@@ -26,6 +26,8 @@ namespace eng
 		Entity& CreateEntity();
 		Entity& CreateEntity(const std::string& name);
 		void ReplaceEntities(std::vector<std::unique_ptr<Entity>> entities);
+		void ClearEntities();
+
 
 		Entity* FindEntityByName(const std::string_view name) const;
 		Entity* FindEntityById(const std::uint32_t id) const;
@@ -35,6 +37,15 @@ namespace eng
 		{
 			return m_mainCamera;
 		}
+		const std::string& GetName() const
+		{
+			return m_name;
+		}
+		void SetName(const std::string& name)
+		{
+			m_name = name;
+		}
+		
 		const std::vector<std::unique_ptr<Entity>>& GetEntities() const;
 	private:
 		std::vector<std::unique_ptr<Entity>> m_entities{};

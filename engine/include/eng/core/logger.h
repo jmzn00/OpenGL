@@ -7,6 +7,11 @@ namespace eng
 	class Logger
 	{
 	public:
+		Logger();
+		static Logger& Instance()
+		{
+			return *m_instance;
+		}
 		void AddSink(ILogSink& sink);
 		void RemoveSink(ILogSink& sink);
 
@@ -18,6 +23,7 @@ namespace eng
 
 		const std::vector<Message>& GetMessageHistory() const;
 	private:
+		inline static Logger* m_instance;
 		std::vector<ILogSink*> m_sinks;
 		std::vector<Message> m_messageHistory;
 	};

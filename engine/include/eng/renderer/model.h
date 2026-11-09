@@ -31,12 +31,17 @@ namespace eng
 	{
 	public:
 		explicit Model(const std::string& path)
+			: m_key {path}
 		{
 			LoadModel(path);
 		}
 		const std::vector<ModelPart>& GetParts() const
 		{
 			return m_parts;
+		}
+		const std::string& GetKey() const
+		{
+			return m_key;
 		}
 	private:
 		void LoadModel(const std::string& path)
@@ -168,6 +173,8 @@ namespace eng
 		std::vector<ModelPart> m_parts;
 		std::string m_directory;
 		std::vector<std::shared_ptr<Material>> m_materials;
+
+		std::string m_key;
 	};
 }
 #endif // !MODEL_HH

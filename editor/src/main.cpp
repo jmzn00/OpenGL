@@ -7,7 +7,7 @@ int main()
 
     engine.SetApplication(std::make_unique<eng::Editor>());
 
-    if (engine.Init(960, 540))
+    if (engine.Init(1920, 1080))
     {        
         engine.Run();
     }    

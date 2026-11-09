@@ -3,11 +3,20 @@
 #include "imgui_impl_opengl3.h"
 #include <iostream>
 #include <filesystem>
+namespace
+{
+	const std::filesystem::path ScenesDirectory =
+		std::filesystem::path{ ENGINE_ASSET_DIR } / "scenes";
 
+	std::filesystem::path SceneFilePath(const std::string& name)
+	{
+		return ScenesDirectory / (name + ".scene.json");
+	}
+}
 namespace eng
 {
-	Toolbar::Toolbar(CommandExecutor& commandExecutor, SceneSerializer& sceneSerializer)
-		: m_commandExecutor{commandExecutor}, m_sceneSerialzier {sceneSerializer}
+	Toolbar::Toolbar(CommandExecutor& commandExecutor, SceneSerializer& sceneSerializer, Scene& scene)
+		: m_commandExecutor{commandExecutor}, m_sceneSerialzier {sceneSerializer}, m_scene{scene}
 	{
 	}
 	bool Toolbar::Init(EngineContext& engineContext)
@@ -45,24 +54,30 @@ namespace eng
 		{
 			if (ImGui::BeginMenu("Scene"))
 			{
-				const std::filesystem::path scenePath =
-					std::filesystem::path{ ENGINE_ASSET_DIR } / "scenes/current.scene.json";
-
+				if (ImGui::MenuItem("New"))
+					m_showNewScenePopup = true;
+				if (ImGui::MenuItem("Open"))
+					m_showOpenScenePopup = true;
 				if (ImGui::MenuItem("Save"))
-				{
-					if (!m_sceneSerialzier.Save(scenePath))
-						m_logger->Error("Failed to save scene");
-						
-				}
-				if (ImGui::MenuItem("Load"))
-				{
-					if (!m_sceneSerialzier.Load(scenePath))
-						m_logger->Error("Failed to load scene");
-				}
+					m_sceneSerialzier.Save(SceneFilePath(m_scene.GetName()));
+
 				ImGui::EndMenu();
 			}
 			ImGui::EndPopup();
 		}
+		
+		if (m_showNewScenePopup)
+		{
+			ImGui::OpenPopup("New Scene");
+			m_showNewScenePopup = false;
+		}
+		if (m_showOpenScenePopup)
+		{
+			ImGui::OpenPopup("Open Scene");
+			m_showOpenScenePopup = false;
+		}
+		DrawNewScenePopup();
+		DrawOpenScenePopup();
 
 		ImGui::SameLine();
 		if (ImGui::Button("Edit"))
@@ -74,11 +89,62 @@ namespace eng
 
 			ImGui::EndPopup();
 		}
-
 		ImGui::End();
-
 	}
+	void Toolbar::DrawNewScenePopup()
+	{
+		if (!ImGui::BeginPopupModal("New Scene", nullptr,
+			ImGuiWindowFlags_AlwaysAutoResize))
+			return;
+
+		ImGui::InputText("Name", m_newSceneName, sizeof(m_newSceneName));
+		if (ImGui::Button("Create"))
+		{
+			const std::string name = m_newSceneName;
+
+			if (!name.empty())
+			{
+				m_scene.ClearEntities();
+				m_scene.SetName(name);
+				m_sceneSerialzier.Save(SceneFilePath(name));
+
+				m_newSceneName[0] = '\0';
+				ImGui::CloseCurrentPopup();
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Cancel"))
+			ImGui::CloseCurrentPopup();
+
+		ImGui::EndPopup();
+	}
+	void Toolbar::DrawOpenScenePopup()
+	{
+		if (!ImGui::BeginPopup("Open Scene"))
+			return;
+
+		std::error_code error;
+		for (const auto& entry : std::filesystem::directory_iterator(ScenesDirectory, error))
+		{
+			if (entry.path().extension() != ".json" ||
+				!entry.path().filename().string().ends_with(".scene.json"))
+				continue;
+			const std::string label = entry.path().stem().stem().string();
+
+			if (ImGui::MenuItem(label.c_str()))
+			{
+				if (m_sceneSerialzier.Load(entry.path()))
+				{
+					m_scene.SetName(label);
+				}
+			}
+		}
+
+		ImGui::EndPopup();
+	}
+
 	void Toolbar::Update(float dt)
 	{
+
 	}
 }

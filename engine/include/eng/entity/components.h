@@ -56,7 +56,6 @@ namespace eng
 	};
 	struct ModelComponent
 	{
-		std::string assetPath;
 		std::shared_ptr<Model> model;
 	};
 	struct MeshComponent

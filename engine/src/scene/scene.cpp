@@ -25,6 +25,10 @@ namespace eng
     {
         m_entities = std::move(entities);
     }
+    void Scene::ClearEntities()
+    {
+        m_entities.clear();
+    }
     Entity* Scene::FindEntityByName(const std::string_view name) const
     {
         for (auto& entityPtr : m_entities)

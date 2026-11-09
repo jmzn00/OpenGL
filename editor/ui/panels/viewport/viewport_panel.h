@@ -5,6 +5,7 @@
 #include <eng/scene/scene.h>
 #include <eng/camera/camera.h>
 #include <eng/renderer/viewport.h>
+#include <eng/scene/scene.h>
 
 namespace eng
 {
@@ -23,7 +24,7 @@ namespace eng
 		Scene& m_scene;
 		Viewport& m_viewport;
 
-		bool m_focused = false;
+		bool m_focused = false;		
 	};
 }
 #endif

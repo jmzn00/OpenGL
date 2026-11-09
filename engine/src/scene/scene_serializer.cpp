@@ -8,6 +8,7 @@
 #include <eng/graphics/texture/texture_library.h>
 #include <eng/renderer/mesh_library.h>
 #include <eng/renderer/model.h>
+#include <eng/core/logger.h>
 
 namespace
 {
@@ -41,7 +42,8 @@ namespace eng
 			return false;
 
 		json root;
-		root["version"] = 1;
+		root["version"] = 1;		
+		root["sceneName"] = m_scene.GetName();
 		root["entities"] = json::array();
 
 		for (const auto& entityPtr : m_scene.GetEntities())
@@ -80,7 +82,8 @@ namespace eng
 			}
 			else if (entity.HasComponent<ModelComponent>())
 			{
-				entityJson["model"] = entity.GetComponent<ModelComponent>().assetPath;
+				ModelComponent& model = entity.GetComponent<ModelComponent>();
+				entityJson["model"] = model.model->GetKey();
 			}
 			if (entity.HasComponent<LightComponent>())
 			{
@@ -137,16 +140,24 @@ namespace eng
 	bool SceneSerializer::Load(const std::filesystem::path& path)
 	{
 		using nlohmann::json;
+		Logger& log = Logger::Instance();
+
 		try
 		{
 			std::ifstream file(path);
 			if (!file)
+			{
+				log.Error("[SCENE SERIALIZER] FILE OPEN FAILED");
 				return false;
+			}				
 
 			json root;
 			file >> root;
 			if (root.at("version").get<int>() != 1 || !root.at("entities").is_array())
+			{
+				log.Error("[SCENE SERIALIZER] ROOT FAILED");
 				return false;
+			}
 
 			std::vector<std::unique_ptr<Entity>> loadedEntities;
 			loadedEntities.reserve(root.at("entities").size());
@@ -163,7 +174,10 @@ namespace eng
 				{
 					auto mesh = MeshLibrary::Create(entityJson.at("mesh").get<std::string>());
 					if (!mesh)
+					{
+						log.Error("[SCENE SERIALIZER] MESH CREATION FAILED");
 						return false;
+					}						
 
 					const json& materialJson = entityJson.at("material");
 					auto material = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
@@ -172,7 +186,10 @@ namespace eng
 					const int alphaMode = materialJson.at("alphamode").get<int>();
 					if (alphaMode < static_cast<int>(AlphaMode::Opaque) ||
 						alphaMode > static_cast<int>(AlphaMode::Blend))
+					{
+						log.Error("[SCENE SERIALIZER] ALPHA MODE INVALID");
 						return false;
+					}						
 					material->SetAlphaMode(static_cast<AlphaMode>(alphaMode));
 
 					const json& textures = materialJson.at("textures");
@@ -196,9 +213,8 @@ namespace eng
 				else if (entityJson.contains("model"))
 				{
 					const std::string assetPath = entityJson.at("model").get<std::string>();
-					auto& model = entity->AddComponent<ModelComponent>();
-					model.assetPath = assetPath;
-					model.model = std::make_shared<Model>(std::string(ENGINE_ASSET_DIR) + "/" + assetPath);
+					auto& model = entity->AddComponent<ModelComponent>();					
+					model.model = std::make_shared<Model>(assetPath);
 				}
 
 				if (entityJson.contains("light"))
@@ -207,7 +223,10 @@ namespace eng
 					auto& light = entity->AddComponent<LightComponent>();
 					const int type = lightJson.at("type").get<int>();
 					if (type < static_cast<int>(LightType::Point) || type >= static_cast<int>(LightType::Count))
+					{
+						log.Error("[SCENE SERIALIZER] LIGHT TYPE INVALID");
 						return false;
+					}						
 					light.type = static_cast<LightType>(type);
 					light.ambient = ReadVec3(lightJson.at("ambient"));
 					light.diffuse = ReadVec3(lightJson.at("diffuse"));
@@ -223,10 +242,18 @@ namespace eng
 			}
 
 			m_scene.ReplaceEntities(std::move(loadedEntities));
+
+			std::string msg{"[SCENE SERIALIZER] LOADED "};
+			msg += root.at("sceneName").get<std::string>();
+
+			log.Info(msg);
 			return true;
 		}
-		catch (const std::exception&)
+		catch (const std::exception& e)
 		{
+			std::string msg{ "[SCENE SERIALZIER] LOAD FAILED: " };
+			msg += e.what();
+			log.Error(msg);
 			return false;
 		}
 	}

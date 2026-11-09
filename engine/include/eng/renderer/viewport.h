@@ -3,7 +3,6 @@
 
 #include <cstdint>
 #include <eng/graphics/framebuffer.h>
-
 namespace eng
 {
 	class Viewport

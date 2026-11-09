@@ -26,7 +26,7 @@ namespace eng
 		m_components.push_back(std::make_unique<Console>(commandExecutor));
 		m_components.push_back(std::make_unique<Inspector>(currentScene, m_editorContext, commandExecutor));
 		m_components.push_back(std::make_unique<PropertiesPanel>(currentScene, m_editorContext));
-		m_components.push_back(std::make_unique<Toolbar>(commandExecutor, *m_sceneSerializer));
+		m_components.push_back(std::make_unique<Toolbar>(commandExecutor, *m_sceneSerializer, currentScene));
 		m_components.push_back(std::make_unique<ProfilerPanel>());
 		m_components.push_back(std::make_unique<ViewportPanel>(currentScene, m_editorContext.GetSceneViewport()));
 		m_components.push_back(std::make_unique<PostProcessPanel>(commandExecutor));

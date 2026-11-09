@@ -1,7 +1,13 @@
 #include <eng/core/logger.h>
 #include <typeinfo>
+#include <eng/debug/assert.h>
 namespace eng
 {
+	Logger::Logger()
+	{
+		ENG_ASSERT(m_instance == nullptr, "LOGGER: INSTANCE ALREADY EXISTS");
+		m_instance = this;
+	}	
 	void Logger::AddSink(ILogSink& sink)
 	{
 		m_sinks.push_back(&sink);
