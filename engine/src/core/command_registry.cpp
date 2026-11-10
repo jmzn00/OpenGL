@@ -33,7 +33,7 @@ namespace eng
 			std::make_unique<EntityMoveCommand>(scene)
 		);
 		Register(
-			std::make_unique<PostProcessSetCommand>()
+			std::make_unique<PostProcessSetCommand>(*ctx.GetRenderer().GetPass<PostProcessPass>())
 		);
 	}
 	bool CommandRegistry::Register(std::unique_ptr<ICommand> command)

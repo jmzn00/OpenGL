@@ -17,7 +17,7 @@ namespace eng
 	}
 	CommandResult EntityMoveCommand::Execute(
 		const std::vector<std::string_view>& arguments,
-		CommandContext& context)
+		CommandContext&)
 	{
 		if (arguments.empty())
 		{

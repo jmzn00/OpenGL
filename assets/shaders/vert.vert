@@ -10,6 +10,7 @@
         out vec3 FragPos;
         out vec3 Normal;
         out vec2 TexCoords;
+        out vec3 Position;
 
         void main()
         {
@@ -20,5 +21,6 @@
             // inverse is expensive, okay for small scale but preferrably done on the cpu
             // and sent to the shader via uniform
             Normal = mat3(transpose(inverse(model))) * aNormal;
+            Position = vec3(model * vec4(aPos, 1.0));
             TexCoords = aTexCoords;
         }

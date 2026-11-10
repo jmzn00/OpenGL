@@ -23,3 +23,9 @@ target_link_libraries(Editor
     PRIVATE
         OpenGLEngine
 )
+
+if (MSVC)
+    target_compile_options(Editor PRIVATE /W4 /WX)
+else()
+    target_compile_options(Editor PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()

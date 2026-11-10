@@ -7,7 +7,7 @@ namespace eng
 	ProfilerPanel::ProfilerPanel()
 	{	
 	}
-	bool ProfilerPanel::Init(EngineContext& engineContext)
+	bool ProfilerPanel::Init(EngineContext&)
 	{
 		return true;		
 	}
@@ -48,7 +48,7 @@ namespace eng
 		}
 		ImGui::End();
 	}
-	void ProfilerPanel::Update(float dt)
+	void ProfilerPanel::Update(float)
 	{
 	}
 }

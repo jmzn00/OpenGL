@@ -74,8 +74,8 @@ namespace eng
 	{
 		glStencilMask(mask);
 	}
-	void GraphicsAPI::SetColorMask(GLenum a, GLenum b, GLenum c, GLenum d)
+	void GraphicsAPI::SetColorMask(GLboolean r, GLboolean g, GLboolean b, GLboolean a)
 	{
-		glColorMask(a, b, c, d);
+		glColorMask(r, g, b, a);
 	}
 }

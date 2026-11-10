@@ -103,9 +103,6 @@ namespace eng
 		m_height = height;
 
 		return true;
-
-
-		return true;
 	}	
 	GLuint Framebuffer::GetID() const
 	{

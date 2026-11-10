@@ -20,7 +20,7 @@ namespace eng
 	}
 	CommandResult GraphicsSetWireframeCommand::Execute(
 		const std::vector<std::string_view>& arguments
-		,CommandContext& context)
+		,CommandContext&)
 	{
 		if (arguments.size() != 1)
 		{

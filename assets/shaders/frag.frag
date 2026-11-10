@@ -4,6 +4,7 @@
             sampler2D diffuse;
             sampler2D specular;
             sampler2D emission;
+            sampler2D reflection;
             float shininess;            
         };
         struct DirLight
@@ -47,6 +48,7 @@
         in vec3 Normal;
         in vec3 FragPos;
         in vec2 TexCoords;
+        in vec3 Position;
 
         out vec4 FragColor;       
         
@@ -64,6 +66,8 @@
         uniform PointLight pointLights[MAX_POINT_LIGHTS];
         uniform DirLight directionalLights[MAX_DIRECTIONAL_LIGHTS];
         uniform SpotLight spotLights[MAX_SPOT_LIGHTS];
+
+        uniform samplerCube skybox;
 
         vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir);
         vec3 CalcPointLight(PointLight light, vec3 normal, vec3 fragPos, vec3 viewDir);
@@ -102,9 +106,17 @@
                     norm,
                     FragPos,
                     viewDir);
-            }
-            
-            FragColor = vec4(result, texColor.a);          
+            }         
+
+            float ratio = 1.00 / 1.52;
+            vec3 I = normalize(Position - viewPos);
+            vec3 R = reflect(I, normalize(Normal));
+
+            float reflectivity = texture(material.reflection, TexCoords).r;
+            vec3 reflection = texture(skybox, R).rgb;
+            vec3 baseColor = result;
+                   
+            FragColor = vec4(mix(baseColor, reflection, reflectivity), texColor.a);  
         }
         vec3 CalcDirLight(DirLight light, vec3 normal, vec3 viewDir)
         {

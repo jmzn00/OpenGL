@@ -23,7 +23,7 @@ namespace eng
 
 	CommandResult EntityCreateCommand::Execute(
 		const std::vector<std::string_view>& arguments,
-		CommandContext& context)
+		CommandContext&)
 	{		
 		if (arguments.empty())
 		{
@@ -40,12 +40,15 @@ namespace eng
 				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2.png");
 			std::shared_ptr<Texture2D> specular =
 				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2_specular.png");
+			std::shared_ptr<Texture2D> reflection =
+				std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2_specular.png");
 
 			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
 			mat->SetDiffuseTexture(texture);
 			mat->SetSpecularMap(specular);
+			mat->SetReflectionMap(reflection);
 						
-			auto& mc = ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::cube"), mat);
+			ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::cube"), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
@@ -60,7 +63,7 @@ namespace eng
 			ent.AddComponent<LightComponent>();
 			ent.Transform().SetScale(glm::vec3(0.5f));
 
-			auto& mc = ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::cube"), mat);
+			ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::cube"), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID())};
 			
@@ -74,7 +77,7 @@ namespace eng
 			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Silver"));
 
 			mat->SetShaderProgram(ShaderLibrary::Get("Default"));
-			auto& mc = ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::pyramid"), mat);
+			ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::pyramid"), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
@@ -111,7 +114,7 @@ namespace eng
 			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/grass.png"));
 			mat->SetAlphaMode(AlphaMode::Mask);
 
-			auto& mc = ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::quad"), mat);
+			ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::quad"), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
@@ -123,7 +126,7 @@ namespace eng
 			auto mat = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
 			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/window.png"));
 			mat->SetAlphaMode(AlphaMode::Blend);
-			auto& mc = ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::quad"), mat);
+			ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::quad"), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
@@ -136,7 +139,7 @@ namespace eng
 			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container_window.png"));
 			mat->SetSpecularMap(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/container2/container2_specular.png"));
 			mat->SetAlphaMode(AlphaMode::Blend);
-			auto& mc = ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::quad"), mat);
+			ent.AddComponent<MeshComponent>(MeshLibrary::Create("primitives::quad"), mat);
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}

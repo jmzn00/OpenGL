@@ -22,7 +22,7 @@ namespace eng
 	void PropertiesPanel::Destroy()
 	{
 	}
-	void PropertiesPanel::Update(float dt)
+	void PropertiesPanel::Update(float)
 	{
 	}
 	void PropertiesPanel::Draw()
@@ -39,8 +39,6 @@ namespace eng
 			, nullptr,
 			ImGuiWindowFlags_NoCollapse
 		);
-		float width = ImGui::GetContentRegionAvail().x;
-
 		Entity* ent = m_scene.FindEntityById(m_editorContext.GetSelectedEntityId());
 		if (ent)
 		{
@@ -74,8 +72,8 @@ namespace eng
 				}
 				if (lc.type == LightType::Spot)
 				{
-					ImGui::DragFloat("Inner Cutoff", &lc.innerCutoff, 0.01);
-					ImGui::DragFloat("Outer Cutoff", &lc.outerCutoff, 0.01);
+					ImGui::DragFloat("Inner Cutoff", &lc.innerCutoff, 0.01f);
+					ImGui::DragFloat("Outer Cutoff", &lc.outerCutoff, 0.01f);
 				}				
 			}
 		}

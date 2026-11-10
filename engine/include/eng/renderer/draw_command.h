@@ -5,7 +5,7 @@ namespace eng
 	class Entity;
 	class Mesh;
 	class Material;
-	class TransformComponent;
+	struct TransformComponent;
 
 	struct DrawCommand
 	{

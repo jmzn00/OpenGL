@@ -35,6 +35,7 @@ namespace eng
 		void SetDiffuseTexture(const std::shared_ptr<Texture2D>& texture);
 		void SetSpecularMap(const std::shared_ptr<Texture2D>& specular);
 		void SetEmissionMap(const std::shared_ptr<Texture2D>& emission);
+		void SetReflectionMap(const std::shared_ptr<Texture2D>& reflection);
 
 		void SetAlphaMode(AlphaMode mode)
 		{
@@ -54,6 +55,10 @@ namespace eng
 		{
 			return m_emissionTextureKey;
 		}
+		const std::string& GetReflectionTextureKey() const
+		{
+			return m_reflectionTextureKey;
+		}
 		const std::unordered_map<std::string, glm::vec3>& GetVec3Params() const
 		{
 			return m_vec3Params;
@@ -72,12 +77,14 @@ namespace eng
 		std::shared_ptr<Texture2D> m_diffuseTexture;
 		std::shared_ptr<Texture2D> m_specularMap;
 		std::shared_ptr<Texture2D> m_emissionMap;
+		std::shared_ptr<Texture2D> m_reflectionMap;
 
 		AlphaMode m_alphaMode = AlphaMode::Opaque;
 
 		std::string m_diffuseTextureKey;
 		std::string m_specularTextureKey;
 		std::string m_emissionTextureKey;
+		std::string m_reflectionTextureKey;
 	};
 }
 #endif // !MATERIAL_H

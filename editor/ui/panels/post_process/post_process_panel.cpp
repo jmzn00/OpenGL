@@ -7,10 +7,10 @@ namespace eng
 		: m_executor {commandExecutor}
 	{
 	}
-	void PostProcessPanel::Update(float dt)
+	void PostProcessPanel::Update(float)
 	{
 	}
-	bool PostProcessPanel::Init(EngineContext& context)
+	bool PostProcessPanel::Init(EngineContext&)
 	{
 		Renderer& renderer = Renderer::Get();
 		PostProcessPass* pass = renderer.GetPass<PostProcessPass>();

@@ -4,7 +4,8 @@
 
 namespace eng
 {
-	PostProcessSetCommand::PostProcessSetCommand()
+	PostProcessSetCommand::PostProcessSetCommand(PostProcessPass& postProcess)
+		: m_postProcess {postProcess}
 	{	
 		
 	}
@@ -18,7 +19,7 @@ namespace eng
 	}
 	CommandResult PostProcessSetCommand::Execute(
 		const std::vector<std::string_view>& arguments
-		,CommandContext& context)
+		,CommandContext&)
 	{		
 		if (arguments.size() < 2)
 		{
@@ -28,14 +29,8 @@ namespace eng
 		if (!util::ParseBool(arguments[1], value))
 		{
 			return { false, "Usage: postprocess.set <name> <true/false>" };
-		}
-
-		auto* postProcess = Renderer::Get().GetPass<PostProcessPass>();
-		if (!postProcess)
-		{
-			return { false, "PostProcess NULL" };
-		}
-		if (!postProcess->ToggleEffect(std::string(arguments[0]), value))
+		}		
+		if (!m_postProcess.ToggleEffect(std::string(arguments[0]), value))
 		{
 			return { false, "Invalid effect name" };
 		}

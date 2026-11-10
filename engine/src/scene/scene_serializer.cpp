@@ -126,7 +126,8 @@ namespace eng
 		root["textures"] = {
 			{ "diffuse", material.GetDiffuseTextureKey()},
 			{ "specular", material.GetSpecularTextureKey()},
-			{ "emission", material.GetEmissionTextureKey()}
+			{ "emission", material.GetEmissionTextureKey()},
+			{ "reflection", material.GetReflectionTextureKey()}
 		};
 		root["vec3Params"] = json::object();
 		for (const auto& [name, value] : material.GetVec3Params())
@@ -196,12 +197,15 @@ namespace eng
 					const std::string diffuse = textures.at("diffuse").get<std::string>();
 					const std::string specular = textures.at("specular").get<std::string>();
 					const std::string emission = textures.at("emission").get<std::string>();
+					const std::string reflection = textures.at("reflection").get<std::string>();
 					if (!diffuse.empty())
 						material->SetDiffuseTexture(TextureLibrary::GetTexture(diffuse));
 					if (!specular.empty())
 						material->SetSpecularMap(TextureLibrary::GetTexture(specular));
 					if (!emission.empty())
 						material->SetEmissionMap(TextureLibrary::GetTexture(emission));
+					if (!reflection.empty())
+						material->SetReflectionMap(TextureLibrary::GetTexture(reflection));
 
 					for (auto it = materialJson.at("vec3Params").begin(); it != materialJson.at("vec3Params").end(); ++it)
 						material->SetVec3(it.key(), ReadVec3(it.value()));

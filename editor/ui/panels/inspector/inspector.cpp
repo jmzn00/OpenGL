@@ -20,10 +20,6 @@ namespace eng
 	}
 	void Inspector::Draw()
 	{
-		ImGuiViewport* viewport = ImGui::GetMainViewport();
-		//ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f + viewport->Size.y / 10.0f));
-		//ImGui::SetNextWindowSize(ImVec2(viewport->Size.x / 8.0f, viewport->Size.y / 1.53f));
-
 		ImGui::Begin(
 			"Inspector"
 			,nullptr,
@@ -87,7 +83,7 @@ namespace eng
 
 		ImGui::End();
 	}
-	void Inspector::Update(float dt)
+	void Inspector::Update(float)
 	{	
 	}
 }

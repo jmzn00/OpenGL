@@ -7,16 +7,16 @@
 
 namespace eng
 {
-	bool ViewportPanel::Init(EngineContext& ctx)
+	bool ViewportPanel::Init(EngineContext&)
 	{		
 		return true;
 	}
 
-	void ViewportPanel::Update(float dt)
+	void ViewportPanel::Update(float)
 	{		
 	}
 
-	void ViewportPanel::UpdateCamera(float dt)
+	void ViewportPanel::UpdateCamera(float)
 	{
 		
 	}

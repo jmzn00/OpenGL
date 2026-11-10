@@ -33,3 +33,9 @@ target_link_libraries(OpenGLEngine
         assimp
         opengl32
 )
+
+if (MSVC)
+    target_compile_options(OpenGLEngine PRIVATE /W4 /WX)
+else()
+    target_compile_options(OpenGLEngine PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()

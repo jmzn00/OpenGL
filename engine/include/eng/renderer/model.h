@@ -80,7 +80,7 @@ namespace eng
 				ProcessNode(node->mChildren[i], scene);
 			}
 		}
-		ModelPart ProcessMesh(aiMesh* mesh, const aiScene* scene)
+		ModelPart ProcessMesh(aiMesh* mesh, const aiScene*)
 		{
 			std::vector<float> vertices;
 			std::vector<uint32_t> indices;

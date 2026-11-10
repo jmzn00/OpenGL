@@ -36,7 +36,7 @@ namespace eng
 			GLenum dpfail,
 			GLenum dppass);
 		static void SetStencilMask(GLuint mask);
-		static void SetColorMask(GLenum a, GLenum b, GLenum c, GLenum d);
+		static void SetColorMask(GLboolean r, GLboolean g, GLboolean b, GLboolean a);
 
 		static void EnableTest(GLenum test);
 		static void DisableTest(GLenum test);

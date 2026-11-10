@@ -45,7 +45,7 @@ namespace eng
             std::cout << "ENGINE::SCROLL_CALLBACK:: ENGINE NULL";
             return;
         }
-        engine->m_input.AddScroll(xo, yo);
+        engine->m_input.AddScroll(static_cast<float>(xo), static_cast<float>(yo));
     }
 	bool Engine::Init(int width, int height)
 	{

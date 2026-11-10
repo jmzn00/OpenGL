@@ -13,7 +13,7 @@
 #include <eng/graphics/material/material.h>
 #include <eng/entity/components.h>
 #include <eng/renderer/render_queue.h>
-
+#include <eng/graphics/texture/cubemap_texture.h>
 #include <vector>
 #include <iostream>
 
@@ -47,6 +47,9 @@ namespace eng
 
 			
 				ShaderProgram* shader = &cmd.material->GetShaderProgram();
+				if (shader == nullptr)
+					return;
+
 				cmd.material->Bind(context.graphicsAPI);				
 			
 				if (shader != currentShader)
@@ -61,12 +64,16 @@ namespace eng
 			
 					shader->SetVec3(
 						"viewPos",
-						context.camera.GetPosition());
+						context.camera.GetPosition());										
 			
 					RenderLights(*shader, context);
 					currentShader = shader;
-				}
-			
+				}		
+
+				constexpr int skyboxUnit = 10;
+				shader->SetInt("skybox", skyboxUnit);
+				context.skybox.Bind(skyboxUnit);
+
 				shader->SetMat4(
 					"model",
 					cmd.transform->GetTransform());									
@@ -75,24 +82,15 @@ namespace eng
 				cmd.mesh->Draw();
 			
 				Profiler::Get().IncrementDrawCalls();
-				Profiler::Get().AddTriangles(cmd.mesh->GetVertexCount());
+				Profiler::Get().AddTriangles(static_cast<uint32_t>(cmd.mesh->GetVertexCount()));
 			}
 		}
 	private:
 		void RenderLights(const ShaderProgram& shader, const RenderContext& context)
 		{
-			if (!context.pointLights.empty())
-			{
-				shader.SetPointLights(context.pointLights);
-			}
-			if (!context.directionalLights.empty())
-			{
-				shader.SetDirectionalLights(context.directionalLights);
-			}
-			if (!context.spotLights.empty())
-			{
-				shader.SetSpotLights(context.spotLights);
-			}
+			shader.SetPointLights(context.pointLights);
+			shader.SetDirectionalLights(context.directionalLights);
+			shader.SetSpotLights(context.spotLights);
 		}
 	};
 }

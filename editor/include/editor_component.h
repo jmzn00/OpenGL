@@ -9,7 +9,7 @@ namespace eng
 		virtual ~IEditorComponent() = default;
 
 		virtual bool Init(EngineContext& ctx) = 0;
-		virtual void Update(float dt){}
+		virtual void Update(float){}
 		virtual void Draw() = 0;
 		virtual void Destroy() {}
 	};

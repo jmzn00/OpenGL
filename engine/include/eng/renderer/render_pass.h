@@ -10,6 +10,7 @@ namespace eng
 	struct RenderLight;	
 	struct RenderQueue;
 	class Framebuffer;
+	class CubemapTexture;
 
 	enum class RenderStage : std::uint8_t
 	{
@@ -18,17 +19,19 @@ namespace eng
 		Masked,
 		Transparent,
 		PostProcess,
+		PostPostProcess,
 	};
 
 	struct RenderContext
 	{
 		GraphicsAPI& graphicsAPI;
 		Camera& camera;
-		
+
 		RenderQueue& renderQueue;
 
 		Framebuffer& sceneTarget;
 		Framebuffer& outputTarget;
+		CubemapTexture& skybox;
 
 		std::vector<RenderLight>& pointLights;
 		std::vector<RenderLight>& directionalLights;

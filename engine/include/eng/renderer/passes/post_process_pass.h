@@ -19,6 +19,8 @@
 #include <eng/graphics/post_process/grayscale_effect.h>
 #include <eng/graphics/post_process/kernel_effect.h>
 
+#include <eng/core/logger.h>
+
 namespace eng
 {
 	class PostProcessPass : public RenderPass
@@ -120,8 +122,6 @@ namespace eng
         }
         bool IsActive(const std::string& name)
         {
-            bool exists = false;
-
             for (auto& effect : m_effects)
             {
                 if (effect->Name() == name)
@@ -129,8 +129,8 @@ namespace eng
                     return effect->IsEnabled();
                 }
             }
-            if (!exists)
-                return false;            
+            Logger::Instance().Info("[POST_PROCESS_PASS:: EFFECT DOES NOT EXIST]");
+            return false;
         }
 	private:
         std::vector<std::unique_ptr<PostProcessEffect>> m_effects;

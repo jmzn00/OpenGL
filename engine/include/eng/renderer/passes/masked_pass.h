@@ -39,6 +39,8 @@ namespace eng
 				ENG_ASSERT(cmd.transform != nullptr, "TRANSFORM NULL");
 
 				ShaderProgram* shader = &cmd.material->GetShaderProgram();
+				ENG_ASSERT(shader != nullptr, "SHADER NULL");
+
 				cmd.material->Bind(context.graphicsAPI);
 
 				if (shader != currentShader)
@@ -67,7 +69,7 @@ namespace eng
 				cmd.mesh->Draw();
 
 				Profiler::Get().IncrementDrawCalls();
-				Profiler::Get().AddTriangles(cmd.mesh->GetVertexCount());
+				Profiler::Get().AddTriangles(static_cast<uint32_t>(cmd.mesh->GetVertexCount()));
 			}
 		}
 	private:

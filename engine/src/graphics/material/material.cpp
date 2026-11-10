@@ -14,6 +14,7 @@ namespace eng
 		SetDiffuseTexture(TextureLibrary::GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
 		SetSpecularMap(TextureLibrary::GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
 		SetEmissionMap(TextureLibrary::GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
+		SetReflectionMap(TextureLibrary::GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
 	}
 	void Material::SetShaderProgram(const std::shared_ptr<ShaderProgram>& shaderProgram)
 	{
@@ -54,6 +55,11 @@ namespace eng
 		m_emissionMap = emission;
 		m_emissionTextureKey = emission->GetKey();
 	}
+	void Material::SetReflectionMap(const std::shared_ptr<Texture2D>& reflection)
+	{
+		m_reflectionMap = reflection;
+		m_reflectionTextureKey = reflection->GetKey();
+	}
 	ShaderProgram& Material::GetShaderProgram() const
 	{
 		ENG_ASSERT(m_shaderProgram, "MATERIAL::GET_SHADER_PROGRAM: NO SHADER_PROGRAM");
@@ -87,6 +93,11 @@ namespace eng
 		{
 			m_emissionMap->Bind(2);
 			m_shaderProgram->SetInt("material.emission", 2);
+		}
+		if (m_reflectionMap)
+		{
+			m_reflectionMap->Bind(3);
+			m_shaderProgram->SetInt("material.reflection", 3);
 		}
 	}
 }

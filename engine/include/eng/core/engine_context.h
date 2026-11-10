@@ -36,6 +36,10 @@ namespace eng
 		{
 			return m_graphicsApi;
 		}
+		Renderer& GetRenderer() const
+		{
+			return m_renderer;
+		}
 		Input& GetInput() const
 		{
 			return m_input;

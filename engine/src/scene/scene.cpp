@@ -9,7 +9,6 @@ namespace eng
     Scene::Scene(EngineContext& ctx, const std::string& name)
         : m_engineContext{ ctx }, m_name{ name }
     {
-        Window& window{ ctx.GetWindow() };           
     }
     Entity& Scene::CreateEntity(const std::string& name)
     {		
@@ -89,7 +88,7 @@ namespace eng
         Renderer::Get().Render(scene, output);
         Renderer::Get().EndScene();                
     }
-	void Scene::Update(float dt)
+	void Scene::Update(float)
 	{        
 	}
     const std::vector<std::unique_ptr<Entity>>& Scene::GetEntities() const

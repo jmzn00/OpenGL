@@ -18,8 +18,12 @@
 #include <eng/renderer/passes/transparent_pass.h>
 #include <eng/renderer/passes/masked_pass.h>
 #include <eng/renderer/passes/post_process_pass.h>
+#include <eng/renderer/passes/skybox_pass.h>
+
+#include <eng/graphics/texture/cubemap_texture.h>
 
 #include <vector>
+#include <string>
 #include <iostream>
 #include <memory>
 #include <utility>
@@ -36,10 +40,21 @@ namespace eng
 			ENG_ASSERT(m_instance == nullptr, "Renderer instance exists");
 			m_instance = this;
 
+			AddPass<SkyboxPass>();
 			AddPass<OpaquePass>();
 			AddPass<TransparentPass>();
 			AddPass<MaskedPass>();
 			AddPass<PostProcessPass>();
+
+			std::vector<std::string> faces{
+			ENGINE_ASSET_DIR"/textures/skybox/right.jpg", // right -
+			ENGINE_ASSET_DIR"/textures/skybox/left.jpg", // left - 
+			ENGINE_ASSET_DIR"/textures/skybox/top.jpg", // top
+			ENGINE_ASSET_DIR"/textures/skybox/bottom.jpg", // bottom
+			ENGINE_ASSET_DIR"/textures/skybox/front.jpg", // front
+			ENGINE_ASSET_DIR"/textures/skybox/back.jpg" }; // back
+
+			m_skybox = std::make_unique<CubemapTexture>(faces);
 		}
 		static Renderer& Get() { return *m_instance; }
 
@@ -164,6 +179,7 @@ namespace eng
 				m_renderQueue,
 				sceneTarget,
 				outputTarget,
+				*m_skybox,
 				m_pointLights,
 				m_directionalLights,
 				m_spotLights
@@ -239,6 +255,7 @@ namespace eng
 		std::vector<RenderLight> m_pointLights;
 		std::vector<RenderLight> m_directionalLights;
 		std::vector<RenderLight> m_spotLights;
+		std::unique_ptr<CubemapTexture> m_skybox;
 
 		Camera* m_currentCamera = nullptr;
 		GraphicsAPI& m_graphicsAPI;		

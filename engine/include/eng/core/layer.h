@@ -11,7 +11,7 @@ namespace eng
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void Update(float dt) {}
+		virtual void Update(float) {}
 		virtual void OnImGuiRender() {}
 		// event handling
 

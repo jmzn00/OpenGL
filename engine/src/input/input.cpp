@@ -3,7 +3,7 @@
 #include <eng/math/math.h>
 namespace eng
 {
-	bool Input::Init(GLFWwindow* window)
+	bool Input::Init(GLFWwindow*)
 	{
 		return true;
 	}
@@ -26,18 +26,18 @@ namespace eng
 
 		if (m_firstMouse)
 		{
-			m_mouseLastX = x;
-			m_mouseLastY = y;
+			m_mouseLastX = static_cast<float>(x);
+			m_mouseLastY = static_cast<float>(y);
 			m_firstMouse = false;
 		}
 
-		m_mouseDelta.x = static_cast<float>(x - m_mouseLastX);
-		m_mouseDelta.y = static_cast<float>(y - m_mouseLastY);
+		m_mouseDelta.x = static_cast<float>(x) - m_mouseLastX;
+		m_mouseDelta.y = static_cast<float>(y) - m_mouseLastY;
 
-		m_mouseLastX = x;
-		m_mouseLastY = y;
+		m_mouseLastX = static_cast<float>(x);
+		m_mouseLastY = static_cast<float>(y);
 	}
-	void Input::AddScroll(float xOffset, float yOffset)
+	void Input::AddScroll(float, float yOffset)
 	{				
 		m_scroll -= yOffset;
 		m_scroll = math::clamp(m_scroll, 1.0f, 45.0f);

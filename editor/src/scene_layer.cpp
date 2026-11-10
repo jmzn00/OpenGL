@@ -35,8 +35,6 @@ namespace eng
 	void SceneLayer::Update(float dt)
 	{		
 		Viewport& viewport = m_editorContext.GetSceneViewport();
-		GraphicsAPI& graphicsApi = m_engineContext.GetGraphicsAPI();
-
 
 		UpdateCamera(dt, m_editorContext.GetSceneViewport());
 		viewport.ApplyPendingResize();

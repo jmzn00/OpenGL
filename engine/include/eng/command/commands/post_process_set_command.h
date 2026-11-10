@@ -9,7 +9,7 @@ namespace eng
 	class PostProcessSetCommand final : public ICommand
 	{
 	public:
-		explicit PostProcessSetCommand();
+		explicit PostProcessSetCommand(PostProcessPass& postProcess);
 
 		std::string_view Name() const override;
 		std::string_view Help() const override;
@@ -18,7 +18,7 @@ namespace eng
 			const std::vector<std::string_view>& arguments,
 			CommandContext& context) override;
 	private:
-		PostProcessPass* m_postProcess;
+		PostProcessPass& m_postProcess;
 	};
 }
 
