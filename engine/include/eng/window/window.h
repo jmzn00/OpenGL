@@ -10,6 +10,7 @@ namespace eng
 	{
 	public:		
 		explicit Window(GLFWwindow* window, uint32_t width, uint32_t height);
+		~Window();
 		Window(const Window&) = delete;
 		Window(Window&&) = delete;
 		Window& operator=(const Window&) = delete;

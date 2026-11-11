@@ -11,10 +11,9 @@
 #include <eng/time/time.h>
 #include <eng/window/window.h>
 #include <eng/renderer/renderer.h>
-#include <eng/graphics/shader_library.h>
-#include <eng/graphics/material/material_library.h>
-#include <eng/graphics/texture/texture_library.h>
-#include <eng/renderer/mesh_library.h>
+
+#include <eng/asset/asset_manager.h>
+
 namespace eng
 {
 	class Engine
@@ -50,10 +49,7 @@ namespace eng
 		GraphicsAPI m_graphicsApi;
 		Logger m_logger;
 
-		ShaderLibrary m_shaderLibrary{};
-		MaterialLibrary m_materialLibrary{};
-		TextureLibrary m_textureLibrary{};
-		MeshLibrary m_meshLibrary{};
+		AssetManager m_assets{};
 	};
 }
 #endif // !ENGINE_H

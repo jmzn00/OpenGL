@@ -24,39 +24,44 @@ namespace eng
 		double y;
 		glfwGetCursorPos(window, &x, &y);
 
+		float xf = static_cast<float>(x);
+		float yf = static_cast<float>(y);
+
 		if (m_firstMouse)
 		{
-			m_mouseLastX = static_cast<float>(x);
-			m_mouseLastY = static_cast<float>(y);
+			m_mouseLastX = xf;
+			m_mouseLastY = yf;
 			m_firstMouse = false;
 		}
 
-		m_mouseDelta.x = static_cast<float>(x) - m_mouseLastX;
-		m_mouseDelta.y = static_cast<float>(y) - m_mouseLastY;
+		m_mouseDelta.x = xf - m_mouseLastX;
+		m_mouseDelta.y = yf - m_mouseLastY;
 
-		m_mouseLastX = static_cast<float>(x);
-		m_mouseLastY = static_cast<float>(y);
+		m_mouseLastX = xf;
+		m_mouseLastY = yf;
 	}
 	void Input::AddScroll(float, float yOffset)
 	{				
 		m_scroll -= yOffset;
 		m_scroll = math::clamp(m_scroll, 1.0f, 45.0f);
 	}
-	void Input::SetKeyPressed(int key, bool isPressed)
-	{
-		if (key < 0 || key >= static_cast<int>(m_keys.size()))
-		{
-			return;
-		}
-		m_keys[key] = isPressed;
-	}
 	bool Input::IsKeyPressed(int key)
 	{
-		if (key < 0 || key >= static_cast<int>(m_keys.size()))
+		int max = static_cast<int>(m_keys.size());
+		if (key < 0 || key >= max)
 		{
 			return false;
 		}
 		return m_keys[key];
+	}
+	bool Input::IsMouseKeyPressed(int key)
+	{
+		int max = static_cast<int>(m_mouseKeys.size());
+		if (key < 0 || key >= max)
+		{
+			return false;
+		}
+		return m_mouseKeys[key];
 	}
 	glm::vec2 Input::MouseDelta() const
 	{

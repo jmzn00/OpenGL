@@ -57,18 +57,32 @@ namespace eng
 
         if (!glfwInit())
         {
-            std::cerr << "Failed to initialize GLFW\n";
+            std::cerr << "ENGINE::INIT: FAILED TO INIT GLFW\n";
             return false;
         }
+
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 6);
         glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_FOCUSED, GLFW_TRUE);
         glfwWindowHint(GLFW_FOCUS_ON_SHOW, GLFW_TRUE);
-        glfwWindowHint(GLFW_DEPTH_BITS, 24);
-        glfwWindowHint(GLFW_STENCIL_BITS, 8);
+
+        GLFWwindow* window = nullptr;
+        auto cleanup = [&]()
+        {
+            if (m_window)
+            {
+                m_window.reset();
+            }
+            else if(window)                
+            {
+                glfwDestroyWindow(window);
+                window = nullptr;
+            }
+            glfwTerminate();
+        };
         
-        GLFWwindow* window = glfwCreateWindow(
+        window = glfwCreateWindow(
             width,
             height,
             "ENG",
@@ -77,13 +91,15 @@ namespace eng
         );
         if (!window)
         {
-            std::cerr << "Failed to create GLFW window\n";
+            cleanup();
+            std::cerr << "ENGINE::INIT: FAILED TO CREATE WINDOW\n";
             return false;
         } 
         glfwMakeContextCurrent(window);
         if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
         {
-            std::cerr << "Failed to initialize GLAD\n";
+            cleanup();
+            std::cerr << "ENGINE::INIT: FAILED TO INIT GLAD\n";
             return false;
         } 
         glfwSetWindowUserPointer(window, this);
@@ -96,15 +112,18 @@ namespace eng
 
         if (!m_graphicsApi.Init())
         {
+            cleanup();
+            std::cerr << "ENGINE::INIT: FAILED TO INIT GRAPHICS API\n";
             return false;
         }
         if (!m_input.Init(window))
         {
+            cleanup();
+            std::cerr << "ENGINE::INIT: FAILED TO INIT INPUT\n";
             return false;
-        }                
-        m_shaderLibrary.Init();
-        m_materialLibrary.Init();
+        }                        
 
+        m_assets.Init();
         m_renderer = std::make_unique<Renderer>(m_graphicsApi);
         m_context = std::make_unique<EngineContext>
             (*m_window, m_logger, m_graphicsApi, m_input, *m_renderer);
@@ -137,12 +156,11 @@ namespace eng
             m_application->Destroy();
             m_application.reset();
         }
-        m_meshLibrary.Clear();
-        if (m_window)
-        {
-            glfwDestroyWindow(m_window->GetNativeWindow());
-            m_window = nullptr;
-        }                
+
+        m_window.reset();
+        m_context.reset();
+        m_renderer.reset();          
+
         glfwTerminate();
 	}
 	void Engine::SetApplication(std::unique_ptr<Application> app)

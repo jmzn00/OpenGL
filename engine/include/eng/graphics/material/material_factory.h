@@ -2,7 +2,7 @@
 #define MATERIAL_FACTORY_H
 
 #include <eng/graphics/material/material.h>
-#include <eng/graphics/texture/texture_library.h>
+#include <eng/asset/asset_manager.h>
 #include <eng/debug/assert.h>
 
 #include <memory>
@@ -91,7 +91,7 @@ namespace eng
 			std::string texturePath =
 				directory + "/" + path.C_Str();
 
-			return TextureLibrary::GetTexture(texturePath);
+			return AssetManager::Get().Textures().GetTexture(texturePath);
 		}
 		inline static MaterialFactory* m_instance;
 	};

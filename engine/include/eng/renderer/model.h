@@ -4,10 +4,8 @@
 #include <eng/renderer/mesh.h>
 #include <eng/graphics/material/material.h>
 #include <eng/graphics/texture/texture.h>
-#include <eng/graphics/texture/texture_library.h>
-#include <eng/graphics/shader_library.h>
-#include <eng/graphics/material/material_library.h>
 #include <eng/graphics/material/material_factory.h>
+#include <eng/asset/asset_manager.h>
 
 #include <memory>
 #include <string>
@@ -149,8 +147,8 @@ namespace eng
 			}
 			else
 			{
-				part.material = MaterialLibrary::Get("Silver");
-				part.material->SetShaderProgram(ShaderLibrary::Get("Default"));
+				part.material = AssetManager::Get().Materials().GetMaterial("Silver");
+				part.material->SetShaderProgram(AssetManager::Get().Shaders().GetShader("Default"));
 			}
 			part.mesh = std::make_shared<Mesh>(layout, vertices, indices);
 
@@ -166,8 +164,7 @@ namespace eng
 					MaterialFactory::CreateFromAssimp(
 						scene->mMaterials[i],
 						m_directory);
-				m_materials[i]->SetShaderProgram(
-					ShaderLibrary::Get("Default"));
+				m_materials[i]->SetShaderProgram(AssetManager::Get().Shaders().GetShader("Default"));
 			}
 		}
 		std::vector<ModelPart> m_parts;

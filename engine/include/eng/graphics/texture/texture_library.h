@@ -19,31 +19,9 @@ namespace eng
 		using Color = std::array<std::uint8_t, 4>;
 
 		TextureLibrary()
-		{
-			ENG_ASSERT(
-				m_instance == nullptr,
-				"TEXTURE_LIBRARY: INSTANCE ALREADY EXISTS");
-
-			m_instance = this;
-		}
-		static TextureLibrary& Instance()
-		{
-			ENG_ASSERT(
-				m_instance != nullptr,
-				"TEXTURE_LIBRARY: INSTANCE NOT INITIALIZED");
-
-			return *m_instance;
-		}
-		static std::shared_ptr<Texture2D> GetTexture(const Color& color)
-		{
-			return Instance().GetTextureInternal(color);
-		}
-		static std::shared_ptr<Texture2D> GetTexture(const std::string& path)
-		{
-			return Instance().GetTextureInternal(path);
-		}
-	private:
-		std::shared_ptr<Texture2D> GetTextureInternal(const Color& color)
+		{			
+		}	
+		std::shared_ptr<Texture2D> GetTexture(const Color& color)
 		{
 			auto texture = m_colorTextures.find(color);
 			if (texture != m_colorTextures.end())
@@ -55,7 +33,7 @@ namespace eng
 
 			return newTexture;
 		}
-		std::shared_ptr<Texture2D> GetTextureInternal(const std::string& path)
+		std::shared_ptr<Texture2D> GetTexture(const std::string& path)
 		{
 			auto texture = m_fileTextures.find(path);
 
@@ -71,8 +49,12 @@ namespace eng
 
 			return newTexture;
 		}
-
-		inline static TextureLibrary* m_instance{ nullptr };
+		void Clear()
+		{
+			m_colorTextures.clear();
+			m_fileTextures.clear();
+		}
+	private:
 		std::map<Color, std::shared_ptr<Texture2D>> m_colorTextures;
 		std::unordered_map<std::string, std::shared_ptr<Texture2D>> m_fileTextures;
 	};

@@ -8,6 +8,14 @@ namespace eng
 	{
 		glViewport(0, 0, width, height);
 	}
+	Window::~Window()
+	{
+		if (m_window != nullptr)
+		{
+			glfwDestroyWindow(m_window);
+			m_window = nullptr;
+		}
+	}
 	void Window::Focus()
 	{
 		glfwFocusWindow(m_window);

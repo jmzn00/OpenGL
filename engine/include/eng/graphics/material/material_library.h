@@ -1,28 +1,27 @@
 #ifndef MATERIAL_LIBRARY_H
+
 #define MATERIAL_LIBRARY_H
 
 #include <eng/graphics/material/material.h>
+#include <eng/graphics/shader_library.h>
+#include <eng/graphics/texture/texture_library.h>
 #include <eng/debug/assert.h>
 
 #include <memory>
 #include <string>
 #include <unordered_map>
-#include <eng/graphics/shader_library.h>
 
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
 
-#include <eng/graphics/texture/texture_library.h>
-
 namespace eng
 {
 	class MaterialLibrary
-	{
+	{	
 	public:
-		MaterialLibrary()
-		{
-			ENG_ASSERT(m_instance == nullptr, "MATERIAL LIBRARY INSTANCE ALREADY EXISTS");
-			m_instance = this;
+       MaterialLibrary(ShaderLibrary& shaders, TextureLibrary& textures)
+			: m_shaders(shaders), m_textures(textures)
+		{			
 		}
 
 		void Init()
@@ -101,43 +100,14 @@ namespace eng
 
 			for (auto& mat : m_materials)
 			{
-				mat.second->SetShaderProgram(ShaderLibrary::Get("Default"));
+             mat.second->SetShaderProgram(m_shaders.GetShader("Default"));
 			}
 		}
-		static MaterialLibrary& Instance()
+		void Clear()
 		{
-			return *m_instance;
+			m_materials.clear();			
 		}
-		static std::shared_ptr<Material> Get(const std::string& name)
-		{
-			ENG_ASSERT(m_instance != nullptr, "MATERIAL_LIBRARY:Get: INSTANCE IS NULL");
-			return Instance().GetMaterial(name);
-		}
-		static std::unordered_map<std::string, std::shared_ptr<Material>>& GetAllMaterials()
-		{
-			ENG_ASSERT(m_instance != nullptr, "MATERIAL_LIBRARY:GetAll: INSTANCE IS NULL");
-			return Instance().GetAll();
-		}		
-		static std::shared_ptr<Material> Create(aiMaterial* aiMat, const std::string& directory)
-		{
-			return Instance().CreateInternal(aiMat, directory);
-		}
-	private:
-		std::shared_ptr<Texture2D> LoadMaterialTexture(aiMaterial* aiMat, aiTextureType type
-			, const std::string& directory)
-		{
-			if (aiMat->GetTextureCount(type) == 0)
-				return nullptr;
-
-			aiString path;
-			aiMat->GetTexture(type, 0, &path);
-
-			std::string texturePath =
-				directory + "/" + path.C_Str();
-
-			return TextureLibrary::GetTexture(texturePath);
-		}
-		std::shared_ptr<Material> CreateInternal(aiMaterial* aiMat, const std::string& directory)
+		std::shared_ptr<Material> Create(aiMaterial* aiMat, const std::string& directory)
 		{
 			MaterialProperties props{};
 
@@ -199,8 +169,24 @@ namespace eng
 		{
 			return m_materials;
 		}
+	private:
+		std::shared_ptr<Texture2D> LoadMaterialTexture(aiMaterial* aiMat, aiTextureType type
+			, const std::string& directory)
+		{
+			if (aiMat->GetTextureCount(type) == 0)
+				return nullptr;
+
+			aiString path;
+			aiMat->GetTexture(type, 0, &path);
+
+			std::string texturePath =
+				directory + "/" + path.C_Str();
+
+			return m_textures.GetTexture(texturePath);
+		}
 		std::unordered_map<std::string, std::shared_ptr<Material>> m_materials;
-		inline static MaterialLibrary* m_instance;
+		ShaderLibrary& m_shaders;
+		TextureLibrary& m_textures;		
 	};
 }
 #endif // !MATERIAL_LIBRARY_H

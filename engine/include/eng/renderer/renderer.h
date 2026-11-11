@@ -184,8 +184,8 @@ namespace eng
 				m_directionalLights,
 				m_spotLights
 			};
-
-			sceneTarget.Bind();
+			
+			Framebuffer::Bind(sceneTarget);
 			m_graphicsAPI.ClearBuffers();
 
 			for (auto& pass : m_passes)

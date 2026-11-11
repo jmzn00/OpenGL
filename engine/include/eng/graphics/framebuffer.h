@@ -23,6 +23,10 @@ namespace eng
 		{
 			glBindFramebuffer(GL_FRAMEBUFFER, 0);
 		}
+		static void Bind(Framebuffer& buffer)
+		{
+			glBindFramebuffer(GL_FRAMEBUFFER, buffer.GetID());
+		}
 
 		GLuint GetID() const;
 

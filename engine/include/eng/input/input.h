@@ -13,11 +13,11 @@ namespace eng
 		bool Init(GLFWwindow* window);
 		void Update(GLFWwindow* window);
 		bool IsKeyPressed(int key);
+		bool IsMouseKeyPressed(int key);
 		glm::vec2 MouseDelta() const;
 		float Scroll() const;
 		void AddScroll(float xOffset, float yOffset);
-	private:		
-		void SetKeyPressed(int key, bool pressed);		
+	private:			
 		std::array<bool, GLFW_KEY_LAST + 1> m_keys = { false };
 		std::array<bool, GLFW_MOUSE_BUTTON_LAST + 1> m_mouseKeys{ false };
 

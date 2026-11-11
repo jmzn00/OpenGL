@@ -1,14 +1,12 @@
 #include <eng/scene/scene_serializer.h>
 #include <eng/scene/scene.h>
-#include <fstream>
 #include <eng/entity/components.h>
 #include <eng/graphics/material/material.h>
-#include <eng/graphics/material/material_library.h>
-#include <eng/graphics/shader_library.h>
-#include <eng/graphics/texture/texture_library.h>
-#include <eng/renderer/mesh_library.h>
+#include <eng/asset/asset_manager.h>
 #include <eng/renderer/model.h>
 #include <eng/core/logger.h>
+
+#include <fstream>
 
 namespace
 {
@@ -142,7 +140,11 @@ namespace eng
 	{
 		using nlohmann::json;
 		Logger& log = Logger::Instance();
-
+		ShaderLibrary& shaders = AssetManager::Get().Shaders();
+		TextureLibrary& textureLibrary = AssetManager::Get().Textures();
+		MeshLibrary& meshes = AssetManager::Get().Meshes();
+		MaterialLibrary& materials = AssetManager::Get().Materials();
+		
 		try
 		{
 			std::ifstream file(path);
@@ -173,7 +175,7 @@ namespace eng
 
 				if (entityJson.contains("mesh"))
 				{
-					auto mesh = MeshLibrary::Create(entityJson.at("mesh").get<std::string>());
+					auto mesh = meshes.Create(entityJson.at("mesh").get<std::string>());
 					if (!mesh)
 					{
 						log.Error("[SCENE SERIALIZER] MESH CREATION FAILED");
@@ -181,8 +183,8 @@ namespace eng
 					}						
 
 					const json& materialJson = entityJson.at("material");
-					auto material = std::make_shared<Material>(*MaterialLibrary::Get("Default"));
-					material->SetShaderProgram(ShaderLibrary::Get(materialJson.at("shader").get<std::string>()));
+					auto material = std::make_shared<Material>(*materials.GetMaterial("Default"));
+					material->SetShaderProgram(shaders.GetShader(materialJson.at("shader").get<std::string>()));
 
 					const int alphaMode = materialJson.at("alphamode").get<int>();
 					if (alphaMode < static_cast<int>(AlphaMode::Opaque) ||
@@ -199,13 +201,13 @@ namespace eng
 					const std::string emission = textures.at("emission").get<std::string>();
 					const std::string reflection = textures.at("reflection").get<std::string>();
 					if (!diffuse.empty())
-						material->SetDiffuseTexture(TextureLibrary::GetTexture(diffuse));
+						material->SetDiffuseTexture(textureLibrary.GetTexture(diffuse));
 					if (!specular.empty())
-						material->SetSpecularMap(TextureLibrary::GetTexture(specular));
+						material->SetSpecularMap(textureLibrary.GetTexture(specular));
 					if (!emission.empty())
-						material->SetEmissionMap(TextureLibrary::GetTexture(emission));
+						material->SetEmissionMap(textureLibrary.GetTexture(emission));
 					if (!reflection.empty())
-						material->SetReflectionMap(TextureLibrary::GetTexture(reflection));
+						material->SetReflectionMap(textureLibrary.GetTexture(reflection));
 
 					for (auto it = materialJson.at("vec3Params").begin(); it != materialJson.at("vec3Params").end(); ++it)
 						material->SetVec3(it.key(), ReadVec3(it.value()));

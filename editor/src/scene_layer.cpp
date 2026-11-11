@@ -59,34 +59,46 @@ namespace eng
 		if (!viewport.GetFocused())
 			return;
 
-		const float cameraSpeed = 1.0f * dt;
+		float cameraSpeed = 1.0f * dt;
 		const float rotationSensitivity = 0.1f;
 
 		glm::vec3 cameraPosition = m_editorCamera.GetPosition();
 
+		if (m_input->IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
+		{
+			cameraSpeed *= 4.0f;
+		}
 		if (m_input->IsKeyPressed(GLFW_KEY_W))
 		{
 			cameraPosition +=
-				cameraSpeed * m_editorCamera.GetFlatForward();
+				cameraSpeed * m_editorCamera.GetForward();
 		}
-
 		if (m_input->IsKeyPressed(GLFW_KEY_S))
 		{
 			cameraPosition -=
-				cameraSpeed * m_editorCamera.GetFlatForward();
+				cameraSpeed * m_editorCamera.GetForward();
 		}
-
 		if (m_input->IsKeyPressed(GLFW_KEY_D))
 		{
 			cameraPosition +=
 				cameraSpeed * m_editorCamera.GetRight();
 		}
-
 		if (m_input->IsKeyPressed(GLFW_KEY_A))
 		{
 			cameraPosition -=
 				cameraSpeed * m_editorCamera.GetRight();
 		}		
+		if (m_input->IsKeyPressed(GLFW_KEY_Q))
+		{
+			cameraPosition -=
+				cameraSpeed * m_editorCamera.GetUp();
+		}
+		if (m_input->IsKeyPressed(GLFW_KEY_E))
+		{
+			cameraPosition +=
+				cameraSpeed * m_editorCamera.GetUp();
+		}
+
 		m_editorCamera.MoveTo(cameraPosition);		
 
 		const glm::vec2 mouseDelta = m_input->MouseDelta();

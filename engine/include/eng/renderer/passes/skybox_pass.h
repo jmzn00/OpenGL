@@ -12,6 +12,8 @@
 #include <vector>
 #include <string>
 
+#include <eng/asset/asset_manager.h>
+
 namespace eng
 {
 	class SkyboxPass : public RenderPass
@@ -30,7 +32,7 @@ namespace eng
 			m_shader = std::make_unique<ShaderProgram>(ENGINE_ASSET_DIR"/shaders/skybox/skybox.vert",
 				ENGINE_ASSET_DIR"/shaders/skybox/skybox.frag");
 
-			m_mesh = MeshLibrary::Create("primitives::cube");
+			m_mesh = AssetManager::Get().Meshes().Create("primitives::cube");
 		}
 		void Execute(RenderContext& context) override
 		{			

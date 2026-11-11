@@ -2,6 +2,7 @@
 #include <iostream>
 #include <eng/debug/assert.h>
 #include <eng/graphics/texture/texture_library.h>
+#include <eng/asset/asset_manager.h>
 namespace eng
 {	
 	Material::Material(MaterialProperties props)
@@ -11,10 +12,12 @@ namespace eng
 		m_vec3Params["material.specular"] = props.specular;
 		m_floatParams["material.shininess"] = props.shininess;
 		
-		SetDiffuseTexture(TextureLibrary::GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
-		SetSpecularMap(TextureLibrary::GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
-		SetEmissionMap(TextureLibrary::GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
-		SetReflectionMap(TextureLibrary::GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
+		TextureLibrary& textures = AssetManager::Get().Textures();
+
+		SetDiffuseTexture(textures.GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
+		SetSpecularMap(textures.GetTexture(TextureLibrary::Color{ 255, 255, 255, 255 }));
+		SetEmissionMap(textures.GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
+		SetReflectionMap(textures.GetTexture(TextureLibrary::Color{0, 0, 0, 255}));
 	}
 	void Material::SetShaderProgram(const std::shared_ptr<ShaderProgram>& shaderProgram)
 	{
