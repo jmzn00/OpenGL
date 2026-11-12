@@ -60,6 +60,8 @@ namespace eng
             if (entity.HasComponent<ModelComponent>())
             {
                 auto& mc = entity.GetComponent<ModelComponent>();
+                if (mc.model == nullptr)
+                    break;
 
                 for (auto& part : mc.model->GetParts())
                 {
@@ -77,6 +79,8 @@ namespace eng
                 continue;
     
             auto& meshComponent = entity.GetComponent<MeshComponent>();
+            if (meshComponent.mesh == nullptr || meshComponent.material == nullptr)
+                continue;
     
             Renderer::Get().Submit(
                 { meshComponent.mesh.get()

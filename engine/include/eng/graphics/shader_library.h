@@ -28,6 +28,19 @@ namespace eng
 					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.vert",
 					ENGINE_ASSET_DIR "/shaders/lightSource/lightSource.frag");			
 			m_shaders["Light"]->SetKey("Light");
+
+			m_shaders["Debug"] = 
+				std::make_shared<ShaderProgram>(
+					ENGINE_ASSET_DIR "/shaders/vert.vert",
+					ENGINE_ASSET_DIR "/shaders/debug/debug.frag");
+			m_shaders["Debug"]->SetKey("Debug");
+
+			m_shaders["Line"] =
+				std::make_shared<ShaderProgram>(
+					ENGINE_ASSET_DIR "/shaders/line/line.vert",
+					ENGINE_ASSET_DIR "/shaders/line/line.frag",
+					ENGINE_ASSET_DIR "/shaders/line/line.geom");
+			m_shaders["Line"]->SetKey("Line");
 		}				
 		void Clear()
 		{

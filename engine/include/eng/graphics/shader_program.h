@@ -17,6 +17,7 @@ namespace eng
 	{
 	public:		
 		explicit ShaderProgram(const char* vertexPath, const char* fragmentPath);
+		explicit ShaderProgram(const char* vertexPath, const char* fragmentPath, const char* geometryPath);
 		ShaderProgram(const ShaderProgram&) = delete;
 		ShaderProgram& operator=(const ShaderProgram&) = delete;
 		explicit ShaderProgram(GLuint shaderProgramID);

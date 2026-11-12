@@ -35,14 +35,23 @@ namespace eng
 			return *component;
 		}
 		template<typename T>
+		bool RemoveComponent()
+		{
+			return m_components.erase(typeid(T)) != 0;
+		}
+		template<typename T>
 		T& GetComponent() const
 		{
 			return *static_cast<T*>(m_components.at(typeid(T)).get());
-		}
+		}		
 		template<typename T>
 		bool HasComponent() const
 		{
 			return m_components.find(typeid(T)) != m_components.end();
+		}
+		void SetName(const std::string& name)
+		{
+			m_name = name;
 		}
 		const std::string& GetName() const
 		{

@@ -84,6 +84,10 @@ namespace eng
 		glDeleteShader(vertex);
 		glDeleteShader(fragment);
 
+		GLuint cameraIndex = glGetUniformBlockIndex(m_id, "Camera");
+		if (cameraIndex != GL_INVALID_INDEX)
+			glUniformBlockBinding(m_id, cameraIndex, 0);
+
 		GLint uniformCount{ 0 };
 		glGetProgramiv(m_id, GL_ACTIVE_UNIFORMS, &uniformCount);
 
@@ -105,6 +109,138 @@ namespace eng
 			);
 			GLint location = glGetUniformLocation(m_id, name);
 			m_uniforms[name] = location;			
+		}		
+	}
+	ShaderProgram::ShaderProgram(const char* vertexPath, const char* fragmentPath
+		, const char* geometryPath)
+	{
+		std::string vertexCode;
+		std::string fragmentCode;
+		std::string geometryCode;
+
+		std::ifstream vShaderFile;
+		std::ifstream fShaderFile;
+		std::ifstream gShaderFile;
+
+		vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		gShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
+		try
+		{
+			vShaderFile.open(vertexPath);
+			fShaderFile.open(fragmentPath);
+			gShaderFile.open(geometryPath);
+
+			std::stringstream vShaderStream, fShaderStream, gShaderStream;
+
+			vShaderStream << vShaderFile.rdbuf();
+			fShaderStream << fShaderFile.rdbuf();
+			gShaderStream << gShaderFile.rdbuf();
+
+			vShaderFile.close();
+			fShaderFile.close();
+			gShaderFile.close();
+
+			vertexCode = vShaderStream.str();
+			fragmentCode = fShaderStream.str();
+			geometryCode = gShaderStream.str();
+		}
+		catch (std::ifstream::failure e)
+		{
+			std::cout << "ERROR:SHADER::FILE_NOT_SUCCESFULLY_READ\n"
+				<< e.what() << '\n';
+			throw;
+		}
+		const char* vShaderCode = vertexCode.c_str();
+		const char* fShaderCode = fragmentCode.c_str();
+		const char* gShaderCode = geometryCode.c_str();
+
+		unsigned int vertex;
+		unsigned int fragment;
+		unsigned int geometry;
+
+		int success;
+		char infoLog[512];
+
+		vertex = glCreateShader(GL_VERTEX_SHADER);
+		glShaderSource(vertex, 1, &vShaderCode, NULL);
+		glCompileShader(vertex);
+
+		glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<
+				infoLog << std::endl;
+			throw;
+		};
+
+		fragment = glCreateShader(GL_FRAGMENT_SHADER);
+		glShaderSource(fragment, 1, &fShaderCode, nullptr);
+		glCompileShader(fragment);
+		glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" <<
+				infoLog << std::endl;
+			throw;
+		};
+
+		geometry = glCreateShader(GL_GEOMETRY_SHADER);
+		glShaderSource(geometry, 1, &gShaderCode, nullptr);
+		glCompileShader(geometry);
+		glGetShaderiv(geometry, GL_COMPILE_STATUS, &success);
+		if (!success)
+		{
+			glGetShaderInfoLog(geometry, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::GEOMETRY::COMPILATION_FAILED\n" <<
+				infoLog << std::endl;
+			throw;
+		}
+
+		m_id = glCreateProgram();
+		glAttachShader(m_id, vertex);
+		glAttachShader(m_id, fragment);
+		glAttachShader(m_id, geometry);
+		glLinkProgram(m_id);
+
+		glGetProgramiv(m_id, GL_LINK_STATUS, &success);
+		if (!success)
+		{
+			glGetProgramInfoLog(m_id, 512, NULL, infoLog);
+			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" <<
+				infoLog << std::endl;
+			throw;
+		}
+		glDeleteShader(vertex);
+		glDeleteShader(fragment);
+
+		GLuint cameraIndex = glGetUniformBlockIndex(m_id, "Camera");
+		if (cameraIndex != GL_INVALID_INDEX)
+			glUniformBlockBinding(m_id, cameraIndex, 0);
+
+		GLint uniformCount{ 0 };
+		glGetProgramiv(m_id, GL_ACTIVE_UNIFORMS, &uniformCount);
+
+		for (GLint i = 0; i < uniformCount; i++)
+		{
+			char name[256];
+			GLsizei length;
+			GLint size;
+			GLenum type;
+
+			glGetActiveUniform(
+				m_id,
+				i,
+				sizeof(name),
+				&length,
+				&size,
+				&type,
+				name
+			);
+			GLint location = glGetUniformLocation(m_id, name);
+			m_uniforms[name] = location;
 		}
 	}
 	void ShaderProgram::SetFloat(const char* name, float x) const
@@ -124,7 +260,7 @@ namespace eng
 
 		if (it == m_uniforms.end())
 		{
-			std::cout << "SHADER_PROGRAM::SETMAT4 UNIFORM: " << name << " NOT FOUND\n";
+			//std::cout << "SHADER_PROGRAM::SETMAT4 UNIFORM: " << name << " NOT FOUND\n";
 			return;
 		}
 		glUniformMatrix4fv(it->second, 1, GL_FALSE, glm::value_ptr(value));

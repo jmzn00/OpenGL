@@ -33,6 +33,13 @@ namespace eng
 		{
 			return { false, "Usage: ent.create <cube / light>" };
 		}
+		if (arguments[0] == "empty")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "Entity";
+			Entity& ent = m_scene.CreateEntity(name);
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
 		if (arguments[0] == "cube")
 		{
 			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "CubeEnt";
@@ -96,6 +103,28 @@ namespace eng
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
+		if (arguments[0] == "rock")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "RockEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+
+			auto& modelComp = ent.AddComponent<ModelComponent>();
+			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/rock/rock.obj");
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
+		if (arguments[0] == "planet")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "PlanetEnt";
+
+			Entity& ent = m_scene.CreateEntity(name);
+
+			auto& modelComp = ent.AddComponent<ModelComponent>();
+			modelComp.model = std::make_shared<Model>(ENGINE_ASSET_DIR "/models/planet/planet.obj");
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
 		if (arguments[0] == "sponza")
 		{
 			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "SponzaEnt";
@@ -114,7 +143,7 @@ namespace eng
 			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "GrassEnt";
 
 			Entity& ent = m_scene.CreateEntity(name);
-           auto mat = std::make_shared<Material>(*materials.GetMaterial("Default"));
+			auto mat = std::make_shared<Material>(*materials.GetMaterial("Default"));			
 			mat->SetDiffuseTexture(std::make_shared<Texture2D>(ENGINE_ASSET_DIR "/textures/grass.png"));
 			mat->SetAlphaMode(AlphaMode::Mask);
 
@@ -147,6 +176,25 @@ namespace eng
 
 			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
 		}
+		if (arguments[0] == "debug")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "DebugEnt";
+			Entity& ent = m_scene.CreateEntity(name);
+			auto mat = std::make_shared<Material>(*materials.GetMaterial("Debug"));
+			ent.AddComponent<MeshComponent>(meshes.Create("primitives::cube"), mat);
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
+		if (arguments[0] == "line")
+		{
+			std::string name = arguments.size() > 1 ? std::string(arguments[1]) : "LineEnt";
+			Entity& ent = m_scene.CreateEntity(name);
+			auto mat = std::make_shared<Material>(*materials.GetMaterial("Line"));
+			ent.AddComponent<MeshComponent>(meshes.Create("primitives::line"), mat);
+
+			return { true, "Created ent: " + ent.GetName() + ' ' + std::to_string(ent.GetID()) };
+		}
+
 		return { false, "Usage: ent.create <cube / light>" };
 	}
 }

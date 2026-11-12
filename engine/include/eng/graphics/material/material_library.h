@@ -25,7 +25,7 @@ namespace eng
 		}
 
 		void Init()
-		{
+		{			
 			m_materials["Default"] = std::make_shared<Material>(
 				MaterialProperties{
 					glm::vec3(0.1f, 0.1f, 0.1f),
@@ -96,12 +96,20 @@ namespace eng
 					glm::vec3(0.714f, 0.4284f, 0.18144f),
 					glm::vec3(0.393548f, 0.271906f, 0.166721f),
 					25.6f
-				});
+				});			
 
+			m_materials["Line"] = std::make_shared<Material>(
+				MaterialProperties{
+					glm::vec3(0.0f, 0.0f, 0.0f),
+					glm::vec3(0.0f, 0.0f, 0.0f),
+					glm::vec3(0.0f, 0.0f, 0.0f),
+					32.0f
+				});			
 			for (auto& mat : m_materials)
 			{
              mat.second->SetShaderProgram(m_shaders.GetShader("Default"));
 			}
+			m_materials["Line"]->SetShaderProgram(m_shaders.GetShader("Line"));
 		}
 		void Clear()
 		{

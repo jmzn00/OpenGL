@@ -22,12 +22,14 @@ namespace eng
 		std::vector<DrawCommand> opaque;
 		std::vector<DrawCommand> masked;
 		std::vector<DrawCommand> transparent;
+		std::vector<DrawCommand> commands;
 
 		void Clear()
 		{
 			opaque.clear();
 			masked.clear();
 			transparent.clear();
+			commands.clear();
 		}
 		void Submit(const DrawCommand& cmd)
 		{

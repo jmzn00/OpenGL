@@ -11,6 +11,8 @@ namespace eng
     inline std::shared_ptr<Mesh> CubeMesh();
     inline std::shared_ptr<Mesh> PyramidMesh();
     inline std::shared_ptr<Mesh> QuadMesh();
+    inline std::shared_ptr<Mesh> LineMesh();
+
 
     class MeshLibrary
     {
@@ -34,6 +36,8 @@ namespace eng
                 mesh = PyramidMesh();
             else if (key == "primitives::quad")
                 mesh = QuadMesh();
+            else if (key == "primitives::line")
+                mesh = LineMesh();
             else
                 return nullptr;
 
@@ -237,5 +241,24 @@ namespace eng
 
         return std::make_shared<Mesh>(layout, vertices, indices);
     }
+    inline std::shared_ptr<Mesh> LineMesh()
+    {
+        std::vector<float> vertices =
+        {
+            -0.5f, 0.0f, 1.0f, 1.0f, 0.0f,
+             0.5f, 0.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f, 0.5f, 1.0f, 0.0f, 0.0f,
+             0.5f, 0.5f, 0.0f, 1.0f, 0.0f,
+        };
+
+        std::vector<uint32_t> indices = { 0, 1, 2, 3};
+
+        VertexLayout layout{};
+        layout.stride = 5 * sizeof(float);
+        layout.elements.push_back({ 0, 2, GL_FLOAT, 0});
+        layout.elements.push_back({ 1, 3, GL_FLOAT, 2 * sizeof(float)});
+
+        return std::make_shared<Mesh>(layout, vertices, indices, GL_POINTS);
+    }   
 }
 #endif // !MESH_LIBRARY

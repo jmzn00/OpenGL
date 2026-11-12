@@ -28,6 +28,7 @@ namespace eng
 		Logger* m_log = nullptr;
 
 		CommandExecutor& m_executor;
+		char m_renameBuffer[256]{};
 	};
 }
 #endif // !INSPECTOR_H

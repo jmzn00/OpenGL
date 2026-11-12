@@ -45,9 +45,7 @@ namespace eng
 			m_shader->SetMat4("view", view);
 			m_shader->SetMat4("projection", context.camera.GetProjection());
 
-			constexpr int skyboxUnit = 10;
-			m_shader->SetInt("skybox", skyboxUnit);
-			context.skybox.Bind(skyboxUnit);
+			m_shader->SetInt("skybox", context.skyboxUnit);			
 
 			m_mesh->Bind();
 			m_mesh->Draw();

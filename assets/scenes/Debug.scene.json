@@ -1,0 +1,57 @@
+{
+    "entities": [
+        {
+            "material": {
+                "alphamode": 0,
+                "floatParams": {
+                    "material.shininess": 32.0
+                },
+                "shader": "Debug",
+                "textures": {
+                    "diffuse": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/textures/debug/debug_front.png",
+                    "emission": "",
+                    "reflection": "",
+                    "specular": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/textures/debug/debug_back.png"
+                },
+                "vec3Params": {
+                    "material.ambient": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "material.diffuse": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "material.specular": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ]
+                }
+            },
+            "mesh": "primitives::cube",
+            "name": "DebugEnt",
+            "transform": {
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ]
+            }
+        }
+    ],
+    "sceneName": "Debug",
+    "version": 1
+}

@@ -31,6 +31,7 @@ namespace eng
 		}
 		void Execute(RenderContext& context) override
 		{
+			GraphicsAPI::EnableTest(GL_DEPTH_TEST);
 			ShaderProgram* currentShader = nullptr;
 
 			for (auto& cmd : context.renderQueue.masked)
@@ -41,18 +42,9 @@ namespace eng
 				ShaderProgram* shader = &cmd.material->GetShaderProgram();
 				ENG_ASSERT(shader != nullptr, "SHADER NULL");
 
-				cmd.material->Bind(context.graphicsAPI);
-
+				cmd.material->Bind(context.graphicsAPI);				
 				if (shader != currentShader)
 				{
-					shader->SetMat4(
-						"view",
-						context.camera.GetView());
-
-					shader->SetMat4(
-						"projection",
-						context.camera.GetProjection());
-
 					shader->SetVec3(
 						"viewPos",
 						context.camera.GetPosition());
@@ -60,6 +52,8 @@ namespace eng
 					RenderLights(*shader, context);
 					currentShader = shader;
 				}
+
+				shader->SetInt("skybox", context.skyboxUnit);
 
 				shader->SetMat4(
 					"model",

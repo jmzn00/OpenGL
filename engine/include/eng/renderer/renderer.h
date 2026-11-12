@@ -19,6 +19,7 @@
 #include <eng/renderer/passes/masked_pass.h>
 #include <eng/renderer/passes/post_process_pass.h>
 #include <eng/renderer/passes/skybox_pass.h>
+#include <eng/renderer/passes/debug_pass.h>
 
 #include <eng/graphics/texture/cubemap_texture.h>
 
@@ -45,6 +46,7 @@ namespace eng
 			AddPass<TransparentPass>();
 			AddPass<MaskedPass>();
 			AddPass<PostProcessPass>();
+			//AddPass<DebugPass>();
 
 			std::vector<std::string> faces{
 			ENGINE_ASSET_DIR"/textures/skybox/right.jpg", // right -
@@ -55,6 +57,12 @@ namespace eng
 			ENGINE_ASSET_DIR"/textures/skybox/back.jpg" }; // back
 
 			m_skybox = std::make_unique<CubemapTexture>(faces);
+
+			glGenBuffers(1, &m_cameraUbo);
+			glBindBuffer(GL_UNIFORM_BUFFER, m_cameraUbo);
+			glBufferData(GL_UNIFORM_BUFFER, 2 * sizeof(glm::mat4), nullptr, GL_DYNAMIC_DRAW);
+			glBindBufferBase(GL_UNIFORM_BUFFER, 0, m_cameraUbo);
+			glBindBuffer(GL_UNIFORM_BUFFER, 0);
 		}
 		static Renderer& Get() { return *m_instance; }
 
@@ -171,6 +179,7 @@ namespace eng
 				"No active scene");
 
 			BuildRenderQueue(*m_currentCamera);
+			constexpr int skyboxUnit = 10;
 
 			RenderContext context
 			{
@@ -180,6 +189,7 @@ namespace eng
 				sceneTarget,
 				outputTarget,
 				*m_skybox,
+				skyboxUnit,
 				m_pointLights,
 				m_directionalLights,
 				m_spotLights
@@ -187,6 +197,12 @@ namespace eng
 			
 			Framebuffer::Bind(sceneTarget);
 			m_graphicsAPI.ClearBuffers();
+
+			glBindBuffer(GL_UNIFORM_BUFFER, m_cameraUbo);
+			glBufferSubData(GL_UNIFORM_BUFFER, 0, sizeof(glm::mat4), glm::value_ptr(m_currentCamera->GetProjection()));
+			glBufferSubData(GL_UNIFORM_BUFFER, sizeof(glm::mat4),sizeof(glm::mat4), glm::value_ptr(m_currentCamera->GetView()));
+							
+			m_skybox->Bind(skyboxUnit);
 
 			for (auto& pass : m_passes)
 			{
@@ -199,6 +215,7 @@ namespace eng
 		{
 			m_renderQueue.Clear();
 
+			m_renderQueue.commands = m_commands;
 			for (const DrawCommand& cmd : m_commands)
 			{
 				ENG_ASSERT(cmd.material != nullptr, "MATERIAL NULL");
@@ -261,6 +278,8 @@ namespace eng
 		GraphicsAPI& m_graphicsAPI;		
 
 		RenderQueue m_renderQueue;
+
+		GLuint m_cameraUbo{0};
 	};
 }
 #endif // !RENDERER_H

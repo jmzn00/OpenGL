@@ -9,8 +9,9 @@
 
 namespace eng
 {
-	PropertiesPanel::PropertiesPanel(Scene& scene, EditorContext& editorContext)
-		: m_scene{scene}, m_editorContext{editorContext}
+	PropertiesPanel::PropertiesPanel(Scene& scene, EditorContext& editorContext
+		, EntityComponentRegistry& components)
+		: m_scene{scene}, m_editorContext{editorContext}, m_components {components}
 	{
 	}
 	bool PropertiesPanel::Init(EngineContext& engineContext)
@@ -28,12 +29,9 @@ namespace eng
 	void PropertiesPanel::Draw()
 	{
 		const float panelWidth = 200.0f;
-		ImGuiViewport* viewport = ImGui::GetMainViewport();
-		//ImGui::SetNextWindowPos(ImVec2(viewport->Size.x - panelWidth
-		//	, viewport->Size.y / 10.0f));
+		ImGuiViewport* viewport = ImGui::GetMainViewport();		
 		ImGui::SetNextWindowSize(ImVec2(panelWidth
 			, viewport->Size.y / 1.53f));
-
 		ImGui::Begin(
 			"Properties"
 			, nullptr,
@@ -42,40 +40,58 @@ namespace eng
 		Entity* ent = m_scene.FindEntityById(m_editorContext.GetSelectedEntityId());
 		if (ent)
 		{
-			TransformComponent& tc = ent->Transform();
-			ImGui::SeparatorText("Transform");
-
-			ImGui::DragFloat3("Position", &tc.Translation.x, 0.1f);
-			ImGui::DragFloat3("Rotation", &tc.Rotation.x, 0.1f);
-			ImGui::DragFloat3("Scale", &tc.Scale.x, 0.1f);			
-						
-			if (ent->HasComponent<LightComponent>())
+			for (const auto& entry : m_components.Entries())
 			{
-				ImGui::SeparatorText("Light");			
-				auto& lc = ent->GetComponent<LightComponent>();
+				if (!entry.has(*ent))
+					continue;
 				
-				if (ImGui::Button("Type"))
+				ImGui::PushID(entry.id.c_str());
+				const bool expanded = ImGui::CollapsingHeader(entry.label.c_str(),
+					ImGuiTreeNodeFlags_DefaultOpen);
+				bool remove = false;
+				if (entry.remove && ImGui::BeginPopupContextItem("ComponentContext"))
 				{
-					ImGui::OpenPopup("LightTypePopup");
-				}
-				if (ImGui::BeginPopup("LightTypePopup"))
-				{					
-					for (int i = 0; i < static_cast<int>(LightType::Count); i++)
-					{
-						LightType type = static_cast<LightType>(i);
-						if (ImGui::MenuItem(Light::ToString(type)))
-						{
-							lc.type = type;
-						}									
-					}					
+					remove = ImGui::MenuItem("Remove Component");
 					ImGui::EndPopup();
 				}
-				if (lc.type == LightType::Spot)
+				if (expanded && !remove)
 				{
-					ImGui::DragFloat("Inner Cutoff", &lc.innerCutoff, 0.01f);
-					ImGui::DragFloat("Outer Cutoff", &lc.outerCutoff, 0.01f);
-				}				
+					ImGui::PushID("properties");
+					entry.draw(*ent, m_editorContext);
+					ImGui::PopID();
+				}
+				if (remove)
+					entry.remove(*ent);
+				ImGui::PopID();				
 			}
+
+			if (ImGui::Button("Add Component"))
+			{
+				ImGui::OpenPopup("AddComponentPopup");
+			}
+			if (ImGui::BeginPopup("AddComponentPopup"))
+			{
+				bool available = false;
+
+				for (const auto& entry : m_components.Entries())
+				{
+					if (!entry.add || entry.has(*ent))
+						continue;
+
+					available = true;
+					ImGui::PushID(entry.id.c_str());
+					if (ImGui::MenuItem(entry.label.c_str()))
+					{
+						entry.add(*ent);
+					}
+					ImGui::PopID();
+				}
+				if (!available)
+				{
+					ImGui::TextDisabled("All components already added");
+				}
+				ImGui::EndPopup();
+			}			
 		}
 		ImGui::End();
 	}

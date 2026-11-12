@@ -17,6 +17,9 @@
 
 #include <eng/scene/scene_serializer.h>
 
+#include "component_properties_drawers.h"
+#include "entity_component_registry.h"
+
 namespace eng
 {
 	class EditorLayer : public Layer
@@ -31,15 +34,17 @@ namespace eng
 		void Update(float dt) override;
 		virtual void OnImGuiRender() override;		
 	private:		
+		void RegisterComponentEditors(ComponentPropertiesDrawers& drawers);
 		void BuildDefaultDockLayout(ImGuiID dockspaceId, const ImVec2& dockspaceSize);
 		bool m_dockLayoutBuilt = false;
 
 		EditorContext& m_editorContext;
 		EngineContext& m_engineContext;
 
+		std::unique_ptr<SceneSerializer> m_sceneSerializer;		
 		std::vector<std::unique_ptr<IEditorComponent>> m_components;
 
-		std::unique_ptr<SceneSerializer> m_sceneSerializer;
+		EntityComponentRegistry m_componentRegistry{};
 	};
 }
 #endif // !EDITOR_LAYER_H

@@ -43,18 +43,13 @@ namespace eng
 				cmd.material->Bind(context.graphicsAPI);
 				if (shader != currentShader)
 				{
-					shader->SetMat4(
-						"view",
-						context.camera.GetView());
-					shader->SetMat4(
-						"projection",
-						context.camera.GetProjection());
 					RenderLights(*shader, context);
 					currentShader = shader;
 				}
+				shader->SetInt("skybox", context.skyboxUnit);
 				shader->SetMat4(
 					"model",
-					cmd.transform->GetTransform());
+					cmd.transform->GetTransform());				
 
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();

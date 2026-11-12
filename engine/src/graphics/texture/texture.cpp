@@ -20,7 +20,7 @@ namespace eng
 			&width,
 			&height,
 			&channels,
-			0);
+			0);		
 		ENG_ASSERT(data, "TEXTURE2D: FAILED TO LOAD IMAGE");
 
 		GLenum format = GL_RGB;
@@ -51,6 +51,7 @@ namespace eng
 
 		glBindTexture(GL_TEXTURE_2D, 0);
 		stbi_image_free(data);
+		stbi_set_flip_vertically_on_load(false);
 	}
 	Texture2D::Texture2D(const Color& color)
 	{

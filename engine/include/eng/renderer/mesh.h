@@ -9,8 +9,10 @@ namespace eng
 	class Mesh
 	{
 	public:
-		Mesh(const VertexLayout& layout, const std::vector<float>& vertices, const std::vector<uint32_t>& indices)
+		Mesh(const VertexLayout& layout, const std::vector<float>& vertices
+			, const std::vector<uint32_t>& indices, GLenum primitiveMode = GL_TRIANGLES)
 			: m_vertexLayout(layout), m_vertexCount(vertices.size()), m_indexCount(indices.size())
+			, m_primitiveMode {primitiveMode}
 		{
 			GLint prevVAO = 0;
 			glGetIntegerv(GL_VERTEX_ARRAY_BINDING, &prevVAO);
@@ -60,7 +62,8 @@ namespace eng
 		}
 		void Draw() const
 		{
-			glDrawElements(GL_TRIANGLES, static_cast<GLsizei>(m_indexCount), GL_UNSIGNED_INT, 0);			
+			glDrawElements(m_primitiveMode, static_cast<GLsizei>(m_indexCount)
+				, GL_UNSIGNED_INT, nullptr);			
 		}
 		size_t GetVertexCount() const
 		{
@@ -84,6 +87,8 @@ namespace eng
 		size_t m_vertexCount{ 0 };
 		size_t m_indexCount{ 0 };
 		std::string m_key;
+
+		GLenum m_primitiveMode{GL_TRIANGLES};
 	};
 }
 #endif // !MESH_H

@@ -18,8 +18,9 @@ namespace eng
 		Opaque,
 		Masked,
 		Transparent,
+		PrePostProcess,
 		PostProcess,
-		PostPostProcess,
+		Debug,
 	};
 
 	struct RenderContext
@@ -32,6 +33,8 @@ namespace eng
 		Framebuffer& sceneTarget;
 		Framebuffer& outputTarget;
 		CubemapTexture& skybox;
+		int skyboxUnit;
+
 
 		std::vector<RenderLight>& pointLights;
 		std::vector<RenderLight>& directionalLights;

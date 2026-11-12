@@ -7,12 +7,13 @@
 #include "panels/profiler/profiler_panel.h"
 #include "panels/viewport/viewport_panel.h"
 #include "panels/post_process/post_process_panel.h"
+#include <eng/asset/asset_manager.h>
 
 
 namespace eng
 {
 	EditorLayer::EditorLayer(EngineContext& ctx, EditorContext& editorContext)
-		: Layer("EditorLayer"), m_engineContext{ctx}, m_editorContext{editorContext}
+		: Layer("EditorLayer"), m_editorContext{editorContext}, m_engineContext{ctx}
 	{
 		ctx.GetLogger().Info("[EditorLayer] Initialized");
 	}
@@ -21,11 +22,14 @@ namespace eng
 		CommandExecutor& commandExecutor = m_editorContext.GetCommandExecutor();
 		Scene& currentScene = m_editorContext.GetCurrentScene();
 
-		m_sceneSerializer = std::make_unique<SceneSerializer>(currentScene);
+		ComponentPropertiesDrawers drawers{m_editorContext};
+		RegisterComponentEditors(drawers);
+		
+		m_sceneSerializer = std::make_unique<SceneSerializer>(currentScene);		
 
 		m_components.push_back(std::make_unique<Console>(commandExecutor));
 		m_components.push_back(std::make_unique<Inspector>(currentScene, m_editorContext, commandExecutor));
-		m_components.push_back(std::make_unique<PropertiesPanel>(currentScene, m_editorContext));
+		m_components.push_back(std::make_unique<PropertiesPanel>(currentScene, m_editorContext, m_componentRegistry));
 		m_components.push_back(std::make_unique<Toolbar>(commandExecutor, *m_sceneSerializer, currentScene));
 		m_components.push_back(std::make_unique<ProfilerPanel>());
 		m_components.push_back(std::make_unique<ViewportPanel>(currentScene, m_editorContext.GetSceneViewport()));
@@ -39,13 +43,51 @@ namespace eng
 			}
 		}		
 	}
+	void EditorLayer::RegisterComponentEditors(ComponentPropertiesDrawers& drawers)
+	{		
+		ComponentEditor transform;
+		transform.id = "engine.transform";
+		transform.label = "Transform";
+		transform.has = [](const Entity&) { return true; };
+
+		transform.draw =
+			[drawers](Entity& entity, EditorContext&) mutable
+			{
+				drawers.DrawTransform(entity.Transform());
+			};
+		m_componentRegistry.Register(std::move(transform));
+
+		m_componentRegistry.Register<ModelComponent>(
+			"engine.model",
+			"Model",
+			[](Entity& entity)
+			{
+				entity.AddComponent<ModelComponent>();
+			},
+			[drawers](ModelComponent& component, EditorContext&) mutable
+			{
+				drawers.DrawModel(component);
+			});
+		m_componentRegistry.Register<LightComponent>(
+			"engine.light",
+			"Light",
+			[](Entity& entity)
+			{
+				entity.AddComponent<LightComponent>();
+			},
+			[drawers](LightComponent& component, EditorContext&) mutable
+			{
+				drawers.DrawLight(component);
+			});
+	}
 	void EditorLayer::OnDetach()
 	{
 		for (auto& component : m_components)
 		{
 			component->Destroy();
 		}
-		m_components.clear();
+		m_components.clear();		
+		m_sceneSerializer.reset();
 	}
 	void EditorLayer::Update(float dt)
 	{
