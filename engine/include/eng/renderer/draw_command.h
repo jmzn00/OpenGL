@@ -4,14 +4,13 @@ namespace eng
 {
 	class Entity;
 	class Mesh;
-	class Material;
-	struct TransformComponent;
+	class Material;	
 
 	struct DrawCommand
 	{
 		Mesh* mesh;
 		Material* material;
-		TransformComponent* transform;
+		glm::mat4 worldTransform{ 1.0f };
 		Entity* entity;
 	};
 }

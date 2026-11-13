@@ -14,6 +14,12 @@
 
 namespace eng
 {
+	class Entity;
+	struct ParentChange
+	{
+		std::uint32_t child;
+		std::optional<std::uint32_t> parent;
+	};
 	class Inspector : public IEditorComponent
 	{
 	public:
@@ -23,12 +29,15 @@ namespace eng
 		void Draw() override;
 		void Destroy() override;
 	private:
+		void DrawEntityNode(Entity& entity);
 		EditorContext& m_editorContext;
 		Scene& m_scene;
 		Logger* m_log = nullptr;
 
 		CommandExecutor& m_executor;
 		char m_renameBuffer[256]{};
+
+		std::optional<ParentChange> m_pendingParentChange;
 	};
 }
 #endif // !INSPECTOR_H

@@ -10,6 +10,7 @@
 #include <eng/graphics/light/light.h>
 #include <eng/renderer/model.h>
 #include <string>
+#include <vector>
 
 
 namespace eng
@@ -96,6 +97,11 @@ namespace eng
 
 		float innerCutoff{ glm::cos(glm::radians(12.5f)) };
 		float outerCutoff{ glm::cos(glm::radians(17.5f)) };
+	};
+	struct RelationshipComponent
+	{
+		std::optional<uint32_t> parent;
+		std::vector<uint32_t> children;
 	};
 }
 #endif // !COMPONENTS_H

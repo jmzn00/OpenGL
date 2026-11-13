@@ -32,6 +32,8 @@ namespace eng
 		Entity* FindEntityByName(const std::string_view name) const;
 		Entity* FindEntityById(const std::uint32_t id) const;
 
+		bool SetParent(std::uint32_t childId, std::optional<std::uint32_t> parentId);
+		glm::mat4 GetWorldTransform(const Entity& entity) const;
 
 		Camera& GetMainCamera()
 		{

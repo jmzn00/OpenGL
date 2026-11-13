@@ -1,8 +1,10 @@
 {
     "entities": [
         {
+            "id": 1,
             "model": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/models/planet/planet.obj",
             "name": "Planet",
+            "parent": null,
             "transform": {
                 "rotation": [
                     0.0,
@@ -22,6 +24,7 @@
             }
         },
         {
+            "id": 2,
             "light": {
                 "ambient": [
                     0.20000000298023224,
@@ -46,6 +49,7 @@
                 "type": 1
             },
             "name": "Sun",
+            "parent": null,
             "transform": {
                 "rotation": [
                     0.0,
@@ -63,8 +67,54 @@
                     0.0
                 ]
             }
+        },
+        {
+            "id": 3,
+            "model": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/models/rock/rock.obj",
+            "name": "Rock",
+            "parent": 1,
+            "transform": {
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translation": [
+                    8.399999618530273,
+                    0.0,
+                    0.0
+                ]
+            }
+        },
+        {
+            "id": 4,
+            "model": "C:/Users/mansi/source/repos/OpenGl/OpenGl/assets/models/rock/rock.obj",
+            "name": "Rock",
+            "parent": 1,
+            "transform": {
+                "rotation": [
+                    0.0,
+                    0.0,
+                    0.0
+                ],
+                "scale": [
+                    1.0,
+                    1.0,
+                    1.0
+                ],
+                "translation": [
+                    -6.400000095367432,
+                    0.0,
+                    0.0
+                ]
+            }
         }
     ],
     "sceneName": "DefaultScene",
-    "version": 1
+    "version": 2
 }

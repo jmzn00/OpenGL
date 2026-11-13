@@ -37,7 +37,6 @@ namespace eng
 			{
 				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");
 				ENG_ASSERT(cmd.material != nullptr, "Material null");
-				ENG_ASSERT(cmd.transform != nullptr, "Transform null");
 
 				ShaderProgram* shader = &cmd.material->GetShaderProgram();
 				cmd.material->Bind(context.graphicsAPI);
@@ -49,7 +48,7 @@ namespace eng
 				shader->SetInt("skybox", context.skyboxUnit);
 				shader->SetMat4(
 					"model",
-					cmd.transform->GetTransform());				
+					cmd.worldTransform);				
 
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();

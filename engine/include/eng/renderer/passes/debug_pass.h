@@ -44,9 +44,8 @@ namespace eng
 			for (auto& cmd : context.renderQueue.commands)
 			{
 				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");
-				ENG_ASSERT(cmd.transform != nullptr, "TRANSFORM NULL");
 
-				m_shader->SetMat4("model", cmd.transform->GetTransform());				
+				m_shader->SetMat4("model", cmd.worldTransform);				
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();
 

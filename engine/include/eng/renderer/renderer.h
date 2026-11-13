@@ -240,10 +240,10 @@ namespace eng
 				{
 					const glm::vec4 aView =
 						camera.GetView() *
-						glm::vec4(a.transform->Translation, 1.0f);
+						a.worldTransform[3];
 					const glm::vec4 bView =
 						camera.GetView() *
-						glm::vec4(b.transform->Translation, 1.0f);
+						b.worldTransform[3];
 
 					return aView.z < bView.z;
 				}
@@ -255,10 +255,10 @@ namespace eng
 				{
 					const glm::vec4 aView =
 						camera.GetView() *
-						glm::vec4(a.transform->Translation, 1.0f);
+						a.worldTransform[3];
 					const glm::vec4 bView =
 						camera.GetView() *
-						glm::vec4(b.transform->Translation, 1.0f);
+						b.worldTransform[3];
 
 					return aView.z < bView.z;
 				}

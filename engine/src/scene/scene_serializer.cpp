@@ -7,6 +7,10 @@
 #include <eng/core/logger.h>
 
 #include <fstream>
+#include <unordered_map>
+#include <unordered_set>
+#include <optional>
+#include <cstdint>
 
 namespace
 {
@@ -40,7 +44,7 @@ namespace eng
 			return false;
 
 		json root;
-		root["version"] = 1;		
+		root["version"] = 2;
 		root["sceneName"] = m_scene.GetName();
 		root["entities"] = json::array();
 
@@ -50,6 +54,9 @@ namespace eng
 			const TransformComponent& transform = entity.Transform();
 
 			json entityJson;
+			entityJson["id"] = entity.GetID();
+			entityJson["parent"] = entity.GetParent()
+				? json(*entity.GetParent()) : json(nullptr);
 			entityJson["name"] = entity.GetName();
 			entityJson["transform"] = {
 				{ "translation", {
@@ -156,7 +163,8 @@ namespace eng
 
 			json root;
 			file >> root;
-			if (root.at("version").get<int>() != 1 || !root.at("entities").is_array())
+			const int version = root.at("version").get<int>();
+			if ((version != 1 && version != 2) || !root.at("entities").is_array())
 			{
 				log.Error("[SCENE SERIALIZER] ROOT FAILED");
 				return false;
@@ -164,10 +172,28 @@ namespace eng
 
 			std::vector<std::unique_ptr<Entity>> loadedEntities;
 			loadedEntities.reserve(root.at("entities").size());
+			std::unordered_map<std::uint32_t, Entity*> savedEntities;
+			std::unordered_map<std::uint32_t, std::optional<std::uint32_t>> parents;
+			auto readId = [](const json& value) -> std::uint32_t
+			{
+				if (!value.is_number_integer() || value.get<std::int64_t>() < 0 ||
+					value.get<std::uint64_t>() > UINT32_MAX)
+					throw std::runtime_error("Invalid entity ID");
+				return value.get<std::uint32_t>();
+			};
 
 			for (const json& entityJson : root.at("entities"))
 			{
 				auto entity = std::make_unique<Entity>(entityJson.at("name").get<std::string>());
+				if (version == 2)
+				{
+					const auto savedId = readId(entityJson.at("id"));
+					if (!savedEntities.emplace(savedId, entity.get()).second)
+						throw std::runtime_error("Duplicate entity ID");
+					const auto& parent = entityJson.at("parent");
+					parents.emplace(savedId, parent.is_null()
+						? std::nullopt : std::optional<std::uint32_t>(readId(parent)));
+				}
 				const json& transformJson = entityJson.at("transform");
 				ReadTransformVec3(transformJson, "translation", entity->Transform().Translation);
 				ReadTransformVec3(transformJson, "rotation", entity->Transform().Rotation);
@@ -247,10 +273,43 @@ namespace eng
 				loadedEntities.push_back(std::move(entity));
 			}
 
+			std::unordered_set<std::uint32_t> validated;
+			for (const auto& [savedId, parentId] : parents)
+			{
+				std::unordered_set<std::uint32_t> chain;
+				std::optional<std::uint32_t> current = savedId;
+				while (current && !validated.count(*current))
+				{
+					if (!chain.insert(*current).second)
+						throw std::runtime_error("Cycle in entity hierarchy");
+					const auto it = parents.find(*current);
+					if (it == parents.end())
+						throw std::runtime_error("Missing parent entity");
+					current = it->second;
+				}
+				validated.insert(chain.begin(), chain.end());
+			}
+
+			if (version == 2)
+			{
+				for (const json& entityJson : root.at("entities"))
+				{
+					const auto savedId = readId(entityJson.at("id"));
+					if (const auto parentId = parents.at(savedId))
+					{
+						Entity* child = savedEntities.at(savedId);
+						Entity* parent = savedEntities.at(*parentId);
+						child->SetParent(parent->GetID());
+						parent->AddChild(child->GetID());
+					}
+				}
+			}
+
+			const auto sceneName = root.at("sceneName").get<std::string>();
 			m_scene.ReplaceEntities(std::move(loadedEntities));
 
 			std::string msg{"[SCENE SERIALIZER] LOADED "};
-			msg += root.at("sceneName").get<std::string>();
+			msg += sceneName;
 
 			log.Info(msg);
 			return true;

@@ -43,7 +43,6 @@ namespace eng
 			for (auto& cmd : context.renderQueue.opaque)
 			{
 				ENG_ASSERT(cmd.mesh != nullptr, "MESH NULL");
-				ENG_ASSERT(cmd.transform != nullptr, "Transform null");
 
 			
 				ShaderProgram* shader = &cmd.material->GetShaderProgram();
@@ -67,7 +66,7 @@ namespace eng
 
 				shader->SetMat4(
 					"model",
-					cmd.transform->GetTransform());									
+					cmd.worldTransform);									
 			
 				cmd.mesh->Bind();
 				cmd.mesh->Draw();
